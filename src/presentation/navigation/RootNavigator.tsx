@@ -6,7 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 import {enableScreens} from 'react-native-screens';
 
-import {AuthorizedNavigator} from './AuthorizedStack';
+import {AuthDrawerNavigator} from './DrawerNavigator';
 import {AuthenticationNavigator} from './AuthenticationStack';
 import {RootStoreState, signInLocally} from '@shared-state';
 
@@ -28,7 +28,7 @@ export const RootNavigator: React.FC = () => {
     if (isAuthorized) {
       return (
         <Stack.Screen
-          component={AuthorizedNavigator}
+          component={AuthDrawerNavigator}
           name="AuthorizedNavigator"
         />
       );

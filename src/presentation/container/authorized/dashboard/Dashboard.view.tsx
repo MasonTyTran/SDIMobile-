@@ -54,7 +54,14 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
   return (
     <>
       <Header
-        leftComponent={<Icon color={'white'} type="ionicon" name="menu" />}
+        leftComponent={
+          <Icon
+            onPress={props.navigation.openDrawer}
+            color={'white'}
+            type="ionicon"
+            name="menu"
+          />
+        }
         centerComponent={<TextView text="Home" style={styles.header} />}
         backgroundColor={gray}
       />

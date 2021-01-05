@@ -1,9 +1,9 @@
-import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
 import {AuthorizedStoryboardParamList} from '@storyboards';
+import {DrawerScreenProps} from '@react-navigation/drawer';
 
-export type DashboardNavigationProps = StackNavigationProp<
+export type DashboardNavigationProps = DrawerScreenProps<
   AuthorizedStoryboardParamList,
   'Dashboard'
 >;
@@ -13,7 +13,4 @@ export type DashboardRouteProp = RouteProp<
   'Dashboard'
 >;
 
-export type DashboardProps = {
-  navigation: DashboardNavigationProps;
-  route: DashboardRouteProp;
-};
+export type DashboardProps = DashboardNavigationProps;
