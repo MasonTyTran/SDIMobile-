@@ -1,5 +1,5 @@
-import {shallow} from 'enzyme';
-import {StyleSheet} from 'react-native';
+import {Colors} from './../../../resource/values/colors';
+import {Dimensions, StyleSheet} from 'react-native';
 const shadow = {
   shadowColor: '#000',
   shadowOffset: {
@@ -10,7 +10,7 @@ const shadow = {
   shadowRadius: 3.84,
   elevation: 5,
 };
-const gray = 'rgb(82,89,108)';
+const CHART_SIZE = Dimensions.get('window').width * 0.7;
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     ...shadow,
   },
   navButton: {
-    width: 100,
+    width: 120,
     height: 100,
     borderRadius: 8,
     justifyContent: 'center',
@@ -43,31 +43,54 @@ export const styles = StyleSheet.create({
   navText: {
     color: 'white',
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   centerText: {
     textAlign: 'center',
   },
   chartContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 24,
     marginHorizontal: 8,
-    paddingVertical: 8,
     backgroundColor: 'white',
     borderRadius: 4,
+    paddingVertical: 24,
     ...shadow,
+  },
+  chartTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    textAlign: 'center',
+    color: Colors.gray,
+  },
+  pieChart: {
+    width: CHART_SIZE,
+    height: CHART_SIZE,
+  },
+  totalContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  total: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    textAlign: 'center',
+    color: Colors.gray,
   },
   legendContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     marginTop: 24,
   },
   legend: {
     flexDirection: 'row',
-    paddingVertical: 8,
-    width: 100,
+    padding: 8,
   },
   circle: {
     width: 20,
