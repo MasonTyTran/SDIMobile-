@@ -1,4 +1,3 @@
-import {signInSuccess} from './../../../shared-state/redux/actions/authentication.action';
 import React from 'react';
 
 import {container} from 'tsyringe';
@@ -6,7 +5,7 @@ import {filter} from 'rxjs/operators';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {AppDependencies} from '@di';
-import {StoreContainer, signInFailed} from '@shared-state';
+import {StoreContainer, signInFailed, signIn} from '@shared-state';
 
 import {signInSelector} from './SignIn.redux-selector';
 import {SignInHandle} from './types';
@@ -15,8 +14,11 @@ export function useSignIn(handle: SignInHandle) {
   const {onSignInFailed} = handle;
   const {isAuthenticating} = useSelector(signInSelector);
   const dispatch = useDispatch();
+
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const submit = (_: any) => {
-    dispatch(signInSuccess());
+    dispatch(signIn({username, password}));
   };
   const {action$} = container.resolve<StoreContainer>(
     AppDependencies.StoreContainer,
@@ -32,5 +34,5 @@ export function useSignIn(handle: SignInHandle) {
       subscription.unsubscribe();
     };
   }, [action$, onSignInFailed]);
-  return {isAuthenticating, submit};
+  return {isAuthenticating, submit, setUsername, setPassword};
 }

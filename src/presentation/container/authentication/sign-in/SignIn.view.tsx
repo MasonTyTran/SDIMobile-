@@ -14,18 +14,22 @@ const _SignIn: React.FC<SignInProps> = (props) => {
   const onSignInFailed = React.useCallback(() => {
     console.warn('Success');
   }, []);
-  const {isAuthenticating, submit} = useSignIn({
+  const {isAuthenticating, submit, setPassword, setUsername} = useSignIn({
     onSignInFailed,
   });
   const renderForm = () => {
     return (
       <View style={styles.formContainer}>
         <TextField
-          inputProps={{placeholder: 'Username'}}
+          inputProps={{placeholder: 'Username', onChangeText: setUsername}}
           containerStyle={styles.input}
         />
         <TextField
-          inputProps={{placeholder: 'Password'}}
+          inputProps={{
+            placeholder: 'Password',
+            secureTextEntry: true,
+            onChangeText: setPassword,
+          }}
           containerStyle={styles.input}
         />
         <TextView style={styles.forgotPass} text="Forgot password" />

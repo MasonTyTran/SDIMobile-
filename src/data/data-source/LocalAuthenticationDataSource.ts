@@ -1,8 +1,9 @@
 import {injectable} from 'tsyringe';
-import {Observable, Observer} from 'rxjs';
+import {Observable, Observer, from} from 'rxjs';
 
 import * as Keychain from 'react-native-keychain';
 import {LocalException} from '@core';
+import {map} from 'rxjs/operators';
 
 export interface LocalAuthenticationDataSource {
   saveToken(username: string, token: string): Observable<boolean>;
@@ -25,18 +26,13 @@ export class KeyChainAuthenticationDataSource
     });
   }
   getToken(): Observable<string> {
-    return Observable.create(async (observer: Observer<string>) => {
-      try {
-        const result = await Keychain.getGenericPassword();
-        if (result) {
-          observer.next(result.password);
-          observer.complete();
-          return;
+    return from(Keychain.getGenericPassword()).pipe(
+      map((x) => {
+        if (!x) {
+          throw new LocalException({});
         }
-        observer.error(new LocalException({}));
-      } catch (error) {
-        observer.error(new LocalException(error));
-      }
-    });
+        return x.password;
+      }),
+    );
   }
 }

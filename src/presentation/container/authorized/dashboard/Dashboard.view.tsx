@@ -9,12 +9,20 @@ import {useDashboardModel} from './Dashboard.hooks';
 import {DashboardProps} from './types';
 import {styles} from './Dashboard.style';
 import {Header, Icon} from 'react-native-elements';
+import {AuthorizedStoryboardParamList} from '@storyboards';
 
 const LEGENDS = ['Completed', 'Uncompleted'];
 
-const NavButton = (props: {title: string; icon: string; color: string}) => {
+const NavButton = (props: {
+  title: string;
+  icon: string;
+  color: string;
+  onPress: () => void;
+}) => {
   return (
-    <Pressable style={[styles.navButton, {backgroundColor: props.color}]}>
+    <Pressable
+      onPress={props.onPress}
+      style={[styles.navButton, {backgroundColor: props.color}]}>
       <Icon color="white" type="ionicon" name={props.icon} />
       <TextView style={styles.navText} text={props.title} />
     </Pressable>
@@ -37,9 +45,9 @@ const orange = 'rgb(233,184,151)';
 const gray = 'rgb(82,89,108)';
 
 export const Dashboard: React.FC<DashboardProps> = (props) => {
-  const {} = props;
-  const {} = useDashboardModel();
-  const data = [20, 30];
+  const {navigation} = props;
+  const {totalInprogress, totalCompleted} = useDashboardModel();
+  const data = [totalInprogress, totalCompleted];
   const colors = [red, accent, ocean, orange, gray];
   const pieData = data
     .filter((value) => value > 0)
@@ -51,6 +59,9 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
       },
       key: `pie-${index}`,
     }));
+  const navToRoute = (route: keyof AuthorizedStoryboardParamList) => () => {
+    navigation.navigate(route);
+  };
   return (
     <>
       <Header
@@ -71,7 +82,10 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
           <TextView text="Công việc" style={styles.chartTitle} />
           <PieChart style={styles.pieChart} data={pieData} />
           <View style={styles.totalContainer}>
-            <TextView text="9,999" style={styles.total} />
+            <TextView
+              text={(totalCompleted + totalInprogress).toString()}
+              style={styles.total}
+            />
           </View>
           <View style={styles.legendContainer}>
             {LEGENDS.map((x, i) => (
@@ -80,9 +94,24 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
           </View>
         </View>
         <View style={styles.navContainer}>
-          <NavButton color={ocean} icon="menu" title="Task" />
-          <NavButton color={red} icon="menu" title="Create Issue" />
-          <NavButton color={accent} icon="menu" title="Asset management" />
+          <NavButton
+            onPress={navToRoute('TaskList')}
+            color={ocean}
+            icon="menu"
+            title="Task"
+          />
+          <NavButton
+            onPress={navToRoute('TaskList')}
+            color={red}
+            icon="menu"
+            title="Create Issue"
+          />
+          <NavButton
+            onPress={navToRoute('TaskList')}
+            color={accent}
+            icon="menu"
+            title="Asset management"
+          />
         </View>
       </View>
     </>

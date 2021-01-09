@@ -32,6 +32,7 @@ export function configureStore(): StoreContainer {
     applyMiddleware(epicMiddleware),
   );
   epicMiddleware.run(rootEpic);
+  action$.subscribe((x) => console.warn(x));
 
   // Optional: Put the reducer manager on the store so it is easily accessible
   return {

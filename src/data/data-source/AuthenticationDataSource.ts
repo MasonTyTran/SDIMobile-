@@ -1,10 +1,12 @@
+import {AxiosResponse} from 'axios';
 import {injectable, inject} from 'tsyringe';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {RxRemoteProvider} from '@core';
+import {Credential} from '@domain';
 
-import {SignInResponseData, SignInRequestData, ApiResult} from '../model';
+import {SignInResponseData, SignInRequestData} from '../model';
 
 export interface RemoteAuthenticationDataSource {
   /**
@@ -12,7 +14,7 @@ export interface RemoteAuthenticationDataSource {
    *
    * @description Sign in user with phone
    */
-  signIn(body: SignInRequestData): Observable<ApiResult<SignInResponseData>>;
+  signIn(body: Credential): Observable<AxiosResponse<SignInResponseData>>;
 }
 
 @injectable()
@@ -22,9 +24,12 @@ export class ApiAuthenticationDataSource
     @inject('ApiProvider')
     private readonly provider: RxRemoteProvider,
   ) {}
-  signIn(body: SignInRequestData): Observable<ApiResult<SignInResponseData>> {
-    return this.provider
-      .post<ApiResult<SignInResponseData>>('login_url', body)
-      .pipe(map((response) => response.data));
+  signIn(data: Credential): Observable<AxiosResponse<SignInResponseData>> {
+    const body: SignInRequestData = {
+      vidagis_branch_id: '',
+      vidagis_password: data.password,
+      vidagis_uid_emailaddress: data.username,
+    };
+    return this.provider.post<SignInResponseData>('user/login', body);
   }
 }

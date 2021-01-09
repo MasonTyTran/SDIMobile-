@@ -1,20 +1,21 @@
-import {inject, injectable} from 'tsyringe';
+import {container, inject, injectable} from 'tsyringe';
 import {Observable} from 'rxjs';
 import {map, mergeMap, mapTo} from 'rxjs/operators';
 
-import {UseCase} from '@core';
+import {RxRemoteProvider, UseCase} from '@core';
 
 import {AuthenticationRepository} from '../../repository';
-import {SignInResult} from '../../entity';
+import {Credential, SignInResult} from '../../entity';
+import {AppDependencies} from '@di';
 
 @injectable()
-export class SignInUseCase implements UseCase<SignInResult, any> {
+export class SignInUseCase implements UseCase<SignInResult, Credential> {
   constructor(
     @inject('AuthenticationRepository')
     private readonly authenticationRepository: AuthenticationRepository,
   ) {}
 
-  call(param?: any): Observable<SignInResult> {
+  call(param?: Credential): Observable<SignInResult> {
     if (typeof param === 'undefined') {
       return this.localSignIn();
     }
@@ -25,21 +26,41 @@ export class SignInUseCase implements UseCase<SignInResult, any> {
     return this.authenticationRepository.getToken().pipe(
       map(
         (token): SignInResult => {
-          return {fromLocal: true, token};
+          container
+            .resolve<RxRemoteProvider>(AppDependencies.ApiProvider)
+            .setToken(token);
+          return {
+            fromLocal: true,
+            token,
+            user: {
+              branchID: null,
+              currentOrganizationId: null,
+              displayName: 'Tran Van Quang ',
+              email: 'quangtran1012@gmail.com',
+              id: '1608567668808',
+              languageID: 'vn',
+              organizationCompanyID: null,
+              organizationID: 'sdi_hue',
+              password: null,
+              permissionIDs: null,
+              roleIDs: null,
+              username: 'quangtv',
+            },
+          };
         },
       ),
     );
   }
 
-  private remoteSignIn(param?: any): Observable<SignInResult> {
+  private remoteSignIn(param: Credential): Observable<SignInResult> {
     return this.authenticationRepository
       .signIn(param)
       .pipe(mergeMap(this.onRemoteSignInSuccess));
   }
 
-  onRemoteSignInSuccess(result: SignInResult): Observable<SignInResult> {
+  onRemoteSignInSuccess = (result: SignInResult): Observable<SignInResult> => {
     return this.authenticationRepository
-      .saveToken('test', result.token)
+      .saveToken(result.user.username, result.token)
       .pipe(mapTo(result));
-  }
+  };
 }

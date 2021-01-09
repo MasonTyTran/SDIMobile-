@@ -22,13 +22,16 @@ const signInEpic$: Epic<AuthenticationEpicActions> = (action$) =>
     filter(signIn.match),
     switchMap((action) => {
       const useCase = container.resolve<SignInUseCase>(
-        AppDependencies.StoreContainer,
+        AppDependencies.SignInUseCase,
       );
       return concat(
         of(signInBegin()),
         useCase.call(action.payload).pipe(
           map(signInSuccess),
-          catchError(() => of(signInSuccess())),
+          catchError((e) => {
+            console.log(e);
+            return of(signInFailed());
+          }),
         ),
       );
     }),
@@ -42,7 +45,10 @@ const signInLocallyEpic$: Epic<AuthenticationEpicActions> = (action$) =>
       );
       return useCase.call().pipe(
         map(signInLocallySuccess),
-        catchError(() => of(signInLocallyFailed())),
+        catchError((e) => {
+          console.log(e);
+          return of(signInLocallyFailed());
+        }),
       );
     }),
   );

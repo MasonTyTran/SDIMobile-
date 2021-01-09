@@ -9,13 +9,14 @@ import {enableScreens} from 'react-native-screens';
 import {AuthDrawerNavigator} from './DrawerNavigator';
 import {AuthenticationNavigator} from './AuthenticationStack';
 import {RootStoreState, signInLocally} from '@shared-state';
+import {FullScreenLoadingIndicator} from '../component/indicator';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator: React.FC = () => {
-  const isAuthorized = useSelector(
-    ({authentication}: RootStoreState): boolean => authentication.isAuthorized,
+  const {isAuthorized, isAuthenticating} = useSelector(
+    ({authentication}: RootStoreState) => authentication,
   );
 
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ export const RootNavigator: React.FC = () => {
   };
   return (
     <NavigationContainer>
+      <FullScreenLoadingIndicator visible={isAuthenticating} />
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {renderStack()}
       </Stack.Navigator>

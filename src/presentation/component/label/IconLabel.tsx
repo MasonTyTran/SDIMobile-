@@ -14,14 +14,28 @@ import {
 export interface IconLabelProps extends TextProps {
   prefix?: React.ReactNode;
   prefixIcon?: ImageSourcePropType;
+
+  suffix?: React.ReactNode;
+  suffixIcon?: ImageSourcePropType;
+
   text?: string;
+  color?: string;
 
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: StyleProp<TextStyle>;
 }
 
 const _IconLabel: React.FC<IconLabelProps> = (props) => {
-  const {prefixIcon, text, containerStyle, labelStyle, prefix} = props;
+  const {
+    prefixIcon,
+    text,
+    containerStyle,
+    labelStyle,
+    prefix,
+    suffix,
+    suffixIcon,
+    color,
+  } = props;
   const renderPrefix = () => {
     if (prefix) {
       return prefix;
@@ -31,10 +45,20 @@ const _IconLabel: React.FC<IconLabelProps> = (props) => {
     }
     return null;
   };
+  const renderSuffix = () => {
+    if (suffix) {
+      return suffix;
+    }
+    if (suffixIcon) {
+      return <Image source={suffixIcon} />;
+    }
+    return null;
+  };
   return (
     <View style={[_styles.container, containerStyle]}>
       {renderPrefix()}
-      <Text style={[_styles.label, labelStyle]}>{text}</Text>
+      <Text style={[_styles.label, labelStyle, {color}]}>{text}</Text>
+      {renderSuffix()}
     </View>
   );
 };
@@ -42,6 +66,7 @@ const _IconLabel: React.FC<IconLabelProps> = (props) => {
 const _styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   label: {
     marginHorizontal: 8,

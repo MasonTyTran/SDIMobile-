@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs';
-import {SignInResult} from '../entity';
+import {Credential, SignInResult} from '../entity';
 
 export interface AuthenticationRepository {
   /**
@@ -7,7 +7,7 @@ export interface AuthenticationRepository {
    * @param credential
    * @return signed token of credential
    */
-  signIn(credential: any): Observable<SignInResult>;
+  signIn(credential: Credential): Observable<SignInResult>;
 
   /**
    * @summary get token by key
