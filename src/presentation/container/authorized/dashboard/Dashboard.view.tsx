@@ -101,10 +101,10 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
             title="Task"
           />
           <NavButton
-            onPress={navToRoute('TaskList')}
+            onPress={navToRoute('IssueMap')}
             color={red}
             icon="menu"
-            title="Create Issue"
+            title="Issue"
           />
           <NavButton
             onPress={navToRoute('TaskList')}
