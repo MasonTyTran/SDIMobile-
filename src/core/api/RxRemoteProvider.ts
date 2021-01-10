@@ -16,7 +16,7 @@ export interface RxRemoteProvider {
    *
    * @returns Either Axios response with generic data: T or @RemoteException if failed
    */
-  post<T>(url: string, data: any): Observable<AxiosResponse<T>>;
+  post<T>(url: string, data?: any): Observable<AxiosResponse<T>>;
 
   /**
    * @summary perform @GET request with config
@@ -71,7 +71,7 @@ export class BearerAuthorizationRxAxiosProvider<Result = any>
         const result = await this.axiosInstance.request(requestConfig);
         observer.next(result);
         observer.complete();
-      } catch (error: AxiosError) {
+      } catch (error) {
         console.log('response =====', error.response);
         console.log('Config =====', error.config);
         observer.error(new RxAxiosProviderException(error));

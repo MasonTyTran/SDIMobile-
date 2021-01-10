@@ -11,6 +11,7 @@ export function registerDataDependencies() {
   container.register(AppDependencies.ApiProvider, {
     useValue: new BearerAuthorizationRxAxiosProvider({
       baseURL: BuildConfig.ApiUrl,
+      timeout: 10000,
     }),
   });
   container.register(AppDependencies.LocalAuthenticationDataSource, {

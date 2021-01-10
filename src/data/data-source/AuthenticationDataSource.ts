@@ -1,7 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {injectable, inject} from 'tsyringe';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
 import {RxRemoteProvider} from '@core';
 import {Credential} from '@domain';
@@ -15,6 +14,8 @@ export interface RemoteAuthenticationDataSource {
    * @description Sign in user with phone
    */
   signIn(body: Credential): Observable<AxiosResponse<SignInResponseData>>;
+  signOut(): Observable<any>;
+  forgotPass(email: string): Observable<any>;
 }
 
 @injectable()
@@ -24,6 +25,9 @@ export class ApiAuthenticationDataSource
     @inject('ApiProvider')
     private readonly provider: RxRemoteProvider,
   ) {}
+  forgotPass(email: string): Observable<any> {
+    return this.provider.post('user/forgotpass', {vidagis_emailaddress: email});
+  }
   signIn(data: Credential): Observable<AxiosResponse<SignInResponseData>> {
     const body: SignInRequestData = {
       vidagis_branch_id: '',
@@ -31,5 +35,9 @@ export class ApiAuthenticationDataSource
       vidagis_uid_emailaddress: data.username,
     };
     return this.provider.post<SignInResponseData>('user/login', body);
+  }
+
+  signOut(): Observable<any> {
+    return this.provider.post('user/logout');
   }
 }

@@ -1,21 +1,32 @@
 import React from 'react';
 import {Image, ImageBackground, StyleSheet, View} from 'react-native';
 
-import {Button} from 'react-native-elements';
+import {Button, Header, Icon} from 'react-native-elements';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {showMessage} from 'react-native-flash-message';
 
-import {TextField, TextView} from '@components';
+import {FullScreenLoadingIndicator, TextField, TextView} from '@components';
 
-import {useSignIn} from './SignIn.hooks';
-import {SignInProps} from './types';
+import {useForgotPass} from './ForgotPass.hooks';
+import {ForgotPassProps} from './types';
+import {Colors, TextStyles} from '@resources';
 
-const _SignIn: React.FC<SignInProps> = (props) => {
+const _ForgotPass: React.FC<ForgotPassProps> = (props) => {
   const {} = props;
-  const onSignInFailed = React.useCallback(() => {
-    console.warn('Success');
-  }, []);
-  const {submit, setPassword, setUsername} = useSignIn({
-    onSignInFailed,
+  const popBack = React.useCallback(() => props.navigation.pop(), [
+    props.navigation,
+  ]);
+  const onForgotPassFailed = React.useCallback(() => {}, []);
+  const onForgotPassSuccess = React.useCallback(() => {
+    showMessage({
+      message: 'Forgot successfully',
+      type: 'success',
+      onHide: popBack,
+    });
+  }, [popBack]);
+  const {submit, setUsername, isLoading} = useForgotPass({
+    onForgotPassFailed,
+    onForgotPassSuccess,
   });
   const renderForm = () => {
     return (
@@ -24,20 +35,11 @@ const _SignIn: React.FC<SignInProps> = (props) => {
           inputProps={{placeholder: 'Username', onChangeText: setUsername}}
           containerStyle={styles.input}
         />
-        <TextField
-          inputProps={{
-            placeholder: 'Password',
-            secureTextEntry: true,
-            onChangeText: setPassword,
-          }}
-          containerStyle={styles.input}
+        <Button
+          buttonStyle={{backgroundColor: Colors.gray}}
+          onPress={submit}
+          title="Submit"
         />
-        <TextView
-          onPress={() => props.navigation.navigate('ForgotPass')}
-          style={styles.forgotPass}
-          text="Forgot password"
-        />
-        <Button onPress={submit} title="ĐĂNG NHẬP" />
       </View>
     );
   };
@@ -49,7 +51,20 @@ const _SignIn: React.FC<SignInProps> = (props) => {
         uri:
           'https://www.vistaprojects.com/media/2019/07/workplace-safety-topics-for-meetings.png',
       }}>
+      <Header
+        leftComponent={
+          <Icon
+            onPress={popBack}
+            color={'white'}
+            type="ionicon"
+            name="arrow-back"
+          />
+        }
+        centerComponent={<TextView text="Forgot pass" style={styles.header} />}
+        backgroundColor={Colors.gray}
+      />
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+        <FullScreenLoadingIndicator visible={isLoading} />
         <Image
           style={styles.logo}
           source={{
@@ -82,13 +97,12 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   input: {
-    marginTop: 24,
+    marginVertical: 24,
     backgroundColor: 'white',
   },
-  forgotPass: {
-    paddingVertical: 8,
+  header: {
     color: 'white',
-    alignSelf: 'flex-end',
+    ...TextStyles.title,
   },
   version: {
     color: 'white',
@@ -97,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export const SignIn = React.memo(_SignIn);
+export const ForgotPass = React.memo(_ForgotPass);

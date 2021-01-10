@@ -8,12 +8,17 @@ import {map} from 'rxjs/operators';
 export interface LocalAuthenticationDataSource {
   saveToken(username: string, token: string): Observable<boolean>;
 
+  deleteToken(): Observable<boolean>;
+
   getToken(): Observable<string>;
 }
 
 @injectable()
 export class KeyChainAuthenticationDataSource
   implements LocalAuthenticationDataSource {
+  deleteToken(): Observable<boolean> {
+    return from(Keychain.resetGenericPassword());
+  }
   saveToken(username: string, token: string): Observable<boolean> {
     return Observable.create(async (observer: Observer<boolean>) => {
       try {

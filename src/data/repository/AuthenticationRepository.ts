@@ -19,6 +19,12 @@ export class CombineAuthenticationRepository
     @inject('RemoteAuthenticationDataSource')
     private readonly remoteDataSource: RemoteAuthenticationDataSource,
   ) {}
+  deleteToken(): Observable<boolean> {
+    return this.localDataSource.deleteToken();
+  }
+  signOut(): Observable<any> {
+    throw new Error('Method not implemented.');
+  }
 
   signIn(credential: Credential): Observable<SignInResult> {
     return this.remoteDataSource.signIn(credential).pipe(

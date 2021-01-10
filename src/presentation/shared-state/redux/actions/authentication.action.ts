@@ -15,6 +15,9 @@ export const signInLocallySuccess = createAction<SignInResult>(
 export const signInLocallyFailed = createAction(
   'authentication/signInLocallyFailed',
 );
+export const signOut = createAction('authentication/signOut');
+export const signOutSuccess = createAction('authentication/signOutSuccess');
+export const signOutFailed = createAction('authentication/signOutFailed');
 
 export type SignInAction = ReturnType<typeof signIn>;
 export type SignInBegin = ReturnType<typeof signInBegin>;
@@ -25,6 +28,10 @@ export type SignInLocally = ReturnType<typeof signInLocally>;
 export type SignInLocallySuccess = ReturnType<typeof signInLocallySuccess>;
 export type SignInLocallyFailed = ReturnType<typeof signInLocallyFailed>;
 
+export type SignOutAction = ReturnType<typeof signOut>;
+export type SignOutSuccessAction = ReturnType<typeof signOutSuccess>;
+export type SignOutFailedAction = ReturnType<typeof signOutFailed>;
+
 export type AuthenticationEpicActions =
   | SignInAction
   | SignInBegin
@@ -32,4 +39,7 @@ export type AuthenticationEpicActions =
   | SignInFailed
   | SignInLocally
   | SignInLocallySuccess
-  | SignInLocallyFailed;
+  | SignInLocallyFailed
+  | SignOutAction
+  | SignOutSuccessAction
+  | SignOutFailedAction;

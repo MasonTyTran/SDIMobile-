@@ -15,7 +15,7 @@ enableScreens();
 const Stack = createNativeStackNavigator();
 
 export const RootNavigator: React.FC = () => {
-  const {isAuthorized, isAuthenticating} = useSelector(
+  const {isAuthorized, isAuthenticating, isSigningOut} = useSelector(
     ({authentication}: RootStoreState) => authentication,
   );
 
@@ -43,7 +43,7 @@ export const RootNavigator: React.FC = () => {
   };
   return (
     <NavigationContainer>
-      <FullScreenLoadingIndicator visible={isAuthenticating} />
+      <FullScreenLoadingIndicator visible={isAuthenticating || isSigningOut} />
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {renderStack()}
       </Stack.Navigator>

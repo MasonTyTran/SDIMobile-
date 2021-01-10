@@ -6,10 +6,10 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Selector, useSelector} from 'react-redux';
+import {Selector, useDispatch, useSelector} from 'react-redux';
 import {TextView} from '../component/label';
 import {Colors} from '../resource/values';
-import {RootStoreState} from '@shared-state';
+import {RootStoreState, signOut} from '@shared-state';
 import {AuthorizedStoryboardParamList} from '../storyboard/Authorized.storyboard';
 import {User} from '@domain';
 
@@ -23,6 +23,7 @@ export const drawerSelector: Selector<RootStoreState, {user: User}> = (
 
 export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
   const {user} = useSelector(drawerSelector);
+  const dispatch = useDispatch();
   const goToRoute = React.useCallback(
     (route: keyof AuthorizedStoryboardParamList) => () => {
       navigation.navigate(route);
@@ -74,7 +75,7 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
           label="Help"
         />
         <DrawerItem
-          onPress={() => {}}
+          onPress={() => dispatch(signOut())}
           icon={() => <Icon type="ionicon" name="log-out-outline" />}
           label="Logout"
         />

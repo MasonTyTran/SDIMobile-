@@ -11,6 +11,7 @@
 import React from 'react';
 
 import {Provider} from 'react-redux';
+import FlashMessage from 'react-native-flash-message';
 
 import {
   registerDependencies,
@@ -30,6 +31,7 @@ const App = () => {
         container.resolve<StoreContainer>(AppDependencies.StoreContainer).store
       }>
       <RootNavigator />
+      <FlashMessage position="top" />
     </Provider>
   );
 };
