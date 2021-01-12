@@ -2,7 +2,7 @@ import {Observable} from 'rxjs';
 import {container} from 'tsyringe';
 import {RxRemoteProvider} from '@core';
 import {AppDependencies} from '@di';
-import {InProgressWOListRequest, InProgressWOListResponse} from '../model';
+import {WOListRequest, WOListResponse} from '../model';
 import {map} from 'rxjs/operators';
 
 class _WODataSource {
@@ -10,19 +10,28 @@ class _WODataSource {
     return container.resolve<RxRemoteProvider>(AppDependencies.ApiProvider);
   }
 
-  listInProgressTask(
-    data: InProgressWOListRequest,
-  ): Observable<InProgressWOListResponse> {
+  listOpenTask(data: WOListRequest): Observable<WOListResponse> {
+    console.log('listOpenTask', data.keyword);
     return this.provider
-      .post<InProgressWOListResponse>('projects/progess', data)
+      .post<WOListResponse>('projects/yetprogress', data)
       .pipe(map((x) => x.data));
   }
 
-  listCompletedTask(
-    data: InProgressWOListRequest,
-  ): Observable<InProgressWOListResponse> {
+  listInProgressTask(data: WOListRequest): Observable<WOListResponse> {
     return this.provider
-      .post<InProgressWOListResponse>('projects/done', data)
+      .post<WOListResponse>('projects/progess', data)
+      .pipe(map((x) => x.data));
+  }
+
+  listCompletedTask(data: WOListRequest): Observable<WOListResponse> {
+    return this.provider
+      .post<WOListResponse>('projects/done', data)
+      .pipe(map((x) => x.data));
+  }
+
+  listOverdueTask(data: WOListRequest): Observable<WOListResponse> {
+    return this.provider
+      .post<WOListResponse>('projects/expired', data)
       .pipe(map((x) => x.data));
   }
 }

@@ -59,6 +59,9 @@ export class SignInUseCase implements UseCase<SignInResult, Credential> {
   }
 
   onRemoteSignInSuccess = (result: SignInResult): Observable<SignInResult> => {
+    container
+      .resolve<RxRemoteProvider>(AppDependencies.ApiProvider)
+      .setToken(result.token);
     return this.authenticationRepository
       .saveToken(result.user.username, result.token)
       .pipe(mapTo(result));

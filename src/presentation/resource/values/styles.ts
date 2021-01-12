@@ -14,6 +14,10 @@ export const TextStyles = StyleSheet.create({
 });
 
 export const GridStyles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
   rowSpaceAround: {
     justifyContent: 'space-around',
     flexDirection: 'row',

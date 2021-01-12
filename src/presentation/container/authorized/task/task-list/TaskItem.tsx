@@ -1,13 +1,17 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, Pressable, StyleSheet, View} from 'react-native';
 
 import {IconLabel, Spacer, TextView} from '@components';
 import {Colors, GridStyles, TextStyles} from '@resources';
-import {Divider, Icon} from 'react-native-elements';
-
-export const TaskItem: React.FC<any> = (props) => {
+import {Icon} from 'react-native-elements';
+import {WOProject} from '@data';
+export interface TaskItemProps {
+  item: WOProject;
+  onPress: (item: WOProject) => void;
+}
+export const TaskItem: React.FC<TaskItemProps> = ({item, onPress}) => {
   return (
-    <View style={styles.container}>
+    <Pressable onPress={() => onPress(item)} style={styles.container}>
       <Image
         source={{
           uri:
@@ -16,8 +20,8 @@ export const TaskItem: React.FC<any> = (props) => {
         style={styles.image}
       />
       <View style={styles.infoContainer}>
-        <View style={GridStyles.rowSpaceBetween}>
-          <TextView style={TextStyles.title} text="Task1" />
+        <View style={styles.nameRow}>
+          <TextView style={styles.title} text={item.vidagis_name} />
           <IconLabel
             suffix={
               <Icon
@@ -27,21 +31,24 @@ export const TaskItem: React.FC<any> = (props) => {
               />
             }
             color={Colors.accent}
-            text="Open"
+            text={item.vidagis_status_des}
           />
         </View>
         <Spacer />
         <IconLabel
           prefix={<Icon name="person-outline" type="ionicon" />}
-          text="Angela Babe"
+          text={`${item.leader_name}`}
         />
         <View style={GridStyles.rowSpaceBetween}>
-          <TextView style={TextStyles.normal} text="#1111" />
-          <TextView style={TextStyles.normal} text="#1111" />
+          <TextView style={TextStyles.normal} text={`#${item.oid}`} />
+          <TextView
+            style={TextStyles.normal}
+            text={`${item.vidagis_startdate_str}`}
+          />
           <Icon name="star-outline" type="ionicon" />
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -72,7 +79,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingStart: 8,
   },
-  name: {
-    fontSize: 16,
+  nameRow: {
+    flexDirection: 'row',
+  },
+  title: {
+    ...TextStyles.title,
+    flex: 1,
+    marginRight: 8,
   },
 });

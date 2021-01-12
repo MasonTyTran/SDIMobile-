@@ -11,6 +11,7 @@ import {IssueMapProps} from './types';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export const IssueMap: React.FC<IssueMapProps> = (props) => {
+  
   return (
     <>
       <Header
