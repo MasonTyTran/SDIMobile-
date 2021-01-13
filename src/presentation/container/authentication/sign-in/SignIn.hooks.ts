@@ -15,8 +15,8 @@ export function useSignIn(handle: SignInHandle) {
   const {isAuthenticating} = useSelector(signInSelector);
   const dispatch = useDispatch();
 
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [username, setUsername] = React.useState('quangtv');
+  const [password, setPassword] = React.useState('7rA*;)Q%xxc');
   const submit = (_: any) => {
     dispatch(signIn({username, password}));
   };

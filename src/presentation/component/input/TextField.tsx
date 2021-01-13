@@ -84,9 +84,12 @@ const _styles = StyleSheet.create({
   container: {
     borderColor: '#ddd',
     borderWidth: 1,
+    backgroundColor: 'white',
   },
   content: {
     flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 8,
   },
   input: {
     flex: 1,

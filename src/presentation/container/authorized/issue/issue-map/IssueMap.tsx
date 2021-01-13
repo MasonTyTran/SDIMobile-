@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {WebView} from 'react-native-webview';
 import {Header, Icon} from 'react-native-elements';
@@ -8,10 +8,10 @@ import {TextView} from '@components';
 import {Colors} from '@resources';
 
 import {IssueMapProps} from './types';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {AddIssue} from './AddIssue';
 
 export const IssueMap: React.FC<IssueMapProps> = (props) => {
-  
+  const [addVisible, setAddVisible] = React.useState(false);
   return (
     <>
       <Header
@@ -33,10 +33,18 @@ export const IssueMap: React.FC<IssueMapProps> = (props) => {
           style={styles.webview}
           source={{uri: 'https://hue.aktivmap.com/GIS/MainMap'}}
         />
-        <TouchableOpacity style={styles.fab}>
-          <Icon color={'white'} name="home" type="ionicon" />
-        </TouchableOpacity>
+        {addVisible || (
+          <TouchableOpacity
+            onPress={() => setAddVisible(true)}
+            style={styles.fab}>
+            <Icon color={'white'} name="home" type="ionicon" />
+          </TouchableOpacity>
+        )}
       </View>
+      <AddIssue
+        onRequestClose={() => setAddVisible(false)}
+        visible={addVisible}
+      />
     </>
   );
 };

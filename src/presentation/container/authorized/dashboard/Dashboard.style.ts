@@ -10,7 +10,7 @@ const shadow = {
   shadowRadius: 3.84,
   elevation: 5,
 };
-const CHART_SIZE = Dimensions.get('window').width * 0.7;
+const CHART_SIZE = Dimensions.get('window').width * 0.65;
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   navContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingBottom: 100,
+    paddingBottom: 30,
     paddingTop: 30,
     paddingHorizontal: 16,
     borderRadius: 16,

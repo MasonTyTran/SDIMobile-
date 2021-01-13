@@ -14,6 +14,9 @@ export const TextStyles = StyleSheet.create({
 });
 
 export const GridStyles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
