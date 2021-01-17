@@ -6,8 +6,21 @@ import {IconLabel, TextView} from '@components';
 import {Colors, GridStyles, TextStyles} from '@resources';
 
 import {AssetInfoProps} from './types';
+import {AssetDataObject} from '@data';
+
+const KeyValueLabel = ({title, value}: {title: string; value: string}) => {
+  return (
+    <View style={GridStyles.rowSpaceBetween}>
+      <TextView style={styles.keyTitle} text={title} />
+      <TextView style={styles.keyValue} text={value} />
+    </View>
+  );
+};
 
 export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
+  const data = JSON.parse(item.datajson) as AssetDataObject[];
+  console.log(item);
+  console.log(data);
   return (
     <View style={styles.container}>
       <TextView style={styles.title} text="Information" />
@@ -16,7 +29,7 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
         <View style={GridStyles.row}>
           <View style={styles.info}>
             <TextView style={styles.id} text={`#${item.is_asset}`} />
-            <TextView style={styles.id} text={item.table_name} />
+            <TextView style={styles.id} text={''} />
             <TextView style={styles.id} text={`Priority: ${item.is_asset}`} />
           </View>
           <IconLabel
@@ -40,7 +53,10 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
         </View>
       </View>
       <Divider style={styles.divider} />
-      <TextView style={styles.title} text="Information" />
+      <TextView style={styles.title} text="Thông số kĩ thuật" />
+      {data.map((x) => {
+        return <KeyValueLabel key={x.name} value={x.value} title={x.name} />;
+      })}
     </View>
   );
 };
