@@ -60,7 +60,7 @@ export class BearerAuthorizationRxAxiosProvider<Result = any>
     this.token = token;
     this.axiosInstance.defaults.headers.common.access_token = token;
     this.axiosInstance.interceptors.request.use((x) => {
-      console.log(x);
+      console.log('request', x);
       return x;
     });
   }

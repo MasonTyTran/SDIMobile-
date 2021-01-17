@@ -4,6 +4,10 @@ export const TextStyles = StyleSheet.create({
   normal: {
     fontSize: FontSize.md,
   },
+  mdTitle: {
+    fontSize: FontSize.md,
+    fontWeight: 'bold',
+  },
   title: {
     fontSize: FontSize.lg,
     fontWeight: 'bold',

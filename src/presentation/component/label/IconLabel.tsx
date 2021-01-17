@@ -9,6 +9,7 @@ import {
   StyleProp,
   ViewStyle,
   TextStyle,
+  Pressable,
 } from 'react-native';
 
 export interface IconLabelProps extends TextProps {
@@ -55,11 +56,13 @@ const _IconLabel: React.FC<IconLabelProps> = (props) => {
     return null;
   };
   return (
-    <View style={[_styles.container, containerStyle]}>
+    <Pressable
+      onPress={props.onPress}
+      style={[_styles.container, containerStyle]}>
       {renderPrefix()}
       <Text style={[_styles.label, labelStyle, {color}]}>{text}</Text>
       {renderSuffix()}
-    </View>
+    </Pressable>
   );
 };
 

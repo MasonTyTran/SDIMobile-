@@ -64,3 +64,25 @@ export interface WOProject {
   lst_user_rating?: any;
   vidagis_description?: any;
 }
+
+export interface WOStepRequest {
+  project_id: string;
+  user_id: string;
+  project_datestart: string;
+  project_dateend: string;
+  total_time: number;
+  organization_id: string;
+}
+
+export interface WOCompletedRequest {
+  project_id: string;
+  user_id: string;
+  project_end_time: string;
+  total_time: number;
+  organization_id: string;
+}
+export interface PostResponse {
+  Message: string;
+  Code: number;
+  Data?: any;
+}

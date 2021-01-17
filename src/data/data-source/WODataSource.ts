@@ -2,7 +2,13 @@ import {Observable} from 'rxjs';
 import {container} from 'tsyringe';
 import {RxRemoteProvider} from '@core';
 import {AppDependencies} from '@di';
-import {WOListRequest, WOListResponse} from '../model';
+import {
+  PostResponse,
+  WOCompletedRequest,
+  WOListRequest,
+  WOListResponse,
+  WOStepRequest,
+} from '../model';
 import {map} from 'rxjs/operators';
 
 class _WODataSource {
@@ -32,6 +38,16 @@ class _WODataSource {
   listOverdueTask(data: WOListRequest): Observable<WOListResponse> {
     return this.provider
       .post<WOListResponse>('projects/expired', data)
+      .pipe(map((x) => x.data));
+  }
+  moveToPreviousStep(data: WOStepRequest): Observable<PostResponse> {
+    return this.provider
+      .post<WOListResponse>('project/backward', data)
+      .pipe(map((x) => x.data));
+  }
+  complete(data: WOCompletedRequest): Observable<PostResponse> {
+    return this.provider
+      .post<WOListResponse>('project/complete', data)
       .pipe(map((x) => x.data));
   }
 }

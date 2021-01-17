@@ -12,9 +12,12 @@ import {TaskListTab} from './TasklistTab';
 import {WODataSource} from '@data';
 import {AuthorizedStoryboardParamList} from '@storyboards';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
+import {useUser} from '@hooks';
+import {User} from '@domain';
 
 const OpenTab = (
   navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>,
+  user: User,
 ) => (
   <TaskListTab
     getData={(keyword, i) =>
@@ -22,7 +25,7 @@ const OpenTab = (
         keyword,
         page_num: i,
         page_size: 10,
-        organization_id: 'sdi_hue',
+        organization_id: user.organizationID,
         user_id: '2',
       })
     }
@@ -32,6 +35,7 @@ const OpenTab = (
 
 const InprogressTab = (
   navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>,
+  user: User,
 ) => (
   <TaskListTab
     getData={(keyword, i) =>
@@ -39,8 +43,8 @@ const InprogressTab = (
         keyword,
         page_num: i,
         page_size: 10,
-        organization_id: 'sdi_hue',
-        user_id: '2',
+        organization_id: user.organizationID,
+        user_id: user.id,
       })
     }
     navigation={navigation}
@@ -49,6 +53,7 @@ const InprogressTab = (
 
 const CompletedTab = (
   navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>,
+  user: User,
 ) => (
   <TaskListTab
     getData={(keyword, i) =>
@@ -56,8 +61,8 @@ const CompletedTab = (
         keyword,
         page_num: i,
         page_size: 10,
-        organization_id: 'sdi_hue',
-        user_id: '2',
+        organization_id: user.organizationID,
+        user_id: user.id,
       })
     }
     navigation={navigation}
@@ -65,6 +70,7 @@ const CompletedTab = (
 );
 const OverdueTab = (
   navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>,
+  user: User,
 ) => (
   <TaskListTab
     getData={(keyword, i) =>
@@ -72,8 +78,8 @@ const OverdueTab = (
         keyword,
         page_num: i,
         page_size: 10,
-        organization_id: 'sdi_hue',
-        user_id: '2',
+        organization_id: user.organizationID,
+        user_id: user.id,
       })
     }
     navigation={navigation}
@@ -83,6 +89,7 @@ const OverdueTab = (
 const initialLayout = {width: Dimensions.get('window').width};
 
 export const TaskList: React.FC<TaskListProps> = (props) => {
+  const user = useUser();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'OpenTab', title: 'Open'},
@@ -92,10 +99,10 @@ export const TaskList: React.FC<TaskListProps> = (props) => {
   ]);
 
   const renderScene = SceneMap({
-    OpenTab: () => OpenTab(props.navigation),
-    InprogressTab: () => InprogressTab(props.navigation),
-    CompletedTab: () => CompletedTab(props.navigation),
-    OverdueTab: () => OverdueTab(props.navigation),
+    OpenTab: () => OpenTab(props.navigation, user),
+    InprogressTab: () => InprogressTab(props.navigation, user),
+    CompletedTab: () => CompletedTab(props.navigation, user),
+    OverdueTab: () => OverdueTab(props.navigation, user),
   });
 
   const renderTabBar = (p: any) => (

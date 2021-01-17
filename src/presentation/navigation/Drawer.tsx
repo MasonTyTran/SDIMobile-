@@ -60,7 +60,7 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
           label="My Tasks"
         />
         <DrawerItem
-          onPress={() => {}}
+          onPress={goToRoute('AssetMap')}
           icon={() => <Icon type="ionicon" name="nuclear-outline" />}
           label="Asset Map"
         />

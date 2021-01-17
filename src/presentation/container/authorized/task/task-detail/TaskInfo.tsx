@@ -1,22 +1,32 @@
 import React from 'react';
 import {StyleSheet, View, Image} from 'react-native';
-import {Divider, Icon, Button} from 'react-native-elements';
+import {Divider, Icon} from 'react-native-elements';
 
-import {IconLabel, TextView} from '@components';
+import {FullScreenLoadingIndicator, IconLabel, TextView} from '@components';
 import {Colors, GridStyles, TextStyles} from '@resources';
 
 import {TaskInfoProps} from './types';
-
-const InfoBox = ({label, value}: {label: string; value: string}) => (
-  <View style={styles.infoBox}>
-    <TextView style={styles.infoBoxLabel} text={label} />
-    <TextView style={styles.infoBoxValue} text={value} />
-  </View>
-);
+import {DateTimeBox, InfoBox} from './common';
+import {useTaskInfo} from './useTaskInfo';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
+  const {
+    setEndDate,
+    setStartDate,
+    setPerson,
+    setCompletedTime,
+    completedTime,
+    startDate,
+    endDate,
+    person,
+    loading,
+    complete,
+    previous,
+  } = useTaskInfo(item);
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
+      <FullScreenLoadingIndicator visible={loading} />
       <TextView style={styles.title} text="Information" />
 
       <View style={styles.infoContainer}>
@@ -51,12 +61,29 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
       </View>
       <Divider style={styles.divider} />
       <TextView style={styles.title} text="Information" />
-      <InfoBox label="Người thực hiện" value={item.leader_name} />
-      <InfoBox label="Thời gian bắt đầu" value={item.vidagis_startdate_str} />
-      <InfoBox label="Thời gian kết thúc" value={item.vidagis_enddate_str} />
-      <InfoBox label="Số giờ hoàn thành" value={item.vidagis_status_des} />
+      <InfoBox
+        onChangeText={setPerson}
+        label="Người thực hiện"
+        value={person}
+      />
+      <DateTimeBox
+        onChangeDate={setStartDate}
+        label="Thời gian bắt đầu"
+        value={startDate}
+      />
+      <DateTimeBox
+        onChangeDate={setEndDate}
+        label="Thời gian kết thúc"
+        value={endDate}
+      />
+      <InfoBox
+        onChangeText={setCompletedTime}
+        label="Số giờ hoàn thành"
+        value={completedTime}
+      />
       <View style={styles.buttonContainer}>
         <IconLabel
+          onPress={previous}
           prefix={
             <Icon color={Colors.gray} name="play-skip-back" type="ionicon" />
           }
@@ -64,6 +91,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
           text="TRẢ LẠI"
         />
         <IconLabel
+          onPress={complete}
           prefix={
             <Icon
               color={Colors.gray}
@@ -75,7 +103,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
           text="HOÀN THÀNH"
         />
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
