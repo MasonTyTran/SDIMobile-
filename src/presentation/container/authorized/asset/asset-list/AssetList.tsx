@@ -21,7 +21,9 @@ export const AssetList: React.FC<AssetListProps> = (props) => {
             name="menu"
           />
         }
-        centerComponent={<TextView text="Asset List" style={styles.header} />}
+        centerComponent={
+          <TextView text="Danh sách tài sản" style={styles.header} />
+        }
         backgroundColor={Colors.gray}
       />
       <AssetListTab navigation={props.navigation} />

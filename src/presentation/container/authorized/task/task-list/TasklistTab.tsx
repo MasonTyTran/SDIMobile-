@@ -33,7 +33,6 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
     setRefreshing(true);
     props.getData(keyword, 1).subscribe({
       next: (res) => {
-        console.log('refresh', res);
         setData(res.Data.projects);
         setIndex(1);
         setRefreshing(false);

@@ -37,7 +37,7 @@ export const IssueMap: React.FC<IssueMapProps> = (props) => {
           <TouchableOpacity
             onPress={() => setAddVisible(true)}
             style={styles.fab}>
-            <Icon color={'white'} name="home" type="ionicon" />
+            <Icon color={'white'} name="add" type="ionicon" />
           </TouchableOpacity>
         )}
       </View>

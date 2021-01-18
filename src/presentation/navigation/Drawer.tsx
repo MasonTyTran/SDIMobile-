@@ -12,6 +12,7 @@ import {Colors} from '../resource/values';
 import {RootStoreState, signOut} from '@shared-state';
 import {AuthorizedStoryboardParamList} from '../storyboard/Authorized.storyboard';
 import {User} from '@domain';
+import {Footer} from '../component/brand';
 
 export const drawerSelector: Selector<RootStoreState, {user: User}> = (
   state,
@@ -33,58 +34,64 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
 
   return (
     <>
-      <View style={styles.header}>
-        <Avatar
-          size={100}
-          source={{
-            uri:
-              'https://1.bp.blogspot.com/-rt6mn1dJJ7M/XqZl2p-TboI/AAAAAAAAjO8/SzKdmwQAFhUH2CXgUH6kluj_G8Gig2-xgCLcBGAsYHQ/s1600/Anh-avatar-dep-cho-con-trai%2B%25281%2529.jpg',
-          }}
-          rounded
-        />
-        <View>
-          <TextView style={styles.username} text={user.displayName} />
-          <TextView style={styles.email} text={user.email} />
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Avatar
+            size={100}
+            source={{
+              uri:
+                'https://www.signfix.com.au/wp-content/uploads/2017/09/placeholder-600x400.png',
+            }}
+            rounded
+          />
+          <View>
+            <TextView style={styles.username} text={user.displayName} />
+            <TextView style={styles.email} text={user.email} />
+          </View>
         </View>
-      </View>
 
-      <SafeAreaView edges={['bottom']}>
-        <DrawerItem
-          onPress={goToRoute('Dashboard')}
-          icon={() => <Icon type="ionicon" name="home-outline" />}
-          label="Home"
-        />
-        <DrawerItem
-          onPress={goToRoute('TaskList')}
-          icon={() => <Icon type="ionicon" name="clipboard-outline" />}
-          label="My Tasks"
-        />
-        <DrawerItem
-          onPress={goToRoute('AssetMap')}
-          icon={() => <Icon type="ionicon" name="nuclear-outline" />}
-          label="Asset Map"
-        />
-        <DrawerItem
-          onPress={goToRoute('IssueMap')}
-          icon={() => <Icon type="ionicon" name="alert-circle-outline" />}
-          label="Issues"
-        />
-        <DrawerItem
-          onPress={() => {}}
-          icon={() => <Icon type="ionicon" name="help-circle-outline" />}
-          label="Help"
-        />
-        <DrawerItem
-          onPress={() => dispatch(signOut())}
-          icon={() => <Icon type="ionicon" name="log-out-outline" />}
-          label="Logout"
-        />
-      </SafeAreaView>
+        <SafeAreaView edges={['bottom']}>
+          <DrawerItem
+            onPress={goToRoute('Dashboard')}
+            icon={() => <Icon type="ionicon" name="home-outline" />}
+            label="Trang chủ"
+          />
+          <DrawerItem
+            onPress={goToRoute('TaskList')}
+            icon={() => <Icon type="ionicon" name="clipboard-outline" />}
+            label="Công việc"
+          />
+          <DrawerItem
+            onPress={goToRoute('AssetMap')}
+            icon={() => <Icon type="ionicon" name="nuclear-outline" />}
+            label="Tài sản"
+          />
+          <DrawerItem
+            onPress={goToRoute('IssueMap')}
+            icon={() => <Icon type="ionicon" name="alert-circle-outline" />}
+            label="Sự cố"
+          />
+          <DrawerItem
+            onPress={() => {}}
+            icon={() => <Icon type="ionicon" name="help-circle-outline" />}
+            label="Trợ giúp"
+          />
+          <DrawerItem
+            onPress={() => dispatch(signOut())}
+            icon={() => <Icon type="ionicon" name="log-out-outline" />}
+            label="Đăng xuất"
+          />
+        </SafeAreaView>
+      </View>
+      <Footer color={Colors.gray} />
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   header: {
     height: 250,
     backgroundColor: Colors.gray,

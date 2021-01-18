@@ -92,10 +92,10 @@ export const TaskList: React.FC<TaskListProps> = (props) => {
   const user = useUser();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'OpenTab', title: 'Open'},
-    {key: 'InprogressTab', title: 'Inprogress'},
-    {key: 'CompletedTab', title: 'Completed'},
-    {key: 'OverdueTab', title: 'Overdue'},
+    {key: 'OpenTab', title: 'Chưa thực hiện'},
+    {key: 'InprogressTab', title: 'Đang thực hiện'},
+    {key: 'CompletedTab', title: 'Hoàn thành'},
+    {key: 'OverdueTab', title: 'Qúa hạn'},
   ]);
 
   const renderScene = SceneMap({
@@ -125,7 +125,9 @@ export const TaskList: React.FC<TaskListProps> = (props) => {
             name="menu"
           />
         }
-        centerComponent={<TextView text="Task List" style={styles.header} />}
+        centerComponent={
+          <TextView text="Danh sách công việc" style={styles.header} />
+        }
         backgroundColor={Colors.gray}
       />
       <TabView

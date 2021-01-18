@@ -4,10 +4,12 @@ import {Image, ImageBackground, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-import {TextField, TextView} from '@components';
+import {Footer, TextField, TextView} from '@components';
 
 import {useSignIn} from './SignIn.hooks';
 import {SignInProps} from './types';
+import {Images} from '@assets';
+import {Colors} from '@resources';
 
 const _SignIn: React.FC<SignInProps> = (props) => {
   const {} = props;
@@ -21,12 +23,12 @@ const _SignIn: React.FC<SignInProps> = (props) => {
     return (
       <View style={styles.formContainer}>
         <TextField
-          inputProps={{placeholder: 'Username', onChangeText: setUsername}}
+          inputProps={{placeholder: 'Tài khoản', onChangeText: setUsername}}
           containerStyle={styles.input}
         />
         <TextField
           inputProps={{
-            placeholder: 'Password',
+            placeholder: 'Mật khẩu',
             secureTextEntry: true,
             onChangeText: setPassword,
           }}
@@ -35,9 +37,13 @@ const _SignIn: React.FC<SignInProps> = (props) => {
         <TextView
           onPress={() => props.navigation.navigate('ForgotPass')}
           style={styles.forgotPass}
-          text="Forgot password"
+          text="Quên mật khẩu"
         />
-        <Button onPress={submit} title="ĐĂNG NHẬP" />
+        <Button
+          buttonStyle={{backgroundColor: Colors.gray}}
+          onPress={submit}
+          title="ĐĂNG NHẬP"
+        />
       </View>
     );
   };
@@ -50,15 +56,10 @@ const _SignIn: React.FC<SignInProps> = (props) => {
           'https://www.vistaprojects.com/media/2019/07/workplace-safety-topics-for-meetings.png',
       }}>
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: 'https://image.flaticon.com/icons/png/512/235/235861.png',
-          }}
-        />
+        <Image style={styles.logo} source={Images.LOGO} resizeMode="contain" />
         {renderForm()}
       </KeyboardAwareScrollView>
-      <TextView style={styles.version} text="Version 1.0.0" />
+      <Footer hasG />
     </ImageBackground>
   );
 };
@@ -74,8 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    width: 180,
-    height: 180,
+    width: 220,
   },
   formContainer: {
     width: '100%',
@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
   },
   forgotPass: {
     paddingVertical: 8,
-    color: 'white',
+    color: Colors.gray,
+    fontWeight: 'bold',
     alignSelf: 'flex-end',
   },
   version: {

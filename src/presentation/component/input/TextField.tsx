@@ -1,3 +1,4 @@
+import {Colors} from '@resources';
 import React from 'react';
 import {
   View,
@@ -72,7 +73,11 @@ export const TextField: React.FC<TextFieldProps> = (props) => {
       <View style={_styles.content}>
         {renderPrefix()}
 
-        <TextInput {...inputProps} style={[_styles.input, inputProps.style]} />
+        <TextInput
+          placeholderTextColor={Colors.gray}
+          {...inputProps}
+          style={[_styles.input, inputProps.style]}
+        />
         {renderSuffix()}
       </View>
       {renderError()}

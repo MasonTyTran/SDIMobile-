@@ -63,7 +63,7 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
             <Image
               source={{
                 uri:
-                  'https://1.bp.blogspot.com/-rt6mn1dJJ7M/XqZl2p-TboI/AAAAAAAAjO8/SzKdmwQAFhUH2CXgUH6kluj_G8Gig2-xgCLcBGAsYHQ/s1600/Anh-avatar-dep-cho-con-trai%2B%25281%2529.jpg',
+                  'https://www.signfix.com.au/wp-content/uploads/2017/09/placeholder-600x400.png',
               }}
               style={styles.image}
             />

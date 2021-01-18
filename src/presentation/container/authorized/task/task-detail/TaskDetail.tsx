@@ -16,8 +16,8 @@ export const TaskDetail: React.FC<TaskDetailProps> = (props) => {
   const project = props.route.params.project;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'Information', title: 'Information'},
-    {key: 'FeedBack', title: 'FeedBack'},
+    {key: 'Information', title: 'Thông tin'},
+    {key: 'FeedBack', title: 'Phản hồi'},
   ]);
 
   const renderScene = SceneMap({
@@ -46,7 +46,7 @@ export const TaskDetail: React.FC<TaskDetailProps> = (props) => {
           />
         }
         centerComponent={
-          <TextView text={project.vidagis_name} style={styles.header} />
+          <TextView text={'Chi tiết công việc'} style={styles.header} />
         }
         backgroundColor={Colors.gray}
       />

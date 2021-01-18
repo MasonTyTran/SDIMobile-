@@ -11,7 +11,7 @@ import {styles} from './Dashboard.style';
 import {Header, Icon} from 'react-native-elements';
 import {AuthorizedStoryboardParamList} from '@storyboards';
 
-const LEGENDS = ['Completed', 'Uncompleted'];
+const LEGENDS = ['Đã hoàn thành', 'Chưa hoàn thành'];
 
 const NavButton = (props: {
   title: string;
@@ -73,7 +73,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
             name="menu"
           />
         }
-        centerComponent={<TextView text="Home" style={styles.header} />}
+        centerComponent={<TextView text="Trang chủ" style={styles.header} />}
         backgroundColor={gray}
       />
 
@@ -89,7 +89,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
           </View>
           <View style={styles.legendContainer}>
             {LEGENDS.map((x, i) => (
-              <Legend key={x} title={x} color={colors[i]} />
+              <Legend key={x} title={`${x} (${data[i]})`} color={colors[i]} />
             ))}
           </View>
         </View>
@@ -97,20 +97,20 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
           <NavButton
             onPress={navToRoute('TaskList')}
             color={ocean}
-            icon="menu"
-            title="Task"
+            icon="albums"
+            title="Công việc"
           />
           <NavButton
             onPress={navToRoute('IssueMap')}
             color={red}
-            icon="menu"
-            title="Issue"
+            icon="bug"
+            title="Sự cố"
           />
           <NavButton
             onPress={navToRoute('TaskList')}
             color={accent}
-            icon="menu"
-            title="Asset management"
+            icon="business"
+            title="Quản lí tài sản"
           />
         </View>
       </View>

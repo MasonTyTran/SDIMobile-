@@ -11,16 +11,17 @@ import {Asset, AssetDataSource} from '@data';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {AuthorizedStoryboardParamList} from '@storyboards';
 import {useUser} from '@hooks';
+import {User} from '@domain';
 
 export interface AssetListTabProps {
   navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'AssetList'>;
 }
 
-const getData = (keyword: string, index: number, user_id: string) =>
+const getData = (keyword: string, index: number, user: User) =>
   AssetDataSource.listAsset({
     keyword,
-    organization_id: 'sdi_hue',
-    user_id,
+    organization_id: user.organizationID,
+    user_id: user.id,
     page_num: index,
     page_size: 10,
   });
@@ -41,7 +42,7 @@ export const AssetListTab: React.FC<AssetListTabProps> = (props) => {
       return;
     }
     setRefreshing(true);
-    getData(keyword, index, user.id).subscribe({
+    getData(keyword, index, user).subscribe({
       next: (res) => {
         console.log('refresh', res);
         setData(res.Data.assets);
@@ -50,13 +51,13 @@ export const AssetListTab: React.FC<AssetListTabProps> = (props) => {
       },
       error: () => setRefreshing(false),
     });
-  }, [index, keyword, loading, refreshing, user.id]);
+  }, [index, keyword, loading, refreshing, user]);
   const onLoadMore = () => {
     if (data.length === 0 || loading || refreshing || !hasMore) {
       return;
     }
     setLoading(true);
-    getData(keyword, index + 1, user.id).subscribe({
+    getData(keyword, index + 1, user).subscribe({
       next: (res) => {
         if (res.Data.assets.length === 0) {
           setHasMore(false);

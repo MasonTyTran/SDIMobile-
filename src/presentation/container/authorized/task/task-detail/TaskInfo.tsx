@@ -27,7 +27,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
   return (
     <KeyboardAwareScrollView style={styles.container}>
       <FullScreenLoadingIndicator visible={loading} />
-      <TextView style={styles.title} text="Information" />
+      <TextView style={styles.title} text="Thông tin chung" />
 
       <View style={styles.infoContainer}>
         <View style={GridStyles.row}>
@@ -53,14 +53,14 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
           <Image
             source={{
               uri:
-                'https://1.bp.blogspot.com/-rt6mn1dJJ7M/XqZl2p-TboI/AAAAAAAAjO8/SzKdmwQAFhUH2CXgUH6kluj_G8Gig2-xgCLcBGAsYHQ/s1600/Anh-avatar-dep-cho-con-trai%2B%25281%2529.jpg',
+                'https://www.signfix.com.au/wp-content/uploads/2017/09/placeholder-600x400.png',
             }}
             style={styles.image}
           />
         </View>
       </View>
       <Divider style={styles.divider} />
-      <TextView style={styles.title} text="Information" />
+      <TextView style={styles.title} text="Thông tin task" />
       <InfoBox
         onChangeText={setPerson}
         label="Người thực hiện"

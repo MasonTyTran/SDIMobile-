@@ -32,13 +32,13 @@ const _ForgotPass: React.FC<ForgotPassProps> = (props) => {
     return (
       <View style={styles.formContainer}>
         <TextField
-          inputProps={{placeholder: 'Username', onChangeText: setUsername}}
+          inputProps={{placeholder: 'Tài khoản', onChangeText: setUsername}}
           containerStyle={styles.input}
         />
         <Button
           buttonStyle={{backgroundColor: Colors.gray}}
           onPress={submit}
-          title="Submit"
+          title="Hoàn thành"
         />
       </View>
     );
@@ -60,7 +60,9 @@ const _ForgotPass: React.FC<ForgotPassProps> = (props) => {
             name="arrow-back"
           />
         }
-        centerComponent={<TextView text="Forgot pass" style={styles.header} />}
+        centerComponent={
+          <TextView text="Quên mật khẩu" style={styles.header} />
+        }
         backgroundColor={Colors.gray}
       />
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>

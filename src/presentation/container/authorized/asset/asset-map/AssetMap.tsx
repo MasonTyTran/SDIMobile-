@@ -23,7 +23,7 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
           />
         }
         centerComponent={
-          <TextView text="Mạng lưới sự cố" style={styles.header} />
+          <TextView text="Mạng lưới tài sản" style={styles.header} />
         }
         backgroundColor={Colors.gray}
       />
