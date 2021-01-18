@@ -20,7 +20,8 @@ export const AssetItem: React.FC<AssetItemProps> = ({item, onPress}) => {
   }, [item, onPress]);
   return (
     <Pressable onPress={onPressItem} style={styles.container}>
-      <TextView style={styles.title} text={data['name']} />
+      <TextView style={styles.title} text={data['value']} />
+      <TextView style={{}} text={`#${item.id}`} />
       <Divider />
     </Pressable>
   );

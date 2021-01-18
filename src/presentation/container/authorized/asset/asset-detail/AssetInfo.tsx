@@ -1,26 +1,42 @@
 import React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, Dimensions} from 'react-native';
 import {Divider, Icon} from 'react-native-elements';
 
 import {IconLabel, TextView} from '@components';
-import {Colors, GridStyles, TextStyles} from '@resources';
+import {Colors, FontSize, GridStyles, TextStyles} from '@resources';
 
 import {AssetInfoProps} from './types';
-import {AssetDataObject} from '@data';
+import {AssetDataSource, AssetInformation} from '@data';
+import {useUser} from '@hooks';
 
 const KeyValueLabel = ({title, value}: {title: string; value: string}) => {
   return (
-    <View style={GridStyles.rowSpaceBetween}>
-      <TextView style={styles.keyTitle} text={title} />
-      <TextView style={styles.keyValue} text={value} />
-    </View>
+    <>
+      <View style={{marginTop: FontSize.md}} />
+
+      <View style={GridStyles.row}>
+        <TextView style={styles.keyTitle} text={`${title}: `} />
+        <TextView style={styles.keyValue} text={value} />
+      </View>
+    </>
   );
 };
 
 export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
-  const data = JSON.parse(item.datajson) as AssetDataObject[];
-  console.log(item);
-  console.log(data);
+  const user = useUser();
+
+  const [data, setData] = React.useState<AssetInformation>();
+  React.useEffect(() => {
+    AssetDataSource.assetInfo({
+      id: item.id,
+      user_id: user.id,
+      organization_id: user.organizationID,
+    }).subscribe({
+      next: (res) => {
+        setData(res.Data);
+      },
+    });
+  }, [item.id, user.id, user.organizationID]);
   return (
     <View style={styles.container}>
       <TextView style={styles.title} text="Information" />
@@ -28,34 +44,36 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
       <View style={styles.infoContainer}>
         <View style={GridStyles.row}>
           <View style={styles.info}>
-            <TextView style={styles.id} text={`#${item.is_asset}`} />
-            <TextView style={styles.id} text={''} />
-            <TextView style={styles.id} text={`Priority: ${item.is_asset}`} />
+            <KeyValueLabel title={'Tên: '} value={item.table_name} />
+            <KeyValueLabel title={'Mã vị trí: '} value={`#${item.geom}`} />
+            <KeyValueLabel title={'Mã thiết bị: '} value={`#${item.id}`} />
           </View>
-          <IconLabel
-            suffix={
-              <Icon
-                color={Colors.accent}
-                name="alert-circle-outline"
-                type="ionicon"
-              />
-            }
-            color={Colors.accent}
-            text={item.table_name}
-          />
-          <Image
-            source={{
-              uri:
-                'https://1.bp.blogspot.com/-rt6mn1dJJ7M/XqZl2p-TboI/AAAAAAAAjO8/SzKdmwQAFhUH2CXgUH6kluj_G8Gig2-xgCLcBGAsYHQ/s1600/Anh-avatar-dep-cho-con-trai%2B%25281%2529.jpg',
-            }}
-            style={styles.image}
-          />
+          <View style={{width: '30%'}}>
+            <IconLabel
+              prefix={
+                <Icon
+                  color={Colors.accent}
+                  name="alert-circle-outline"
+                  type="ionicon"
+                />
+              }
+              color={Colors.accent}
+              text={`${item.is_f ? 'Đang hoạt động' : 'Ngừng hoạt động'}`}
+            />
+            <Image
+              source={{
+                uri:
+                  'https://1.bp.blogspot.com/-rt6mn1dJJ7M/XqZl2p-TboI/AAAAAAAAjO8/SzKdmwQAFhUH2CXgUH6kluj_G8Gig2-xgCLcBGAsYHQ/s1600/Anh-avatar-dep-cho-con-trai%2B%25281%2529.jpg',
+              }}
+              style={styles.image}
+            />
+          </View>
         </View>
       </View>
       <Divider style={styles.divider} />
       <TextView style={styles.title} text="Thông số kĩ thuật" />
-      {data.map((x) => {
-        return <KeyValueLabel key={x.name} value={x.value} title={x.name} />;
+      {data?.info.map((x) => {
+        return <KeyValueLabel key={x.field} value={x.value} title={x.field} />;
       })}
     </View>
   );
@@ -77,39 +95,23 @@ const styles = StyleSheet.create({
   },
   info: {
     flex: 1,
+    paddingRight: 16,
   },
   id: {
     ...TextStyles.normal,
     marginBottom: 8,
   },
   image: {
-    width: '30%',
+    width: '100%',
     height: 50,
   },
-  infoBox: {
-    marginTop: 16,
-    borderWidth: 2,
-    borderColor: Colors.gray,
-    borderRadius: 8,
-    padding: 12,
-  },
-  infoBoxLabel: {
-    position: 'absolute',
-    top: -10,
-    left: 8,
-    backgroundColor: 'white',
-  },
-  infoBoxValue: {
-    ...TextStyles.normal,
-    fontWeight: 'bold',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    letterSpacing: 10,
-    marginTop: 30,
-  },
+
   divider: {
     marginVertical: 30,
   },
+  keyTitle: {
+    fontWeight: 'bold',
+    color: Colors.gray,
+  },
+  keyValue: {},
 });

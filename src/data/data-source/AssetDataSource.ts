@@ -2,7 +2,12 @@ import {Observable} from 'rxjs';
 import {container} from 'tsyringe';
 import {RxRemoteProvider} from '@core';
 import {AppDependencies} from '@di';
-import {ListAssetRequest, ListAssetResponse} from '../model';
+import {
+  AssetInfoRequest,
+  AssetInfoResponse,
+  ListAssetRequest,
+  ListAssetResponse,
+} from '../model';
 import {map} from 'rxjs/operators';
 
 class _AssetDataSource {
@@ -13,6 +18,12 @@ class _AssetDataSource {
   listAsset(data: ListAssetRequest): Observable<ListAssetResponse> {
     return this.provider
       .post<ListAssetResponse>('assets/search', data)
+      .pipe(map((x) => x.data));
+  }
+
+  assetInfo(data: AssetInfoRequest): Observable<AssetInfoResponse> {
+    return this.provider
+      .post<AssetInfoResponse>('asset/id', data)
       .pipe(map((x) => x.data));
   }
 }

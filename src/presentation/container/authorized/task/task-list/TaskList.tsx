@@ -26,7 +26,7 @@ const OpenTab = (
         page_num: i,
         page_size: 10,
         organization_id: user.organizationID,
-        user_id: '2',
+        user_id: user.id,
       })
     }
     navigation={navigation}

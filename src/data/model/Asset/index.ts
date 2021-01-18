@@ -36,3 +36,28 @@ export interface AssetDataObject {
   type: number;
   value: string;
 }
+
+export interface AssetInfoRow {
+  field: string;
+  value: string;
+}
+
+export interface AssetInformation {
+  id: string;
+  table_name: string;
+  table_id: string;
+  table_asset: string;
+  info: AssetInfoRow[];
+}
+
+export interface AssetInfoResponse {
+  Message: string;
+  Code: number;
+  Data: AssetInformation;
+}
+
+export interface AssetInfoRequest {
+  id: string;
+  user_id: string;
+  organization_id: string;
+}
