@@ -1,16 +1,20 @@
-import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-
-import {WebView} from 'react-native-webview';
-import {Header, Icon} from 'react-native-elements';
-
 import {TextView} from '@components';
+import {RxRemoteProvider} from '@core';
+import {AppDependencies} from '@di';
 import {Colors} from '@resources';
-
-import {IssueMapProps} from './types';
+import React from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Header, Icon} from 'react-native-elements';
+import {WebView} from 'react-native-webview';
+import {container} from 'tsyringe';
 import {AddIssue} from './AddIssue';
+import {IssueMapProps} from './types';
 
 export const IssueMap: React.FC<IssueMapProps> = (props) => {
+  const provider = container.resolve<RxRemoteProvider>(
+    AppDependencies.ApiProvider,
+  );
+  console.warn(provider.token);
   const [addVisible, setAddVisible] = React.useState(false);
   return (
     <>
@@ -31,7 +35,13 @@ export const IssueMap: React.FC<IssueMapProps> = (props) => {
       <View style={styles.container}>
         <WebView
           style={styles.webview}
-          source={{uri: 'https://hue.aktivmap.com/GIS/MainMap'}}
+          source={{
+            uri: 'https://hue.aktivmap.com/GIS/MainMap',
+            headers: {
+              access_token: provider.token,
+              type_request: 'mobile',
+            },
+          }}
         />
         {addVisible || (
           <TouchableOpacity

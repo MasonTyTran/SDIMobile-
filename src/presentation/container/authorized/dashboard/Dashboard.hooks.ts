@@ -18,7 +18,7 @@ export function useDashboardModel() {
     WODataSource.listInProgressTask({
       page_num: 1,
       page_size: 100,
-      user_id: '2',
+      user_id: user.id,
       organization_id: user.organizationID,
       keyword: '',
     })
@@ -27,7 +27,7 @@ export function useDashboardModel() {
     WODataSource.listCompletedTask({
       page_num: 1,
       page_size: 100,
-      user_id: '2',
+      user_id: user.id,
       organization_id: user.organizationID,
       keyword: '',
     })

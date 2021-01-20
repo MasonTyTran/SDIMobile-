@@ -58,9 +58,27 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
     });
   };
 
+  const debounceRefresh = React.useCallback(
+    debounce((k: string) => {
+      if (refreshing || loading) {
+        return;
+      }
+      setRefreshing(true);
+      props.getData(k, 1).subscribe({
+        next: (res) => {
+          setData(res.Data.projects);
+          setIndex(1);
+          setRefreshing(false);
+        },
+        error: () => setRefreshing(false),
+      });
+    }, 800),
+    [],
+  );
+
   const onChangeKeyword = (t: string) => {
     setKeyword(t);
-    onRefresh();
+    debounceRefresh(t);
   };
 
   React.useEffect(onRefresh, []);

@@ -8,6 +8,7 @@ import {Observable, Observer} from 'rxjs';
 import {RemoteException} from '../error';
 
 export interface RxRemoteProvider {
+  token?: string;
   setToken(token: string): void;
   /**
    * @summary perform @POST request with config
@@ -50,7 +51,7 @@ export class BearerAuthorizationRxAxiosProvider<Result = any>
   implements RxRemoteProvider {
   private readonly axiosInstance: AxiosInstance;
 
-  private token?: string;
+  token?: string;
 
   constructor(config: AxiosRequestConfig) {
     this.axiosInstance = axios.create(config);
