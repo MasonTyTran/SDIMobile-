@@ -25,6 +25,12 @@ class _IssueDataSource {
             .pipe(map((x) => x.data));
     }
 
+    searchIssue(data: IssueListRequest): Observable<IssueListResponse> {
+        return this.provider
+            .post<IssueListResponse>('asset/incident_search', data)
+            .pipe(map((x) => x.data));
+    }
+
 }
 
 export const IssueDataSource = new _IssueDataSource();

@@ -2,7 +2,8 @@ export type IssueListRequest = {
     user_id: string;
     organization_id: string;
     page_num: number,
-    page_size: number
+    page_size: number,
+    keyword?: string
 };
 export type IssueListResponse = {
     Message: string;

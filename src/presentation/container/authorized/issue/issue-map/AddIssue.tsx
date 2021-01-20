@@ -1,11 +1,13 @@
-import React from 'react';
-import {Modal, Pressable, StyleSheet, View} from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Image, Modal, Pressable, StyleSheet, View } from 'react-native';
 
-import {Button, Icon} from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
-import {IconLabel, TextField} from '@components';
-import {Colors, GridStyles} from '@resources';
-import {Formik} from 'formik';
+import { IconLabel, TextField } from '@components';
+import { Colors, GridStyles } from '@resources';
+import { Formik } from 'formik';
+import ImagePicker, { Options, Image as ImageProps } from "react-native-image-crop-picker";
+
 
 export interface AddIssueProps {
   visible: boolean;
@@ -16,6 +18,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
   visible,
   onRequestClose,
 }) => {
+  let [image, setImage] = useState<ImageProps>({} as ImageProps)
   const form = () => {
     return (
       <Formik
@@ -25,7 +28,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
           content: '',
           time: new Date(),
         }}
-        onSubmit={() => {}}>
+        onSubmit={() => { }}>
         {() => {
           return (
             <View style={styles.form}>
@@ -69,21 +72,28 @@ export const AddIssue: React.FC<AddIssueProps> = ({
                   placeholder: 'Thời gian phát hiện',
                 }}
               />
-              <Pressable style={styles.imageUpload}>
-                <IconLabel
-                  prefix={
-                    <Icon color="white" type="ionicon" name="cloud-upload" />
-                  }
-                  color="white"
-                  text="Upload image"
-                />
+              <Pressable style={styles.imageUpload} onPress={() => {
+                openImagePicker((image) => {
+                  setImage(image)
+                })
+              }}>
+
+                {!!image.path ?
+                  <Image source={{ uri: image.path }} style={{ width: '100%', height: '100%' }} resizeMode='contain' />
+                  : <IconLabel
+                    prefix={
+                      <Icon color="white" type="ionicon" name="cloud-upload" />
+                    }
+                    color="white"
+                    text="Upload image"
+                  />}
               </Pressable>
               <View style={GridStyles.row}>
                 <Button
                   onPress={onRequestClose}
                   containerStyle={styles.btnCancel}
                   title="Hủy"
-                  buttonStyle={{backgroundColor: Colors.red}}
+                  buttonStyle={{ backgroundColor: Colors.red }}
                 />
                 <Button
                   title="Lưu"
@@ -105,6 +115,34 @@ export const AddIssue: React.FC<AddIssueProps> = ({
     </Modal>
   );
 };
+
+
+const openImagePicker = (callback: (image: any) => void) => {
+  let option: Options = {
+    width: 300,
+    height: 400,
+    mediaType: 'photo',
+    forceJpg: true
+  }
+  Alert.alert("Chọn ảnh từ", '', [
+    {
+      text: 'Camera', onPress: () => {
+        ImagePicker.openCamera(option).then(image => {
+          callback && callback(image)
+
+        })
+      }
+    },
+    {
+      text: 'Thư viện ảnh', onPress: () => {
+        ImagePicker.openPicker(option).then(image => {
+          callback && callback(image)
+
+        })
+      }
+    }
+  ])
+}
 
 const styles = StyleSheet.create({
   container: {

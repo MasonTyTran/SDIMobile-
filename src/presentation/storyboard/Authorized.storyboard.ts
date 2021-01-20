@@ -5,6 +5,7 @@ export type AuthorizedStoryboardParamList = {
   TaskList: undefined;
   IssueMap: undefined;
   IssueList: undefined;
+  IssueSearchResult: undefined;
   TaskDetail: { project: WOProject };
   AssetDetail: { asset: Asset };
   AssetList: undefined;

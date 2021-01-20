@@ -10,6 +10,7 @@ import {
   Dashboard,
   IssueList,
   IssueMap,
+  IssueSearchResult,
   TaskDetail,
   TaskList,
 } from '@containers';
@@ -26,6 +27,7 @@ export const AuthorizedNavigator: React.FC = () => {
       <Stack.Screen name="TaskDetail" component={TaskDetail} />
       <Stack.Screen name="AssetMap" component={AssetMap} />
       <Stack.Screen name="AssetList" component={AssetList} />
+      <Stack.Screen name="IssueSearchResult" component={IssueSearchResult} />
       <Stack.Screen name="AssetDetail" component={AssetDetail} />
     </Stack.Navigator>
   );
