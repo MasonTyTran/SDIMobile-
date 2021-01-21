@@ -35,7 +35,6 @@ export const AddIssue: React.FC<AddIssueProps> = ({
 
   const handleConfirm = (date: any) => {
     setDate(date)
-    console.warn("A date has been picked: ", date);
     hideDatePicker();
   };
 
