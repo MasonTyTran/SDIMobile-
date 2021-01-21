@@ -14,6 +14,24 @@ export type IssueListResponse = {
     };
 };
 
+export type CreateIssueRequest = {
+    vidagis_userid: string
+    vidagis_oranizationid: string
+    vidagis_id: number
+    vidagis_incident_name: string
+    vidagis_type_incident: number //=0
+    vidagis_reason_incident: string
+    vidagis_incurred_incident: string
+    vidagis_status: number //=0
+    vidagis_handling_incident: string //=""
+};
+export type CreateIssueResponse = {
+    Message: string;
+    Code: number;
+    Data: undefined
+};
+
+
 export interface Issue {
     "oid": number
     "vidagis_id": string

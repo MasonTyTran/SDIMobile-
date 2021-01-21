@@ -11,7 +11,6 @@ import {AssetInfo} from './AssetInfo';
 
 export const AssetDetail: React.FC<AssetDetailProps> = (props) => {
   const asset = props.route.params.asset;
-
   return (
     <>
       <Header

@@ -82,10 +82,10 @@ export const IssueList: React.FC<IssueListProps> = (props) => {
       <Header
         leftComponent={
           <Icon
-            onPress={props.navigation.goBack}
+            onPress={props.navigation.openDrawer}
             color={'white'}
             type="ionicon"
-            name="arrow-back"
+            name="menu"
           />
         }
         centerComponent={
