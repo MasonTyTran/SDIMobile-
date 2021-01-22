@@ -1,5 +1,5 @@
-import {Colors} from './../../../resource/values/colors';
-import {Dimensions, StyleSheet} from 'react-native';
+import { Colors } from './../../../resource/values/colors';
+import { Dimensions, StyleSheet } from 'react-native';
 const shadow = {
   shadowColor: '#000',
   shadowOffset: {
@@ -62,6 +62,12 @@ export const styles = StyleSheet.create({
   chartTitle: {
     fontSize: 30,
     fontWeight: 'bold',
+    marginBottom: 8,
+    textAlign: 'center',
+    color: Colors.gray,
+  },
+  date: {
+    fontSize: 15,
     marginBottom: 8,
     textAlign: 'center',
     color: Colors.gray,

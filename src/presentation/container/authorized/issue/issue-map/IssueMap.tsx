@@ -7,7 +7,7 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Header, Icon} from 'react-native-elements';
 import {WebView} from 'react-native-webview';
 import {container} from 'tsyringe';
-import {AddIssue} from './AddIssue';
+import {AddIssue} from '../../asset/asset-detail/AddIssue';
 import {IssueMapProps} from './types';
 
 export const IssueMap: React.FC<IssueMapProps> = (props) => {
@@ -43,23 +43,11 @@ export const IssueMap: React.FC<IssueMapProps> = (props) => {
             },
           }}
         />
-        {addVisible || (
-          <TouchableOpacity
-            onPress={() => setAddVisible(true)}
-            style={styles.fab}>
-            <Icon color={'white'} name="add" type="ionicon" />
-          </TouchableOpacity>
-        )}
       </View>
-      <AddIssue
-        onRequestClose={() => setAddVisible(false)}
-        visible={addVisible}
-      />
     </>
   );
 };
 
-const FABSize = 65;
 
 const styles = StyleSheet.create({
   container: {
@@ -72,16 +60,5 @@ const styles = StyleSheet.create({
   },
   webview: {
     flex: 1,
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 36,
-    right: 36,
-    width: FABSize,
-    height: FABSize,
-    borderRadius: FABSize * 0.5,
-    backgroundColor: Colors.gray,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

@@ -1,28 +1,29 @@
 import React from 'react';
-import {StyleSheet, View, Image, Dimensions} from 'react-native';
-import {Divider, Icon} from 'react-native-elements';
+import { StyleSheet, View, Image, Dimensions } from 'react-native';
+import { Divider, Icon } from 'react-native-elements';
 
-import {IconLabel, TextView} from '@components';
-import {Colors, FontSize, GridStyles, TextStyles} from '@resources';
+import { IconLabel, TextView } from '@components';
+import { Colors, FontSize, GridStyles, TextStyles } from '@resources';
 
-import {AssetInfoProps} from './types';
-import {AssetDataSource, AssetInformation} from '@data';
-import {useUser} from '@hooks';
+import { AssetInfoProps } from './types';
+import { AssetDataSource, AssetInformation } from '@data';
+import { useUser } from '@hooks';
+import { ScrollView } from 'react-native-gesture-handler';
 
-const KeyValueLabel = ({title, value}: {title: string; value: string}) => {
+const KeyValueLabel = ({ title, value }: { title: string; value: string }) => {
   return (
     <>
-      <View style={{marginTop: FontSize.md}} />
+      <View style={{ marginTop: FontSize.md }} />
 
-      <View style={GridStyles.row}>
-        <TextView style={styles.keyTitle} text={`${title}: `} />
+      <View style={[GridStyles.row]}>
+        <TextView style={styles.keyTitle} text={`${title} `} />
         <TextView style={styles.keyValue} text={value} />
       </View>
     </>
   );
 };
 
-export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
+export const AssetInfo: React.FC<AssetInfoProps> = ({ item }) => {
   const user = useUser();
 
   const [data, setData] = React.useState<AssetInformation>();
@@ -38,17 +39,17 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
     });
   }, [item.id, user.id, user.organizationID]);
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <TextView style={styles.title} text="Information" />
 
       <View style={styles.infoContainer}>
         <View style={GridStyles.row}>
-          <View style={styles.info}>
+          <View style={[styles.info, {}]}>
             <KeyValueLabel title={'Tên: '} value={item.table_name} />
             <KeyValueLabel title={'Mã vị trí: '} value={`#${item.geom}`} />
             <KeyValueLabel title={'Mã thiết bị: '} value={`#${item.id}`} />
           </View>
-          <View style={{width: '30%'}}>
+          <View style={{ width: '30%' }}>
             <IconLabel
               prefix={
                 <Icon
@@ -75,7 +76,7 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
       {data?.info.map((x) => {
         return <KeyValueLabel key={x.field} value={x.value} title={x.field} />;
       })}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -113,5 +114,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.gray,
   },
-  keyValue: {},
+  keyValue: { flex: 1 },
 });

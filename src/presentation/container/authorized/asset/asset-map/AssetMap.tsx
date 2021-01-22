@@ -37,7 +37,7 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
         <WebView
           style={styles.webview}
           source={{
-            uri: 'https://hue.aktivmap.com/GIS/MainMap',
+            uri: 'https://hue.aktivmap.com/GIS/MainMap/MapMobile',
             headers: {
               access_token: provider.token,
               type_request: 'mobile',

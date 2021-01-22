@@ -17,7 +17,7 @@ export type IssueListResponse = {
 export type CreateIssueRequest = {
     vidagis_userid: string
     vidagis_oranizationid: string
-    vidagis_id: number
+    vidagis_id: number | string
     vidagis_incident_name: string
     vidagis_type_incident: number //=0
     vidagis_reason_incident: string

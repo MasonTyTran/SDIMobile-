@@ -15,11 +15,13 @@ import { showMessage } from 'react-native-flash-message';
 export interface AddIssueProps {
   visible: boolean;
   onRequestClose: () => void;
+  id: number | string
 }
 
 export const AddIssue: React.FC<AddIssueProps> = ({
   visible,
   onRequestClose,
+  id
 }) => {
   let [image, setImage] = useState<ImageProps>({} as ImageProps)
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -41,7 +43,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
   const createIssue = ({ name, content }: { name: string, content: string }) => {
     IssueDataSource.createIssue({
       vidagis_handling_incident: "",
-      vidagis_id: 4935,
+      vidagis_id: id,
       vidagis_incident_name: name,
       vidagis_incurred_incident: moment(date).format("DD/MM/YYYY HH:mm"),
       vidagis_oranizationid: user.organizationID,

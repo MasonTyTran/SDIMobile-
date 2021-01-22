@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {FontSize} from './dimensions';
+import { StyleSheet } from 'react-native';
+import { FontSize } from './dimensions';
 export const TextStyles = StyleSheet.create({
   normal: {
     fontSize: FontSize.md,
