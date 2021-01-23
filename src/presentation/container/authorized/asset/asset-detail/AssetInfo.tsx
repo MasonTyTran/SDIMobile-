@@ -1,19 +1,19 @@
 import React from 'react';
-import { StyleSheet, View, Image, Dimensions } from 'react-native';
-import { Divider, Icon } from 'react-native-elements';
+import {StyleSheet, View} from 'react-native';
+import {Divider, Icon} from 'react-native-elements';
 
-import { IconLabel, TextView } from '@components';
-import { Colors, FontSize, GridStyles, TextStyles } from '@resources';
+import {IconLabel, SDIImage, TextView} from '@components';
+import {Colors, FontSize, GridStyles, TextStyles} from '@resources';
 
-import { AssetInfoProps } from './types';
-import { AssetDataSource, AssetInformation } from '@data';
-import { useUser } from '@hooks';
-import { ScrollView } from 'react-native-gesture-handler';
+import {AssetInfoProps} from './types';
+import {AssetDataSource, AssetInformation} from '@data';
+import {useUser} from '@hooks';
+import {ScrollView} from 'react-native-gesture-handler';
 
-const KeyValueLabel = ({ title, value }: { title: string; value: string }) => {
+const KeyValueLabel = ({title, value}: {title: string; value: string}) => {
   return (
     <>
-      <View style={{ marginTop: FontSize.md }} />
+      <View style={{marginTop: FontSize.md}} />
 
       <View style={[GridStyles.row]}>
         <TextView style={styles.keyTitle} text={`${title} `} />
@@ -23,7 +23,7 @@ const KeyValueLabel = ({ title, value }: { title: string; value: string }) => {
   );
 };
 
-export const AssetInfo: React.FC<AssetInfoProps> = ({ item }) => {
+export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
   const user = useUser();
 
   const [data, setData] = React.useState<AssetInformation>();
@@ -49,7 +49,7 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({ item }) => {
             <KeyValueLabel title={'Mã vị trí: '} value={`#${item.geom}`} />
             <KeyValueLabel title={'Mã thiết bị: '} value={`#${item.id}`} />
           </View>
-          <View style={{ width: '30%' }}>
+          <View style={{width: '30%'}}>
             <IconLabel
               prefix={
                 <Icon
@@ -61,7 +61,8 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({ item }) => {
               color={Colors.accent}
               text={`${item.is_f ? 'Đang hoạt động' : 'Ngừng hoạt động'}`}
             />
-            <Image
+            <SDIImage
+              fileID={data?.id ?? ''}
               source={{
                 uri:
                   'https://www.signfix.com.au/wp-content/uploads/2017/09/placeholder-600x400.png',
@@ -114,5 +115,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.gray,
   },
-  keyValue: { flex: 1 },
+  keyValue: {flex: 1},
 });

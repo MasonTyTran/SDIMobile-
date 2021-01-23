@@ -2,7 +2,12 @@ import React from 'react';
 import {StyleSheet, View, Image} from 'react-native';
 import {Divider, Icon} from 'react-native-elements';
 
-import {FullScreenLoadingIndicator, IconLabel, TextView} from '@components';
+import {
+  FullScreenLoadingIndicator,
+  IconLabel,
+  SDIImage,
+  TextView,
+} from '@components';
 import {Colors, GridStyles, TextStyles} from '@resources';
 
 import {TaskInfoProps} from './types';
@@ -50,13 +55,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
             color={Colors.accent}
             text={item.vidagis_status_des}
           />
-          <Image
-            source={{
-              uri:
-                'https://www.signfix.com.au/wp-content/uploads/2017/09/placeholder-600x400.png',
-            }}
-            style={styles.image}
-          />
+          <SDIImage fileID={item.vidagis_avatar} style={styles.image} />
         </View>
       </View>
       <Divider style={styles.divider} />

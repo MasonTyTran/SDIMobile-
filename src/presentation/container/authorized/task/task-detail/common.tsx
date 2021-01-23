@@ -1,10 +1,10 @@
 import React from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Pressable, StyleSheet, View, TextInput} from 'react-native';
 
 import {TextView} from '@components';
 import {Colors, TextStyles} from '@resources';
 
-import {TextInput} from 'react-native-gesture-handler';
+import moment from 'moment';
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -54,7 +54,10 @@ export const DateTimeBox = ({
     <>
       <Pressable onPress={showDatePicker} style={styles.infoBox}>
         <TextView style={styles.infoBoxLabel} text={label} />
-        <TextView style={styles.infoBoxValue} text={value.toISOString()} />
+        <TextView
+          style={styles.infoBoxValue}
+          text={moment(value).format('DD/MM/YYYY hh:mm a')}
+        />
       </Pressable>
       <DateTimePickerModal
         isVisible={isDatePickerVisible}

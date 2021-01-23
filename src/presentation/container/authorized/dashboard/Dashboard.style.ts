@@ -1,5 +1,5 @@
-import { Colors } from './../../../resource/values/colors';
-import { Dimensions, StyleSheet } from 'react-native';
+import {Colors} from './../../../resource/values/colors';
+import {Dimensions, StyleSheet} from 'react-native';
 const shadow = {
   shadowColor: '#000',
   shadowOffset: {
@@ -10,11 +10,10 @@ const shadow = {
   shadowRadius: 3.84,
   elevation: 5,
 };
-const CHART_SIZE = Dimensions.get('window').width * 0.65;
+const CHART_SIZE = Dimensions.get('window').width * 0.8;
+const NAV_WIDTH = Dimensions.get('window').width * 0.25;
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: {},
   header: {
     color: 'white',
     fontSize: 20,
@@ -22,16 +21,17 @@ export const styles = StyleSheet.create({
   },
   navContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     paddingBottom: 30,
     paddingTop: 30,
     paddingHorizontal: 16,
     borderRadius: 16,
-    ...shadow,
   },
   navButton: {
-    width: 120,
-    height: 100,
+    width: NAV_WIDTH,
+    height: NAV_WIDTH,
+    marginHorizontal: 10,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
