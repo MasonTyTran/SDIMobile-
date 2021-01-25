@@ -58,27 +58,27 @@ export const IssueSearchResult: React.FC<IssueSearchResultProps> = (props) => {
         });
     }, [loading, props, refreshing, keyword]);
     const onLoadMore = () => {
-        if (loading || refreshing || !hasMore) {
-            return;
-        }
-        setLoading(true);
-        IssueDataSource.searchIssue({
-            keyword,
-            organization_id: user.organizationID,
-            user_id: user.id,
-            page_num: index,
-            page_size: 10,
-        }).subscribe({
-            next: (res) => {
-                if (res.Data.incidents.length === 0) {
-                    setHasMore(false);
-                }
-                setData((old) => [...old, ...res.Data.incidents]);
-                setIndex(index + 1);
-                setLoading(false);
-            },
-            error: () => setLoading(false),
-        });
+        // if (loading || refreshing || !hasMore) {
+        //     return;
+        // }
+        // setLoading(true);
+        // IssueDataSource.searchIssue({
+        //     keyword,
+        //     organization_id: user.organizationID,
+        //     user_id: user.id,
+        //     page_num: index,
+        //     page_size: 10,
+        // }).subscribe({
+        //     next: (res) => {
+        //         if (res.Data.incidents.length === 0) {
+        //             setHasMore(false);
+        //         }
+        //         setData((old) => [...old, ...res.Data.incidents]);
+        //         setIndex(index + 1);
+        //         setLoading(false);
+        //     },
+        //     error: () => setLoading(false),
+        // });
     };
     const renderItem = ({ item }: ListRenderItemInfo<Issue>) => {
         return (
