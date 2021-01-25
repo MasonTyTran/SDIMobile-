@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Header, Icon } from 'react-native-elements';
 
-import { TextView } from '@components';
+import { FullScreenLoadingIndicator, TextView } from '@components';
 import { Colors } from '@resources';
 
 import { AssetDetailProps } from './types';
@@ -13,6 +13,7 @@ import { AddIssue } from './AddIssue';
 export const AssetDetail: React.FC<AssetDetailProps> = (props) => {
   const asset = props.route.params.asset;
   const [addVisible, setAddVisible] = React.useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   return (
     <>
       <Header
@@ -39,9 +40,11 @@ export const AssetDetail: React.FC<AssetDetailProps> = (props) => {
       )}
       <AddIssue
         id={asset.gid}
+        setLoading={setLoading}
         onRequestClose={() => setAddVisible(false)}
         visible={addVisible}
       />
+      <FullScreenLoadingIndicator visible={loading} />
     </>
   );
 };

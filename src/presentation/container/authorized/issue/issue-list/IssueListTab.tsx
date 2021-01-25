@@ -42,21 +42,21 @@ export const IssueListTab: React.FC<IssueListTabProps> = (props) => {
         });
     }, [loading, props, refreshing]);
     const onLoadMore = () => {
-        if (loading || refreshing || !hasMore) {
-            return;
-        }
-        setLoading(true);
-        props.getData(index + 1).subscribe({
-            next: (res) => {
-                if (res.Data.incidents.length === 0) {
-                    setHasMore(false);
-                }
-                setData((old) => [...old, ...res.Data.incidents]);
-                setIndex(index + 1);
-                setLoading(false);
-            },
-            error: () => setLoading(false),
-        });
+        // if (loading || refreshing || !hasMore) {
+        //     return;
+        // }
+        // setLoading(true);
+        // props.getData(index + 1).subscribe({
+        //     next: (res) => {
+        //         if (res.Data.incidents.length === 0) {
+        //             setHasMore(false);
+        //         }
+        //         setData((old) => [...old, ...res.Data.incidents]);
+        //         setIndex(index + 1);
+        //         setLoading(false);
+        //     },
+        //     error: () => setLoading(false),
+        // });
     };
 
     React.useEffect(onRefresh, []);

@@ -1,35 +1,35 @@
-import React, {useState} from 'react';
-import {Alert, Image, Modal, Pressable, StyleSheet, View} from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Image, Modal, Pressable, StyleSheet, View } from 'react-native';
 
-import {Button, Icon} from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
-import {IconLabel, TextField, TextView} from '@components';
-import {Colors, GridStyles} from '@resources';
-import {Formik} from 'formik';
-import ImagePicker, {
-  Options,
-  Image as ImageProps,
-} from 'react-native-image-crop-picker';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {IssueDataSource} from '@data';
-import {useUser} from '@hooks';
-import moment from 'moment';
-import {showMessage} from 'react-native-flash-message';
+import { FullScreenLoadingIndicator, IconLabel, TextField, TextView } from '@components';
+import { Colors, GridStyles } from '@resources';
+import { Formik } from 'formik';
+import ImagePicker, { Options, Image as ImageProps } from "react-native-image-crop-picker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { IssueDataSource } from '@data';
+import { useUser } from '@hooks';
+import moment from "moment";
+import { showMessage } from 'react-native-flash-message';
 export interface AddIssueProps {
   visible: boolean;
   onRequestClose: () => void;
   id: number | string;
+  setLoading: (values: boolean) => void
 }
 
 export const AddIssue: React.FC<AddIssueProps> = ({
   visible,
   onRequestClose,
   id,
+  setLoading
 }) => {
   let [image, setImage] = useState<ImageProps>({} as ImageProps);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState(new Date());
-  const user = useUser();
+
+  const user = useUser()
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -43,7 +43,9 @@ export const AddIssue: React.FC<AddIssueProps> = ({
     hideDatePicker();
   };
 
-  const createIssue = ({name, content}: {name: string; content: string}) => {
+  const createIssue = ({ name, content }: { name: string, content: string }) => {
+    onRequestClose()
+    setLoading(true)
     IssueDataSource.createIssue({
       vidagis_handling_incident: '',
       vidagis_id: id,
@@ -56,12 +58,16 @@ export const AddIssue: React.FC<AddIssueProps> = ({
       vidagis_userid: user.id,
     }).subscribe({
       next: (res) => {
-        onRequestClose();
-        setImage({} as ImageProps);
-        setDate(new Date());
+        setLoading(false)
+        setImage({} as ImageProps)
+        setDate(new Date())
+        showMessage({ message: 'Thành công', type: 'success' });
+
       },
       error: (err) => {
-        console.log('000err', err);
+        setLoading(false)
+        console.log("000err", err);
+        showMessage({ message: 'Thất bại', type: 'warning' });
       },
     });
   };
@@ -77,7 +83,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
         onSubmit={(values) => {
           createIssue(values);
         }}>
-        {({values, setFieldValue, submitForm}) => (
+        {({ values, setFieldValue, submitForm }) => (
           <View style={styles.form}>
             <TextField
               containerStyle={styles.input}
@@ -139,26 +145,26 @@ export const AddIssue: React.FC<AddIssueProps> = ({
               }}>
               {!!image.path ? (
                 <Image
-                  source={{uri: image.path}}
-                  style={{width: '100%', height: '100%'}}
+                  source={{ uri: image.path }}
+                  style={{ width: '100%', height: '100%' }}
                   resizeMode="contain"
                 />
               ) : (
-                <IconLabel
-                  prefix={
-                    <Icon color="white" type="ionicon" name="cloud-upload" />
-                  }
-                  color="white"
-                  text="Upload image"
-                />
-              )}
+                  <IconLabel
+                    prefix={
+                      <Icon color="white" type="ionicon" name="cloud-upload" />
+                    }
+                    color="white"
+                    text="Upload image"
+                  />
+                )}
             </Pressable>
             <View style={GridStyles.row}>
               <Button
                 onPress={onRequestClose}
                 containerStyle={styles.btnCancel}
                 title="Hủy"
-                buttonStyle={{backgroundColor: Colors.red}}
+                buttonStyle={{ backgroundColor: Colors.red }}
               />
               <Button
                 title="Lưu"
@@ -177,6 +183,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
             />
+
           </View>
         )}
       </Formik>
