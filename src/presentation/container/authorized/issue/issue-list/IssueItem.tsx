@@ -1,30 +1,24 @@
 import React from 'react';
-import {Image, Pressable, StyleSheet, View} from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 
-import {IconLabel, Spacer, TextView} from '@components';
-import {Colors, GridStyles, TextStyles} from '@resources';
-import {Icon} from 'react-native-elements';
-import {Issue} from '@data';
-import {useUser} from '@hooks';
+import { IconLabel, SDIImage, Spacer, TextView } from '@components';
+import { Colors, GridStyles, TextStyles } from '@resources';
+import { Icon } from 'react-native-elements';
+import { Issue } from '@data';
+import { useUser } from '@hooks';
 import moment from 'moment';
 export interface IssueItemProps {
   item: Issue;
   onPress: (item: Issue) => void;
   type: 'OPEN' | 'CLOSED';
 }
-export const IssueItem: React.FC<IssueItemProps> = ({item, onPress, type}) => {
+export const IssueItem: React.FC<IssueItemProps> = ({ item, onPress, type }) => {
   let isOpen = type === 'OPEN';
   let user = useUser();
   return (
     <Pressable onPress={() => onPress(item)} style={styles.container}>
-      <View style={{flexDirection: 'row', marginVertical: 5}}>
-        <Image
-          source={{
-            uri:
-              'https://1.bp.blogspot.com/-rt6mn1dJJ7M/XqZl2p-TboI/AAAAAAAAjO8/SzKdmwQAFhUH2CXgUH6kluj_G8Gig2-xgCLcBGAsYHQ/s1600/Anh-avatar-dep-cho-con-trai%2B%25281%2529.jpg',
-          }}
-          style={styles.image}
-        />
+      <View style={{ flexDirection: 'row', marginVertical: 5 }}>
+        <SDIImage fileID={item.vidagis_images || item.vidagis_list_path_image} style={styles.image} />
         <View>
           <View style={styles.infoContainer}>
             <TextView
@@ -47,16 +41,16 @@ export const IssueItem: React.FC<IssueItemProps> = ({item, onPress, type}) => {
               type="ionicon"
               size={15}
               name="person-outline"
-              style={{marginRight: 4}}
+              style={{ marginRight: 4 }}
             />
             <TextView
-              style={[styles.code, {marginVertical: 0}]}
+              style={[styles.code, { marginVertical: 0 }]}
               text={user.displayName}
             />
           </View>
         </View>
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <TextView style={styles.title} text={'Tên sự cố:'} />
         <TextView
           style={styles.normalText}
@@ -64,7 +58,7 @@ export const IssueItem: React.FC<IssueItemProps> = ({item, onPress, type}) => {
           text={item.vidagis_incident_name}
         />
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <TextView style={styles.title} text={'Thời gian phát hiện:'} />
         <TextView
           style={styles.normalText}
@@ -75,7 +69,7 @@ export const IssueItem: React.FC<IssueItemProps> = ({item, onPress, type}) => {
           ).format('HH:mm DD/MM/YYYY')}
         />
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <TextView style={styles.title} text={'Thời gian khắc phục:'} />
         <TextView
           style={styles.normalText}
@@ -83,9 +77,9 @@ export const IssueItem: React.FC<IssueItemProps> = ({item, onPress, type}) => {
           text={
             !isOpen
               ? moment(
-                  item.vidagis_handling_incident,
-                  'YYYY-MM-DDTHH:mm:ss',
-                ).format('HH:mm DD/MM/YYYY')
+                item.vidagis_handling_incident,
+                'YYYY-MM-DDTHH:mm:ss',
+              ).format('HH:mm DD/MM/YYYY')
               : '...'
           }
         />
@@ -115,6 +109,7 @@ const styles = StyleSheet.create({
   image: {
     width: '30%',
     borderRadius: 4,
+    marginRight: 15
   },
   infoContainer: {
     flex: 1,
