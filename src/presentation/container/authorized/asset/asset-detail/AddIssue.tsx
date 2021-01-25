@@ -25,7 +25,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
   id,
   setLoading
 }) => {
-  let [image, setImage] = useState<ImageProps>({} as ImageProps)
+  let [image, setImage] = useState<ImageProps>({} as ImageProps);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -39,7 +39,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
   };
 
   const handleConfirm = (date: any) => {
-    setDate(date)
+    setDate(date);
     hideDatePicker();
   };
 
@@ -47,10 +47,10 @@ export const AddIssue: React.FC<AddIssueProps> = ({
     onRequestClose()
     setLoading(true)
     IssueDataSource.createIssue({
-      vidagis_handling_incident: "",
+      vidagis_handling_incident: '',
       vidagis_id: id,
       vidagis_incident_name: name,
-      vidagis_incurred_incident: moment(date).format("DD/MM/YYYY HH:mm"),
+      vidagis_incurred_incident: moment(date).format('DD/MM/YYYY HH:mm'),
       vidagis_oranizationid: user.organizationID,
       vidagis_reason_incident: content,
       vidagis_status: 0,
@@ -70,8 +70,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
         showMessage({ message: 'Thất bại', type: 'warning' });
       },
     });
-
-  }
+  };
 
   const form = () => {
     return (
@@ -82,9 +81,9 @@ export const AddIssue: React.FC<AddIssueProps> = ({
           content: '',
         }}
         onSubmit={(values) => {
-          createIssue(values)
+          createIssue(values);
         }}>
-        {({ values, setFieldValue, submitForm, }) => (
+        {({ values, setFieldValue, submitForm }) => (
           <View style={styles.form}>
             <TextField
               containerStyle={styles.input}
@@ -94,7 +93,9 @@ export const AddIssue: React.FC<AddIssueProps> = ({
               inputProps={{
                 placeholder: 'Tên sự cố',
                 value: values.name,
-                onChangeText: (text) => { setFieldValue('name', text, false) }
+                onChangeText: (text) => {
+                  setFieldValue('name', text, false);
+                },
               }}
             />
             {/* <TextField
@@ -109,40 +110,54 @@ export const AddIssue: React.FC<AddIssueProps> = ({
             <TextField
               containerStyle={styles.input}
               prefix={
-                <Icon
-                  color={Colors.gray}
-                  type="ionicon"
-                  name="document-text"
-                />
+                <Icon color={Colors.gray} type="ionicon" name="document-text" />
               }
               inputProps={{
                 placeholder: 'Nội dung',
                 value: values.content,
-                onChangeText: (text) => { setFieldValue('content', text, false) }
+                onChangeText: (text) => {
+                  setFieldValue('content', text, false);
+                },
               }}
             />
-            <Pressable style={styles.datePickerContainer} onPress={showDatePicker}>
+            <Pressable
+              style={styles.datePickerContainer}
+              onPress={showDatePicker}>
               <Icon color={Colors.gray} type="ionicon" name="calendar" />
-              <TextView style={{
-                flex: 1,
-                paddingHorizontal: 8,
-              }} text={!!date ? moment(date).format("DD/MM/YYYY HH:mm") : `Thời gian phát hiện`} />
+              <TextView
+                style={{
+                  flex: 1,
+                  paddingHorizontal: 8,
+                }}
+                text={
+                  !!date
+                    ? moment(date).format('DD/MM/YYYY HH:mm')
+                    : `Thời gian phát hiện`
+                }
+              />
             </Pressable>
-            <Pressable style={styles.imageUpload} onPress={() => {
-              openImagePicker((image) => {
-                setImage(image)
-              })
-            }}>
-
-              {!!image.path ?
-                <Image source={{ uri: image.path }} style={{ width: '100%', height: '100%' }} resizeMode='contain' />
-                : <IconLabel
-                  prefix={
-                    <Icon color="white" type="ionicon" name="cloud-upload" />
-                  }
-                  color="white"
-                  text="Upload image"
-                />}
+            <Pressable
+              style={styles.imageUpload}
+              onPress={() => {
+                openImagePicker((image) => {
+                  setImage(image);
+                });
+              }}>
+              {!!image.path ? (
+                <Image
+                  source={{ uri: image.path }}
+                  style={{ width: '100%', height: '100%' }}
+                  resizeMode="contain"
+                />
+              ) : (
+                  <IconLabel
+                    prefix={
+                      <Icon color="white" type="ionicon" name="cloud-upload" />
+                    }
+                    color="white"
+                    text="Upload image"
+                  />
+                )}
             </Pressable>
             <View style={GridStyles.row}>
               <Button
@@ -181,33 +196,32 @@ export const AddIssue: React.FC<AddIssueProps> = ({
   );
 };
 
-
 const openImagePicker = (callback: (image: any) => void) => {
   let option: Options = {
     width: 300,
     height: 400,
     mediaType: 'photo',
-    forceJpg: true
-  }
-  Alert.alert("Chọn ảnh từ", '', [
+    forceJpg: true,
+  };
+  Alert.alert('Chọn ảnh từ', '', [
     {
-      text: 'Camera', onPress: () => {
-        ImagePicker.openCamera(option).then(image => {
-          callback && callback(image)
-
-        })
-      }
+      text: 'Camera',
+      onPress: () => {
+        ImagePicker.openCamera(option).then((image) => {
+          callback && callback(image);
+        });
+      },
     },
     {
-      text: 'Thư viện ảnh', onPress: () => {
-        ImagePicker.openPicker(option).then(image => {
-          callback && callback(image)
-
-        })
-      }
-    }
-  ])
-}
+      text: 'Thư viện ảnh',
+      onPress: () => {
+        ImagePicker.openPicker(option).then((image) => {
+          callback && callback(image);
+        });
+      },
+    },
+  ]);
+};
 
 const styles = StyleSheet.create({
   container: {

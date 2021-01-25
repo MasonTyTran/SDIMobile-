@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 
-import {IconLabel, Spacer, TextView} from '@components';
+import {IconLabel, SDIImage, Spacer, TextView} from '@components';
 import {Colors, GridStyles, TextStyles} from '@resources';
 import {Icon} from 'react-native-elements';
 import {WOProject} from '@data';
@@ -12,13 +12,7 @@ export interface TaskItemProps {
 export const TaskItem: React.FC<TaskItemProps> = ({item, onPress}) => {
   return (
     <Pressable onPress={() => onPress(item)} style={styles.container}>
-      <Image
-        source={{
-          uri:
-            'https://www.signfix.com.au/wp-content/uploads/2017/09/placeholder-600x400.png',
-        }}
-        style={styles.image}
-      />
+      <SDIImage fileID={item.vidagis_avatar} style={styles.image} />
       <View style={styles.infoContainer}>
         <View style={styles.nameRow}>
           <TextView style={styles.title} text={item.vidagis_name} />

@@ -10,6 +10,7 @@ import {RemoteException} from '../error';
 export interface RxRemoteProvider {
   token?: string;
   setToken(token: string): void;
+  onUnAuthorized?: () => void;
   /**
    * @summary perform @POST request with config
    * @param url
@@ -53,6 +54,8 @@ export class BearerAuthorizationRxAxiosProvider<Result = any>
 
   token?: string;
 
+  onUnAuthorized?: () => void;
+
   constructor(config: AxiosRequestConfig) {
     this.axiosInstance = axios.create(config);
   }
@@ -60,10 +63,6 @@ export class BearerAuthorizationRxAxiosProvider<Result = any>
   setToken(token: string) {
     this.token = token;
     this.axiosInstance.defaults.headers.common.access_token = token;
-    this.axiosInstance.interceptors.request.use((x) => {
-      console.log('request', x);
-      return x;
-    });
   }
 
   request<T>(requestConfig: AxiosRequestConfig): Observable<AxiosResponse<T>> {
@@ -74,6 +73,14 @@ export class BearerAuthorizationRxAxiosProvider<Result = any>
         observer.complete();
       } catch (error) {
         console.log('response =====', error.response);
+        const response = error.response as AxiosResponse;
+        if (
+          response &&
+          response.data === 'Thông tin xác thực không chính xác' &&
+          response.status === 403
+        ) {
+          // this.onUnAuthorized?.call(this);
+        }
         console.log('Config =====', error.config);
         observer.error(new RxAxiosProviderException(error));
       }
