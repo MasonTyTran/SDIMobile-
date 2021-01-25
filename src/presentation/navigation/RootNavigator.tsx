@@ -8,7 +8,7 @@ import {enableScreens} from 'react-native-screens';
 
 import {AuthDrawerNavigator} from './DrawerNavigator';
 import {AuthenticationNavigator} from './AuthenticationStack';
-import {RootStoreState, signInLocally, signOut} from '@shared-state';
+import {RootStoreState, signOut} from '@shared-state';
 import {FullScreenLoadingIndicator} from '../component/indicator';
 import {container} from 'tsyringe';
 import {RxRemoteProvider} from '@core';
@@ -39,7 +39,7 @@ export const RootNavigator: React.FC = () => {
   }, [dispatch]);
 
   React.useEffect(() => {
-    dispatch(signInLocally());
+    // dispatch(signInLocally());
     handleTokenExpired();
   }, [dispatch, handleTokenExpired]);
 
