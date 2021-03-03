@@ -82,6 +82,11 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
             label="Trợ giúp"
           /> */}
           <DrawerItem
+            onPress={goToRoute('NotificationList')}
+            icon={() => <Icon type="ionicon" name="notifications-outline" />}
+            label="Thông báo"
+          />
+          <DrawerItem
             onPress={() => dispatch(signOut())}
             icon={() => <Icon type="ionicon" name="log-out-outline" />}
             label="Đăng xuất"

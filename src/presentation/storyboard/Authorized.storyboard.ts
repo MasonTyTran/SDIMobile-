@@ -1,4 +1,4 @@
-import { WOProject, Asset } from '@data';
+import {WOProject, Asset} from '@data';
 
 export type AuthorizedStoryboardParamList = {
   Dashboard: undefined;
@@ -6,8 +6,9 @@ export type AuthorizedStoryboardParamList = {
   IssueMap: undefined;
   IssueList: undefined;
   IssueSearchResult: undefined;
-  TaskDetail: { project: WOProject };
-  AssetDetail: { asset: Asset };
+  TaskDetail: {project: WOProject};
+  AssetDetail: {asset: Asset};
   AssetList: undefined;
   AssetMap: undefined;
+  NotificationList: undefined;
 };

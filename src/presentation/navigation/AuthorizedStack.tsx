@@ -14,6 +14,7 @@ import {
   TaskDetail,
   TaskList,
 } from '@containers';
+import { NotificationList } from '../container/authorized/notification';
 
 const Stack = createStackNavigator<AuthorizedStoryboardParamList>();
 
@@ -29,6 +30,7 @@ export const AuthorizedNavigator: React.FC = () => {
       <Stack.Screen name="AssetList" component={AssetList} />
       <Stack.Screen name="IssueSearchResult" component={IssueSearchResult} />
       <Stack.Screen name="AssetDetail" component={AssetDetail} />
+      <Stack.Screen name="NotificationList" component={NotificationList} />
     </Stack.Navigator>
   );
 };
