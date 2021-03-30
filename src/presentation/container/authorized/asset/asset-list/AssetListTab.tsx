@@ -93,6 +93,9 @@ export const AssetListTab: React.FC<AssetListTabProps> = (props) => {
         value={keyword}
         onChangeText={onChangeKeyword}
       />
+      <View onStartShouldSetResponder={(e) => e.target}>
+
+      </View>
       <ListView
         isLoadingMore={loading}
         refreshing={refreshing}

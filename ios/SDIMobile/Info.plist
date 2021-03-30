@@ -40,7 +40,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) muốn truy cập camera upload ảnh tạo sự cố </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>$(PRODUCT_NAME) muốn truy vị trí để hiển thị mạng lưới tài sản quanh bạn</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>$(PRODUCT_NAME) muốn truy vị trí để hiển thị mạng lưới tài sản quanh bạn</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>$(PRODUCT_NAME) muốn truy vị trí để hiển thị mạng lưới tài sản quanh bạn</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) muốn truy cập Photo upload ảnh tạo sự cố</string>
 	<key>UIAppFonts</key>

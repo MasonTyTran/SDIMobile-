@@ -18,6 +18,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* SDIMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SDIMobileTests.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8858DB0064ED7DA057C6B898 /* libPods-SDIMobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0815EA9155A596D36232AA15 /* libPods-SDIMobile-tvOSTests.a */; };
+		B697673C26136C090070EBD3 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B697673B26136C090070EBD3 /* File.swift */; };
 		E2884B38E444A96D73A841CF /* libPods-SDIMobile-SDIMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C33246B08EAE64CF324A9D /* libPods-SDIMobile-SDIMobileTests.a */; };
 		E8A5706B5CD456EABBB9CD5E /* libPods-SDIMobile-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31EBD8F95ADA02E89B928402 /* libPods-SDIMobile-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,8 @@
 		7CA5C49A4E2A565CD1EFA8C8 /* Pods-SDIMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SDIMobile.release.xcconfig"; path = "Target Support Files/Pods-SDIMobile/Pods-SDIMobile.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SDIMobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A579138AE0A8256AD3ADB84E /* Pods-SDIMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SDIMobile.debug.xcconfig"; path = "Target Support Files/Pods-SDIMobile/Pods-SDIMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		B697673A26136C090070EBD3 /* SDIMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDIMobile-Bridging-Header.h"; sourceTree = "<group>"; };
+		B697673B26136C090070EBD3 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		BF9871470774751DE9F83C9C /* Pods-SDIMobile-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SDIMobile-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-SDIMobile-tvOSTests/Pods-SDIMobile-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C2C33246B08EAE64CF324A9D /* libPods-SDIMobile-SDIMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SDIMobile-SDIMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D425CF2AACECFCC364927835 /* libPods-SDIMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SDIMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +135,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				B697673B26136C090070EBD3 /* File.swift */,
+				B697673A26136C090070EBD3 /* SDIMobile-Bridging-Header.h */,
 			);
 			name = SDIMobile;
 			sourceTree = "<group>";
@@ -294,7 +299,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = FQ4PQN7KW5;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1240;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -641,6 +646,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				B697673C26136C090070EBD3 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -682,6 +688,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5CE7BE82C07C5E3DA656AB40 /* Pods-SDIMobile-SDIMobileTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -705,6 +712,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 329846E0E96FB612D4B3FD2F /* Pods-SDIMobile-SDIMobileTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = SDIMobileTests/Info.plist;
@@ -739,6 +747,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hue.aktivmap;
 				PRODUCT_NAME = Aktivmap;
+				SWIFT_OBJC_BRIDGING_HEADER = "SDIMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -762,6 +771,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hue.aktivmap;
 				PRODUCT_NAME = Aktivmap;
+				SWIFT_OBJC_BRIDGING_HEADER = "SDIMobile-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
