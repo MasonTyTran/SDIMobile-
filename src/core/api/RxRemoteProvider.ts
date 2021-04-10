@@ -18,7 +18,11 @@ export interface RxRemoteProvider {
    *
    * @returns Either Axios response with generic data: T or @RemoteException if failed
    */
-  post<T>(url: string, data?: any): Observable<AxiosResponse<T>>;
+  post<T>(
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig,
+  ): Observable<AxiosResponse<T>>;
 
   /**
    * @summary perform @GET request with config
@@ -69,6 +73,7 @@ export class BearerAuthorizationRxAxiosProvider<Result = any>
     return Observable.create(async (observer: Observer<AxiosResponse<T>>) => {
       try {
         const result = await this.axiosInstance.request(requestConfig);
+        console.log('result', result);
         observer.next(result);
         observer.complete();
       } catch (error) {
@@ -87,11 +92,16 @@ export class BearerAuthorizationRxAxiosProvider<Result = any>
     });
   }
 
-  post<T>(url: string, data: any): Observable<AxiosResponse<T>> {
+  post<T>(
+    url: string,
+    data: any,
+    config: AxiosRequestConfig = {},
+  ): Observable<AxiosResponse<T>> {
     return this.request({
       method: 'POST',
       data,
       url,
+      ...config,
     });
   }
   get<T>(url: string): Observable<AxiosResponse<T>> {

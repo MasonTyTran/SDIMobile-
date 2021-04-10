@@ -116,12 +116,12 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
             icon="albums"
             title="Công việc"
           />
-          {/* <NavButton
+          <NavButton
             onPress={navToRoute('IssueMap')}
             color={red}
             icon="bug"
             title="Sự cố"
-          /> */}
+          />
           <NavButton
             onPress={navToRoute('AssetMap')}
             color={accent}

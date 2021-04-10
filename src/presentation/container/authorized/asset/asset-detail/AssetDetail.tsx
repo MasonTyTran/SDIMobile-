@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 
-import { Header, Icon } from 'react-native-elements';
+import {Header, Icon} from 'react-native-elements';
 
-import { FullScreenLoadingIndicator, TextView } from '@components';
-import { Colors } from '@resources';
+import {FullScreenLoadingIndicator, TextView} from '@components';
+import {Colors} from '@resources';
 
-import { AssetDetailProps } from './types';
-import { AssetInfo } from './AssetInfo';
-import { AddIssue } from './AddIssue';
+import {AssetDetailProps} from './types';
+import {AssetInfo} from './AssetInfo';
+import {AddIssue} from './AddIssue';
 
 export const AssetDetail: React.FC<AssetDetailProps> = (props) => {
+  const {navigation} = props;
   const asset = props.route.params.asset;
   const [addVisible, setAddVisible] = React.useState(false);
   const [loading, setLoading] = useState<boolean>(false);
+
   return (
     <>
       <Header
@@ -28,6 +30,18 @@ export const AssetDetail: React.FC<AssetDetailProps> = (props) => {
         centerComponent={
           <TextView text="Chi tiết tài sản" style={styles.header} />
         }
+        rightComponent={
+          <TextView
+            onPress={() =>
+              navigation.navigate('IssueList', {
+                id: asset.id,
+                tableId: asset.tableid,
+              })
+            }
+            text="Sự cố"
+            style={styles.issue}
+          />
+        }
         backgroundColor={Colors.gray}
       />
       <AssetInfo item={asset} />
@@ -39,7 +53,7 @@ export const AssetDetail: React.FC<AssetDetailProps> = (props) => {
         </TouchableOpacity>
       )}
       <AddIssue
-        id={asset.gid}
+        id={asset.id}
         setLoading={setLoading}
         onRequestClose={() => setAddVisible(false)}
         visible={addVisible}
@@ -60,6 +74,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
   },
+  issue: {
+    color: 'white',
+    fontWeight: '600',
+  },
   fab: {
     position: 'absolute',
     bottom: 36,
@@ -71,5 +89,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  tabBarStyle: { backgroundColor: 'white' },
+  tabBarStyle: {backgroundColor: 'white'},
 });

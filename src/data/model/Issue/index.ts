@@ -1,9 +1,8 @@
 export type IssueListRequest = {
-  user_id: string;
-  organization_id: string;
+  vidagis_id: string;
   page_num: number;
   page_size: number;
-  keyword?: string;
+  vidagis_tableid: string;
 };
 export type IssueListResponse = {
   Message: string;
@@ -14,17 +13,15 @@ export type IssueListResponse = {
   };
 };
 
-export type CreateIssueRequest = {
-  vidagis_userid: string;
-  vidagis_oranizationid: string;
+export interface CreateIssueRequest {
   vidagis_id: number | string;
   vidagis_incident_name: string;
-  vidagis_type_incident: number; //=0
+  vidagis_type_incident: string; //=0
   vidagis_reason_incident: string;
   vidagis_incurred_incident: string;
-  vidagis_status: number; //=0
-  vidagis_handling_incident: string; //=""
-};
+  file?: any; //=0
+  vidagis_handling_incident?: string; //=""
+}
 export type CreateIssueResponse = {
   Message: string;
   Code: number;
@@ -67,4 +64,20 @@ export interface Issue {
   geom?: any;
   vidagis_warning_id?: any;
   project_status?: any;
+}
+
+export interface IssueType {
+  event_id: string;
+  event_name: string;
+}
+
+export interface ListIssueTypeData {
+  total_records: number;
+  type_incident: IssueType[];
+}
+
+export interface ListIssueTypeResponse {
+  Message: string;
+  Code: number;
+  Data: ListIssueTypeData;
 }

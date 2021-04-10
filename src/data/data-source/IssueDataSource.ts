@@ -7,6 +7,8 @@ import {
   CreateIssueResponse,
   IssueListRequest,
   IssueListResponse,
+  ListIssueTypeData,
+  ListIssueTypeResponse,
 } from '../model';
 import {map} from 'rxjs/operators';
 
@@ -34,9 +36,19 @@ class _IssueDataSource {
   }
 
   createIssue(data: CreateIssueRequest): Observable<CreateIssueResponse> {
+    const form = new FormData();
+    Object.keys(data).forEach((k) => data[k] && form.append(k, data[k]));
+    console.log(form);
     return this.provider
-      .post<CreateIssueResponse>('asset/incident_add', data)
+      .post<CreateIssueResponse>('asset/incident_add', form, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      })
       .pipe(map((x) => x.data));
+  }
+  listIssueType(): Observable<ListIssueTypeData> {
+    return this.provider
+      .get<ListIssueTypeResponse>('incident/type_incident')
+      .pipe(map((x) => x.data.Data));
   }
 }
 

@@ -1,89 +1,120 @@
-import React, { useState } from 'react';
-import { Alert, Image, Modal, Pressable, StyleSheet, View } from 'react-native';
+import React from 'react';
+import {
+  Alert,
+  Image,
+  Modal,
+  Platform,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native';
 
-import { Button, Icon } from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 
-import { FullScreenLoadingIndicator, IconLabel, TextField, TextView } from '@components';
-import { Colors, GridStyles } from '@resources';
-import { Formik } from 'formik';
-import ImagePicker, { Options, Image as ImageProps } from "react-native-image-crop-picker";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { IssueDataSource } from '@data';
-import { useUser } from '@hooks';
-import moment from "moment";
-import { showMessage } from 'react-native-flash-message';
+import {IconLabel, TextField} from '@components';
+import {Colors, GridStyles} from '@resources';
+import {Formik} from 'formik';
+import ImagePicker, {
+  Options,
+  Image as ImageProps,
+} from 'react-native-image-crop-picker';
+import {CreateIssueRequest, IssueDataSource} from '@data';
+import {showMessage} from 'react-native-flash-message';
+import {DatePicker} from './DatePicker';
+import moment from 'moment';
+import {TypePicker} from './TypePicker';
 export interface AddIssueProps {
   visible: boolean;
   onRequestClose: () => void;
   id: number | string;
-  setLoading: (values: boolean) => void
+  setLoading: (values: boolean) => void;
 }
 
 export const AddIssue: React.FC<AddIssueProps> = ({
   visible,
   onRequestClose,
   id,
-  setLoading
+  setLoading,
 }) => {
-  let [image, setImage] = useState<ImageProps>({} as ImageProps);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [date, setDate] = useState(new Date());
-
-  const user = useUser()
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (date: any) => {
-    setDate(date);
-    hideDatePicker();
-  };
-
-  const createIssue = ({ name, content }: { name: string, content: string }) => {
-    onRequestClose()
-    setLoading(true)
-    IssueDataSource.createIssue({
-      vidagis_handling_incident: '',
-      vidagis_id: id,
-      vidagis_incident_name: name,
-      vidagis_incurred_incident: moment(date).format('DD/MM/YYYY HH:mm'),
-      vidagis_oranizationid: user.organizationID,
-      vidagis_reason_incident: content,
-      vidagis_status: 0,
-      vidagis_type_incident: 0,
-      vidagis_userid: user.id,
-    }).subscribe({
+  const createIssue = (request: CreateIssueRequest) => {
+    setLoading(true);
+    IssueDataSource.createIssue(request).subscribe({
       next: (res) => {
-        setLoading(false)
-        setImage({} as ImageProps)
-        setDate(new Date())
-        showMessage({ message: 'Thành công', type: 'success' });
-
+        if (res.Data) {
+          showMessage({message: 'Thành công', type: 'success'});
+          onRequestClose();
+        } else {
+          showMessage({message: 'Thất bại', type: 'warning'});
+        }
       },
       error: (err) => {
-        setLoading(false)
-        console.log("000err", err);
-        showMessage({ message: 'Thất bại', type: 'warning' });
+        console.log('000err', err);
+        showMessage({message: 'Thất bại', type: 'warning'});
       },
+      complete: () => setLoading(false),
     });
   };
 
   const form = () => {
     return (
-      <Formik
+      <Formik<{
+        name: string;
+        content: string;
+        image?: ImageProps;
+        date?: Date;
+        hDate?: Date;
+        type?: string;
+      }>
         initialValues={{
           name: '',
-          // location: '',
           content: '',
+          type: '',
+          image: undefined,
+          date: undefined,
+          hDate: undefined,
         }}
         onSubmit={(values) => {
-          createIssue(values);
+          if (!values.date) {
+            return showMessage({message: 'Ngày phát sinh không thể bỏ trống'});
+          }
+          if (!values.name) {
+            return showMessage({message: 'Tên sự kiện không thể bỏ trống'});
+          }
+          if (!values.content) {
+            return showMessage({message: 'Lí do không thể bỏ trống'});
+          }
+          if (!values.type) {
+            return showMessage({message: 'Loại sự kiện không thể bỏ trống'});
+          }
+          let image;
+          if (values.image) {
+            image = {
+              uri: Platform.select({
+                ios: values.image.sourceURL,
+                default: values.image.path,
+              }),
+              type: values.image.mime,
+              name: Platform.select({
+                ios: values.image.filename,
+                default: 'image.png',
+              }),
+            };
+          }
+          createIssue({
+            vidagis_id: id,
+            vidagis_incident_name: values.name,
+            vidagis_incurred_incident: moment(values.date).format(
+              'DD/MM/YYYY HH:mm',
+            ),
+            vidagis_reason_incident: values.content,
+            vidagis_type_incident: values.type,
+            file: image,
+            vidagis_handling_incident: values.hDate
+              ? moment(values.hDate).format('DD/MM/YYYY HH:mm')
+              : undefined,
+          });
         }}>
-        {({ values, setFieldValue, submitForm }) => (
+        {({values, setFieldValue, submitForm}) => (
           <View style={styles.form}>
             <TextField
               containerStyle={styles.input}
@@ -98,15 +129,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
                 },
               }}
             />
-            {/* <TextField
-                containerStyle={styles.input}
-                prefix={
-                  <Icon color={Colors.gray} type="ionicon" name="location" />
-                }
-                inputProps={{
-                  placeholder: 'Vị trí',
-                }}
-              /> */}
+
             <TextField
               containerStyle={styles.input}
               prefix={
@@ -120,51 +143,56 @@ export const AddIssue: React.FC<AddIssueProps> = ({
                 },
               }}
             />
-            <Pressable
-              style={styles.datePickerContainer}
-              onPress={showDatePicker}>
-              <Icon color={Colors.gray} type="ionicon" name="calendar" />
-              <TextView
-                style={{
-                  flex: 1,
-                  paddingHorizontal: 8,
-                }}
-                text={
-                  !!date
-                    ? moment(date).format('DD/MM/YYYY HH:mm')
-                    : `Thời gian phát hiện`
-                }
-              />
-            </Pressable>
+            <TypePicker
+              value={values.type}
+              onChange={(v) => setFieldValue('type', v)}
+            />
+
+            <DatePicker
+              date={values.date}
+              onChange={(date) => setFieldValue('date', date)}
+              placeholder="Thời gian phát hiện"
+            />
+            <DatePicker
+              date={values.hDate}
+              onChange={(date) => setFieldValue('hDate', date)}
+              placeholder="Thời gian xử lí"
+            />
             <Pressable
               style={styles.imageUpload}
               onPress={() => {
                 openImagePicker((image) => {
-                  setImage(image);
+                  console.warn(image);
+                  setFieldValue('image', image);
                 });
               }}>
-              {!!image.path ? (
+              {values.image?.path ? (
                 <Image
-                  source={{ uri: image.path }}
-                  style={{ width: '100%', height: '100%' }}
+                  source={{uri: values.image.path}}
+                  style={{width: '100%', height: '100%'}}
                   resizeMode="contain"
                 />
               ) : (
-                  <IconLabel
-                    prefix={
-                      <Icon color="white" type="ionicon" name="cloud-upload" />
-                    }
-                    color="white"
-                    text="Upload image"
-                  />
-                )}
+                <IconLabel
+                  onPress={() => {
+                    openImagePicker((image) => {
+                      setFieldValue('image', image);
+                    });
+                  }}
+                  prefix={
+                    <Icon color="white" type="ionicon" name="cloud-upload" />
+                  }
+                  color="white"
+                  text="Upload image"
+                />
+              )}
             </Pressable>
             <View style={GridStyles.row}>
               <Button
                 onPress={onRequestClose}
                 containerStyle={styles.btnCancel}
                 title="Hủy"
-                buttonStyle={{ backgroundColor: Colors.red }}
+                buttonStyle={{backgroundColor: Colors.red}}
               />
               <Button
                 title="Lưu"
@@ -175,15 +203,6 @@ export const AddIssue: React.FC<AddIssueProps> = ({
                 }}
               />
             </View>
-            <DateTimePickerModal
-              minimumDate={new Date()}
-              isVisible={isDatePickerVisible}
-              date={date}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
-
           </View>
         )}
       </Formik>
@@ -207,17 +226,13 @@ const openImagePicker = (callback: (image: any) => void) => {
     {
       text: 'Camera',
       onPress: () => {
-        ImagePicker.openCamera(option).then((image) => {
-          callback && callback(image);
-        });
+        ImagePicker.openCamera(option).then(callback);
       },
     },
     {
       text: 'Thư viện ảnh',
       onPress: () => {
-        ImagePicker.openPicker(option).then((image) => {
-          callback && callback(image);
-        });
+        ImagePicker.openPicker(option).then(callback);
       },
     },
   ]);
