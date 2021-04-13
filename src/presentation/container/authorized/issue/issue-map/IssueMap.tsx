@@ -69,7 +69,7 @@ export const IssueMap: React.FC<IssueMapProps> = (props) => {
           />
         }
         centerComponent={
-          <TextView text="Mạng lưới sự cố" style={styles.header} />
+          <TextView text="Mạng lưới sự kiện" style={styles.header} />
         }
         backgroundColor={Colors.gray}
       />

@@ -122,7 +122,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
                 <Icon color={Colors.gray} type="ionicon" name="warning" />
               }
               inputProps={{
-                placeholder: 'Tên sự cố',
+                placeholder: 'Tên sự kiện',
                 value: values.name,
                 onChangeText: (text) => {
                   setFieldValue('name', text, false);

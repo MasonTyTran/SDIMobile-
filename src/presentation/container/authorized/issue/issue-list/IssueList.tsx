@@ -89,7 +89,7 @@ export const IssueList: React.FC<IssueListProps> = (props) => {
           />
         }
         centerComponent={
-          <TextView text="Thông tin sự cố" style={styles.header} />
+          <TextView text="Thông tin sự kiện" style={styles.header} />
         }
         rightComponent={
           <Icon

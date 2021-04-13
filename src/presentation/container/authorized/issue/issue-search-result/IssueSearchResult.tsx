@@ -103,7 +103,7 @@ export const IssueSearchResult: React.FC<IssueSearchResultProps> = (props) => {
                     />
                 }
                 centerComponent={
-                    <TextView text="Tìm kiếm sự cố" style={styles.header} />
+                    <TextView text="Tìm kiếm sự kiện" style={styles.header} />
                 }
                 backgroundColor={Colors.gray}
             />

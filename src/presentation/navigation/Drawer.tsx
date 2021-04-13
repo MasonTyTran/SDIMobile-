@@ -67,14 +67,14 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
             label="Tài sản"
           />
           <DrawerItem
-            onPress={goToRoute('IssueMap')}
-            icon={() => <Icon type="ionicon" name="alert-circle-outline" />}
-            label="Sự cố"
+            onPress={goToRoute('AssetList')}
+            icon={() => <Icon type="ionicon" name="search-outline" />}
+            label="Tìm kiếm tài sản"
           />
           {/* <DrawerItem
             onPress={goToRoute('IssueList')}
             icon={() => <Icon type="ionicon" name="alert-circle-outline" />}
-            label="Danh sách sự cố"
+            label="Danh sách sự kiện"
           /> */}
           {/* <DrawerItem
             onPress={() => {}}

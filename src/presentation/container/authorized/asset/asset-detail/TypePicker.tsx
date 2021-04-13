@@ -30,7 +30,7 @@ export const TypePicker: React.FC<TypePickerProps> = ({onChange, value}) => {
         style={{}}
         value={value}
         onValueChange={onChange}
-        placeholder="Loại sự cố"
+        placeholder="Loại sự kiện"
         items={data.map((x) => ({value: x.event_id, label: x.event_name}))}>
         <View style={styles.datePickerContainer}>
           {loading ? (
@@ -38,7 +38,7 @@ export const TypePicker: React.FC<TypePickerProps> = ({onChange, value}) => {
           ) : (
             <>
               <Icon color={Colors.gray} type="ionicon" name="albums" />
-              <TextView style={styles.text} text={label ?? 'Loại sự cố'} />
+              <TextView style={styles.text} text={label ?? 'Loại sự kiện'} />
             </>
           )}
         </View>

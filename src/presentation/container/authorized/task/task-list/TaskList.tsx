@@ -128,6 +128,14 @@ export const TaskList: React.FC<TaskListProps> = (props) => {
         centerComponent={
           <TextView text="Danh sách công việc" style={styles.header} />
         }
+        rightComponent={
+          <Icon
+            color="#fff"
+            onPress={() => props.navigation.navigate('AssetList')}
+            type="ionicon"
+            name="search-outline"
+          />
+        }
         backgroundColor={Colors.gray}
       />
       <TabView

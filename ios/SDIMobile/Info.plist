@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) muốn truy cập camera upload ảnh tạo sự cố </string>
+	<string>$(PRODUCT_NAME) muốn truy cập camera upload ảnh tạo sự kiện </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) muốn truy vị trí để hiển thị mạng lưới tài sản quanh bạn</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -46,7 +46,7 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) muốn truy vị trí để hiển thị mạng lưới tài sản quanh bạn</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) muốn truy cập Photo upload ảnh tạo sự cố</string>
+	<string>$(PRODUCT_NAME) muốn truy cập Photo upload ảnh tạo sự kiện</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

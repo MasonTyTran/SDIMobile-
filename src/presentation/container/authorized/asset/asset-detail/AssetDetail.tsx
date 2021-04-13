@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 
-import {Header, Icon} from 'react-native-elements';
+import {Header, Icon, ListItem} from 'react-native-elements';
 
 import {FullScreenLoadingIndicator, TextView} from '@components';
 import {Colors} from '@resources';
@@ -38,7 +38,7 @@ export const AssetDetail: React.FC<AssetDetailProps> = (props) => {
                 tableId: asset.tableid,
               })
             }
-            text="Sự cố"
+            text="Sự kiện"
             style={styles.issue}
           />
         }
@@ -49,7 +49,7 @@ export const AssetDetail: React.FC<AssetDetailProps> = (props) => {
         <TouchableOpacity
           onPress={() => setAddVisible(true)}
           style={styles.fab}>
-          <Icon color={'white'} name="add" type="ionicon" />
+          <ListItem.Title style={{color: 'white'}}>Thêm sự kiện</ListItem.Title>
         </TouchableOpacity>
       )}
       <AddIssue
@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 36,
     right: 36,
-    width: FABSize,
     height: FABSize,
+    paddingHorizontal: 16,
     borderRadius: FABSize * 0.5,
     backgroundColor: Colors.gray,
     justifyContent: 'center',

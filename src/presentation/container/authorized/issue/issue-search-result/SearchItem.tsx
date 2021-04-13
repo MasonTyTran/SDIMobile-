@@ -50,7 +50,7 @@ export const SearchItem: React.FC<SearchItemProps> = ({ item, onPress }) => {
                 </View>
             </View>
             <View style={{ flexDirection: 'row' }}>
-                <TextView style={styles.title} text={'Tên sự cố:'} />
+                <TextView style={styles.title} text={'Tên sự kiện:'} />
                 <TextView
                     style={styles.normalText}
                     numberOfLines={1}

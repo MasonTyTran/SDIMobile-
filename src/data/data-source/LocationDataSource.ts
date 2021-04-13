@@ -1,5 +1,6 @@
 import {PermissionsAndroid, Platform} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import {Observable, ReplaySubject} from 'rxjs';
 
 class _LocationDataSource {
   async requestPermission(): Promise<boolean> {
@@ -24,6 +25,13 @@ class _LocationDataSource {
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
     });
+  }
+  trackLocation(): Observable<Geolocation.GeoPosition> {
+    const subject = new ReplaySubject<Geolocation.GeoPosition>();
+    Geolocation.watchPosition((position) => {
+      subject.next(position);
+    }, subject.error);
+    return subject;
   }
 }
 

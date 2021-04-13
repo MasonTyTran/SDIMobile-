@@ -84,6 +84,14 @@ export const NotificationList: React.FC<NotificationListProps> = (props) => {
         centerComponent={
           <TextView text="Danh sách thông báo" style={styles.header} />
         }
+        rightComponent={
+          <Icon
+            color="#fff"
+            onPress={() => props.navigation.navigate('AssetList')}
+            type="ionicon"
+            name="search-outline"
+          />
+        }
         backgroundColor={Colors.gray}
       />
       <ListView

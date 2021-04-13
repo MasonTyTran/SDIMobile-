@@ -9,13 +9,13 @@ import {FullScreenLoadingIndicator, TextView} from '@components';
 import {Colors} from '@resources';
 
 import {AssetMapProps} from './types';
-import {AssetSearch} from './AssetSearch';
 import {container} from 'tsyringe';
 import {AppDependencies} from '@di';
 import {RxRemoteProvider} from '@core';
 import {LocationDataSource} from '@data';
 
 export const AssetMap: React.FC<AssetMapProps> = (props) => {
+  const {navigation} = props;
   const provider = container.resolve<RxRemoteProvider>(
     AppDependencies.ApiProvider,
   );
@@ -73,12 +73,17 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
         centerComponent={
           <TextView text="Mạng lưới tài sản" style={styles.header} />
         }
+        rightComponent={
+          <Icon
+            color="#fff"
+            onPress={() => navigation.navigate('AssetList')}
+            type="ionicon"
+            name="search-outline"
+          />
+        }
         backgroundColor={Colors.gray}
       />
-      <View style={styles.container}>
-        {renderWebview()}
-        <AssetSearch onSearch={() => props.navigation.navigate('AssetList')} />
-      </View>
+      <View style={styles.container}>{renderWebview()}</View>
     </>
   );
 };

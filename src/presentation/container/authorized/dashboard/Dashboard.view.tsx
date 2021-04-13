@@ -1,15 +1,15 @@
 import React from 'react';
-import { Pressable, RefreshControl, View, ScrollView } from 'react-native';
+import {Pressable, RefreshControl, View, ScrollView} from 'react-native';
 // import from library
-import { PieChart } from 'react-native-svg-charts';
+import {PieChart} from 'react-native-svg-charts';
 // import from alias
-import { TextView } from '@components';
+import {TextView} from '@components';
 // localImport
-import { useDashboardModel } from './Dashboard.hooks';
-import { DashboardProps } from './types';
-import { styles } from './Dashboard.style';
-import { Header, Icon } from 'react-native-elements';
-import { AuthorizedStoryboardParamList } from '@storyboards';
+import {useDashboardModel} from './Dashboard.hooks';
+import {DashboardProps} from './types';
+import {styles} from './Dashboard.style';
+import {Header, Icon} from 'react-native-elements';
+import {AuthorizedStoryboardParamList} from '@storyboards';
 import moment from 'moment';
 
 const LEGENDS = ['Đã hoàn thành', 'Chưa hoàn thành'];
@@ -23,17 +23,17 @@ const NavButton = (props: {
   return (
     <Pressable
       onPress={props.onPress}
-      style={[styles.navButton, { backgroundColor: props.color }]}>
+      style={[styles.navButton, {backgroundColor: props.color}]}>
       <Icon color="white" type="ionicon" name={props.icon} />
       <TextView style={styles.navText} text={props.title} />
     </Pressable>
   );
 };
 
-const Legend = (props: { title: string; color: string }) => {
+const Legend = (props: {title: string; color: string}) => {
   return (
     <View style={styles.legend}>
-      <View style={[styles.circle, { backgroundColor: props.color }]} />
+      <View style={[styles.circle, {backgroundColor: props.color}]} />
       <TextView text={props.title} />
     </View>
   );
@@ -46,7 +46,7 @@ const orange = 'rgb(233,184,151)';
 const gray = 'rgb(82,89,108)';
 
 export const Dashboard: React.FC<DashboardProps> = (props) => {
-  const { navigation } = props;
+  const {navigation} = props;
   const {
     totalInprogress,
     totalCompleted,
@@ -77,6 +77,14 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
             color={'white'}
             type="ionicon"
             name="menu"
+          />
+        }
+        rightComponent={
+          <Icon
+            color="#fff"
+            onPress={() => navigation.navigate('AssetList')}
+            type="ionicon"
+            name="search-outline"
           />
         }
         centerComponent={<TextView text="Trang chủ" style={styles.header} />}
@@ -116,12 +124,12 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
             icon="albums"
             title="Công việc"
           />
-          <NavButton
+          {/* <NavButton
             onPress={navToRoute('IssueMap')}
             color={red}
             icon="bug"
-            title="Sự cố"
-          />
+            title="Sự kiện"
+          /> */}
           <NavButton
             onPress={navToRoute('AssetMap')}
             color={accent}
