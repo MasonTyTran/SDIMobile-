@@ -1,6 +1,6 @@
 import {RouteProp, CompositeNavigationProp} from '@react-navigation/native';
 
-import {AuthorizedStoryboardParamList} from '@storyboards';
+import {AuthorizedStoryboardParamList, TaskState} from '@storyboards';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {WOProject} from '@data';
@@ -19,5 +19,5 @@ export type TaskDetailProps = {
   navigation: TaskDetailNavigationProps;
   route: TaskDetailRouteProp;
 };
-export type TaskInfoProps = {item: WOProject};
+export type TaskInfoProps = {item: WOProject; taskState: TaskState};
 export type TaskFeedBackProps = {item: WOProject};

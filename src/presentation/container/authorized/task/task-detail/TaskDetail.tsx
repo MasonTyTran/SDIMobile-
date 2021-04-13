@@ -13,7 +13,7 @@ import {TaskInfo} from './TaskInfo';
 
 const initialLayout = {width: Dimensions.get('window').width};
 export const TaskDetail: React.FC<TaskDetailProps> = (props) => {
-  const project = props.route.params.project;
+  const {project, state} = props.route.params;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'Information', title: 'Thông tin'},
@@ -21,7 +21,7 @@ export const TaskDetail: React.FC<TaskDetailProps> = (props) => {
   ]);
 
   const renderScene = SceneMap({
-    Information: () => <TaskInfo item={project} />,
+    Information: () => <TaskInfo item={project} taskState={state} />,
     FeedBack: () => <TaskFeedBack item={project} />,
   });
 

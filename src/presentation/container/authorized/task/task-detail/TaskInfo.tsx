@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Divider, Icon} from 'react-native-elements';
 
 import {
@@ -15,7 +15,7 @@ import {DateTimeBox, InfoBox} from './common';
 import {useTaskInfo} from './useTaskInfo';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
+export const TaskInfo: React.FC<TaskInfoProps> = ({item, taskState}) => {
   const {
     setEndDate,
     setStartDate,
@@ -28,6 +28,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
     loading,
     complete,
     previous,
+    forward,
   } = useTaskInfo(item);
   return (
     <KeyboardAwareScrollView style={styles.container}>
@@ -81,26 +82,40 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
         value={completedTime}
       />
       <View style={styles.buttonContainer}>
-        <IconLabel
-          onPress={previous}
-          prefix={
-            <Icon color={Colors.gray} name="play-skip-back" type="ionicon" />
-          }
-          color={Colors.gray}
-          text="TRẢ LẠI"
-        />
-        <IconLabel
-          onPress={complete}
-          prefix={
-            <Icon
-              color={Colors.gray}
-              name="checkmark-done-circle"
-              type="ionicon"
-            />
-          }
-          color={Colors.gray}
-          text="HOÀN THÀNH"
-        />
+        {taskState === 'PROGRESS' && (
+          <IconLabel
+            onPress={previous}
+            prefix={
+              <Icon color={Colors.gray} name="play-skip-back" type="ionicon" />
+            }
+            color={Colors.gray}
+            text="TRẢ LẠI"
+          />
+        )}
+        {taskState === 'PROGRESS' && (
+          <IconLabel
+            onPress={complete}
+            prefix={
+              <Icon
+                color={Colors.gray}
+                name="checkmark-done-circle"
+                type="ionicon"
+              />
+            }
+            color={Colors.gray}
+            text="HOÀN THÀNH"
+          />
+        )}
+        {taskState === 'INIT' && (
+          <IconLabel
+            onPress={forward}
+            prefix={
+              <Icon color={Colors.gray} name="arrow-forward" type="ionicon" />
+            }
+            color={Colors.gray}
+            text="Bước tiếp theo"
+          />
+        )}
       </View>
     </KeyboardAwareScrollView>
   );

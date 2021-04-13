@@ -20,6 +20,7 @@ const OpenTab = (
   user: User,
 ) => (
   <TaskListTab
+    taskState="INIT"
     getData={(keyword, i) =>
       WODataSource.listOpenTask({
         keyword,
@@ -38,6 +39,7 @@ const InprogressTab = (
   user: User,
 ) => (
   <TaskListTab
+    taskState="PROGRESS"
     getData={(keyword, i) =>
       WODataSource.listInProgressTask({
         keyword,
@@ -56,6 +58,7 @@ const CompletedTab = (
   user: User,
 ) => (
   <TaskListTab
+    taskState="COMPLETED"
     getData={(keyword, i) =>
       WODataSource.listCompletedTask({
         keyword,
@@ -73,6 +76,7 @@ const OverdueTab = (
   user: User,
 ) => (
   <TaskListTab
+    taskState="OVERDUE"
     getData={(keyword, i) =>
       WODataSource.listOverdueTask({
         keyword,

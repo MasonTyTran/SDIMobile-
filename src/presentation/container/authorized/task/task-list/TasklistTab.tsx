@@ -10,9 +10,11 @@ import {ListView} from '@components';
 import {TaskItem} from './TaskItem';
 import {WOListResponse, WOProject} from '@data';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {AuthorizedStoryboardParamList} from '@storyboards';
+import {AuthorizedStoryboardParamList, TaskState} from '@storyboards';
+import {useFocusEffect} from '@react-navigation/core';
 
 export interface TaskListTabProps {
+  taskState: TaskState;
   navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>;
   getData: (keyword: string, index: number) => Observable<WOListResponse>;
 }
@@ -81,13 +83,21 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
     debounceRefresh(t);
   };
 
-  React.useEffect(onRefresh, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      onRefresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []),
+  );
 
   const renderItem = ({item}: ListRenderItemInfo<WOProject>) => {
     return (
       <TaskItem
         onPress={(project) =>
-          props.navigation.navigate('TaskDetail', {project})
+          props.navigation.navigate('TaskDetail', {
+            project,
+            state: props.taskState,
+          })
         }
         item={item}
       />

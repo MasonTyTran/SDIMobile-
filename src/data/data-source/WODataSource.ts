@@ -45,6 +45,11 @@ class _WODataSource {
       .post<WOListResponse>('project/backward', data)
       .pipe(map((x) => x.data));
   }
+  moveToNextStep(data: WOStepRequest): Observable<PostResponse> {
+    return this.provider
+      .post<WOListResponse>('project/forward', data)
+      .pipe(map((x) => x.data));
+  }
   complete(data: WOCompletedRequest): Observable<PostResponse> {
     return this.provider
       .post<WOListResponse>('project/complete', data)

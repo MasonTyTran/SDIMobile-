@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Pressable, StyleSheet, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 
 import {IconLabel, SDIImage, Spacer, TextView} from '@components';
 import {Colors, GridStyles, TextStyles} from '@resources';

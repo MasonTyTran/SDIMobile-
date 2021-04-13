@@ -1,4 +1,5 @@
 import {WOProject, Asset} from '@data';
+export type TaskState = 'INIT' | 'PROGRESS' | 'COMPLETED' | 'OVERDUE';
 
 export type AuthorizedStoryboardParamList = {
   Dashboard: undefined;
@@ -6,7 +7,7 @@ export type AuthorizedStoryboardParamList = {
   IssueMap: undefined;
   IssueList: {id: string; tableId: string};
   IssueSearchResult: undefined;
-  TaskDetail: {project: WOProject};
+  TaskDetail: {project: WOProject; state: TaskState};
   AssetDetail: {asset: Asset};
   AssetList: undefined;
   AssetMap: undefined;
