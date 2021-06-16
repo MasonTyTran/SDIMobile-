@@ -30,7 +30,7 @@ export class ApiAuthenticationDataSource
   }
   signIn(data: Credential): Observable<AxiosResponse<SignInResponseData>> {
     const body: SignInRequestData = {
-      vidagis_branch_id: '',
+      vidagis_org_id: data.vidagis_org_id,
       vidagis_password: data.password,
       vidagis_uid_emailaddress: data.username,
     };

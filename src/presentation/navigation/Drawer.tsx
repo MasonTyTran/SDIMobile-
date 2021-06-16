@@ -13,6 +13,7 @@ import {RootStoreState, signOut} from '@shared-state';
 import {AuthorizedStoryboardParamList} from '../storyboard/Authorized.storyboard';
 import {User} from '@domain';
 import {Footer} from '../component/brand';
+import {usePermissionContext} from '@hooks';
 
 export const drawerSelector: Selector<RootStoreState, {user: User}> = (
   state,
@@ -25,6 +26,7 @@ export const drawerSelector: Selector<RootStoreState, {user: User}> = (
 export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
   const {user} = useSelector(drawerSelector);
   const dispatch = useDispatch();
+  const {permission} = usePermissionContext();
   const goToRoute = React.useCallback(
     (route: keyof AuthorizedStoryboardParamList) => () => {
       navigation.navigate(route);
@@ -56,21 +58,29 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
             icon={() => <Icon type="ionicon" name="home-outline" />}
             label="Trang chủ"
           />
-          <DrawerItem
-            onPress={goToRoute('TaskList')}
-            icon={() => <Icon type="ionicon" name="clipboard-outline" />}
-            label="Công việc"
-          />
-          <DrawerItem
-            onPress={goToRoute('AssetMap')}
-            icon={() => <Icon type="ionicon" name="nuclear-outline" />}
-            label="Tài sản"
-          />
-          <DrawerItem
-            onPress={goToRoute('AssetList')}
-            icon={() => <Icon type="ionicon" name="search-outline" />}
-            label="Tìm kiếm tài sản"
-          />
+          {permission?.job_order === '1' && (
+            <DrawerItem
+              onPress={goToRoute('TaskList')}
+              icon={() => <Icon type="ionicon" name="clipboard-outline" />}
+              label="Công việc"
+            />
+          )}
+          {permission?.asset === '1' && (
+            <>
+              {permission.map === '1' && (
+                <DrawerItem
+                  onPress={goToRoute('AssetMap')}
+                  icon={() => <Icon type="ionicon" name="nuclear-outline" />}
+                  label="Tài sản"
+                />
+              )}
+              <DrawerItem
+                onPress={goToRoute('AssetList')}
+                icon={() => <Icon type="ionicon" name="search-outline" />}
+                label="Tìm kiếm tài sản"
+              />
+            </>
+          )}
           {/* <DrawerItem
             onPress={goToRoute('IssueList')}
             icon={() => <Icon type="ionicon" name="alert-circle-outline" />}

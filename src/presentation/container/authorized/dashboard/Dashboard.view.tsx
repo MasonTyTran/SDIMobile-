@@ -52,6 +52,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
     totalCompleted,
     refreshing,
     loadData,
+    permission,
   } = useDashboardModel();
   const data = [totalInprogress, totalCompleted];
   const colors = [red, accent, ocean, orange, gray];
@@ -118,24 +119,22 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
           </View>
         </View>
         <View style={styles.navContainer}>
-          <NavButton
-            onPress={navToRoute('TaskList')}
-            color={ocean}
-            icon="albums"
-            title="Công việc"
-          />
-          {/* <NavButton
-            onPress={navToRoute('IssueMap')}
-            color={red}
-            icon="bug"
-            title="Sự kiện"
-          /> */}
-          <NavButton
-            onPress={navToRoute('AssetMap')}
-            color={accent}
-            icon="business"
-            title="Quản lí tài sản"
-          />
+          {permission?.job_order === '1' && (
+            <NavButton
+              onPress={navToRoute('TaskList')}
+              color={ocean}
+              icon="albums"
+              title="Công việc"
+            />
+          )}
+          {permission?.map === '1' && permission?.asset === '1' && (
+            <NavButton
+              onPress={navToRoute('AssetMap')}
+              color={accent}
+              icon="business"
+              title="Quản lí tài sản"
+            />
+          )}
         </View>
       </ScrollView>
     </>

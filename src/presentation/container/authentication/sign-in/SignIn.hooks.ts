@@ -22,8 +22,15 @@ export function useSignIn(handle: SignInHandle) {
 
   const [username, setUsername] = React.useState(DFUser.user);
   const [password, setPassword] = React.useState(DFUser.pass);
+  const [
+    selectedOrganization,
+    setSelectedOrganization,
+  ] = React.useState<string>();
+
   const submit = (_: any) => {
-    dispatch(signIn({username, password}));
+    dispatch(
+      signIn({username, password, vidagis_org_id: selectedOrganization!}),
+    );
   };
   const {action$} = container.resolve<StoreContainer>(
     AppDependencies.StoreContainer,
@@ -39,5 +46,12 @@ export function useSignIn(handle: SignInHandle) {
       subscription.unsubscribe();
     };
   }, [action$, onSignInFailed]);
-  return {isAuthenticating, submit, setUsername, setPassword};
+  return {
+    isAuthenticating,
+    submit,
+    setUsername,
+    setPassword,
+    selectedOrganization,
+    setSelectedOrganization,
+  };
 }

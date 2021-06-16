@@ -14,6 +14,7 @@ import {container} from 'tsyringe';
 import {RxRemoteProvider} from '@core';
 import {AppDependencies} from '@di';
 import {showMessage} from 'react-native-flash-message';
+import {PermissionProvider} from '@hooks';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -62,9 +63,11 @@ export const RootNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <FullScreenLoadingIndicator visible={isAuthenticating || isSigningOut} />
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        {renderStack()}
-      </Stack.Navigator>
+      <PermissionProvider>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          {renderStack()}
+        </Stack.Navigator>
+      </PermissionProvider>
     </NavigationContainer>
   );
 };

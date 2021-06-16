@@ -5,7 +5,7 @@ import {Button} from 'react-native-elements';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {Footer, TextField, TextView} from '@components';
-
+import {TypePicker} from './TypePicker';
 import {useSignIn} from './SignIn.hooks';
 import {SignInProps} from './types';
 import {Images} from '@assets';
@@ -16,12 +16,22 @@ const _SignIn: React.FC<SignInProps> = (props) => {
   const onSignInFailed = React.useCallback(() => {
     console.warn('Success');
   }, []);
-  const {submit, setPassword, setUsername} = useSignIn({
+  const {
+    submit,
+    setPassword,
+    setUsername,
+    selectedOrganization,
+    setSelectedOrganization,
+  } = useSignIn({
     onSignInFailed,
   });
   const renderForm = () => {
     return (
       <View style={styles.formContainer}>
+        <TypePicker
+          value={selectedOrganization}
+          onChange={setSelectedOrganization}
+        />
         <TextField
           inputProps={{placeholder: 'Tài khoản', onChangeText: setUsername}}
           containerStyle={styles.input}

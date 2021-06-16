@@ -16,6 +16,10 @@ export type WOListResponse = {
 
 export interface WOProject {
   oid: number;
+  is_back_forward: boolean;
+  is_complete: boolean;
+  is_forward: boolean;
+  is_update: boolean;
   total_records: number;
   total_ticket: number;
   total_ticket_complete: number;

@@ -81,42 +81,48 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item, taskState}) => {
         label="Số giờ hoàn thành"
         value={completedTime}
       />
-      <View style={styles.buttonContainer}>
-        {taskState === 'PROGRESS' && (
-          <IconLabel
-            onPress={previous}
-            prefix={
-              <Icon color={Colors.gray} name="play-skip-back" type="ionicon" />
-            }
-            color={Colors.gray}
-            text="TRẢ LẠI"
-          />
-        )}
-        {taskState === 'PROGRESS' && (
-          <IconLabel
-            onPress={complete}
-            prefix={
-              <Icon
-                color={Colors.gray}
-                name="checkmark-done-circle"
-                type="ionicon"
-              />
-            }
-            color={Colors.gray}
-            text="HOÀN THÀNH"
-          />
-        )}
-        {taskState === 'INIT' && (
-          <IconLabel
-            onPress={forward}
-            prefix={
-              <Icon color={Colors.gray} name="arrow-forward" type="ionicon" />
-            }
-            color={Colors.gray}
-            text="Bước tiếp theo"
-          />
-        )}
-      </View>
+      {item.is_update && (
+        <View style={styles.buttonContainer}>
+          {item.is_back_forward && (
+            <IconLabel
+              onPress={previous}
+              prefix={
+                <Icon
+                  color={Colors.gray}
+                  name="play-skip-back"
+                  type="ionicon"
+                />
+              }
+              color={Colors.gray}
+              text="TRẢ LẠI"
+            />
+          )}
+          {item.is_complete && (
+            <IconLabel
+              onPress={complete}
+              prefix={
+                <Icon
+                  color={Colors.gray}
+                  name="checkmark-done-circle"
+                  type="ionicon"
+                />
+              }
+              color={Colors.gray}
+              text="HOÀN THÀNH"
+            />
+          )}
+          {item.is_forward && (
+            <IconLabel
+              onPress={forward}
+              prefix={
+                <Icon color={Colors.gray} name="arrow-forward" type="ionicon" />
+              }
+              color={Colors.gray}
+              text="Bước tiếp theo"
+            />
+          )}
+        </View>
+      )}
     </KeyboardAwareScrollView>
   );
 };
@@ -166,6 +172,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    flexWrap: 'wrap',
     letterSpacing: 10,
     marginTop: 30,
   },

@@ -6,6 +6,7 @@ import {Selector, useSelector} from 'react-redux';
 import {RootStoreState} from '@shared-state';
 import {User} from '@domain';
 import {zip} from 'rxjs';
+import {usePermissionContext} from '@hooks';
 
 export const dashboardSelector: Selector<RootStoreState, User> = (state) => {
   return state.authentication.user!;
@@ -42,6 +43,10 @@ export function useDashboardModel() {
       error: () => setRefreshing(false),
     });
   }, [user]);
-  React.useEffect(loadData, [user]);
-  return {totalInprogress, totalCompleted, refreshing, loadData};
+  const {refresh, permission} = usePermissionContext();
+  React.useEffect(() => {
+    loadData();
+    refresh();
+  }, [loadData, refresh]);
+  return {totalInprogress, totalCompleted, refreshing, loadData, permission};
 }

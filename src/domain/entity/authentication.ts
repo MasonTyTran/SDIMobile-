@@ -9,4 +9,5 @@ export interface SignInResult {
 export interface Credential {
   username: string;
   password: string;
+  vidagis_org_id: string;
 }

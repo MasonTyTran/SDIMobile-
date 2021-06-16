@@ -3,7 +3,7 @@ import {UserModel} from './UserModel';
 export interface SignInRequestData {
   vidagis_uid_emailaddress: string;
   vidagis_password: string;
-  vidagis_branch_id: string;
+  vidagis_org_id: string;
 }
 
 export interface SignInResponseData {
@@ -11,3 +11,24 @@ export interface SignInResponseData {
   user: UserModel;
 }
 export interface SignUpResponseData {}
+
+export interface Organization {
+  vidagis_organizationid: string;
+  vidagis_organizationname: string;
+}
+export interface GetOrganizationTypeResponse {
+  Message: string;
+  Code: number;
+  Data: Organization[];
+}
+export interface OrgPermission {
+  vidagis_organizationid: string;
+  job_order: string;
+  asset: string;
+  map: string;
+}
+export interface GetPermissionResponse {
+  Message: string;
+  Code: number;
+  Data: OrgPermission[];
+}

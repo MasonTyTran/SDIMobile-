@@ -22,8 +22,8 @@ export function useTaskInfo(project: WOProject) {
     setLoading(true);
     WODataSource.moveToNextStep({
       organization_id: user.organizationID,
-      project_dateend: moment(endDate).format('DD/MM/yyyy'),
-      project_datestart: moment(startDate).format('DD/MM/yyyy'),
+      project_dateend: moment(endDate).format('DD/MM/yyyy hh:mm'),
+      project_datestart: moment(startDate).format('DD/MM/yyyy hh:mm'),
       project_id: project.vidagis_project_id,
       total_time: completedTime,
       user_id: user.id,
@@ -45,8 +45,8 @@ export function useTaskInfo(project: WOProject) {
     setLoading(true);
     WODataSource.moveToPreviousStep({
       organization_id: user.organizationID,
-      project_dateend: moment(endDate).format('DD/MM/yyyy'),
-      project_datestart: moment(startDate).format('DD/MM/yyyy'),
+      project_dateend: moment(endDate).format('DD/MM/yyyy hh:mm'),
+      project_datestart: moment(startDate).format('DD/MM/yyyy hh:mm'),
       project_id: project.vidagis_project_id,
       total_time: completedTime,
       user_id: user.id,
