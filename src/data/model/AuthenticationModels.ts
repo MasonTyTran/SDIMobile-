@@ -15,11 +15,17 @@ export interface SignUpResponseData {}
 export interface Organization {
   vidagis_organizationid: string;
   vidagis_organizationname: string;
+  vidagis_url: string;
 }
 export interface GetOrganizationTypeResponse {
   Message: string;
   Code: number;
   Data: Organization[];
+}
+export interface GetOrganizationInfoResponse {
+  Message: string;
+  Code: number;
+  Data: Organization;
 }
 export interface OrgPermission {
   vidagis_organizationid: string;

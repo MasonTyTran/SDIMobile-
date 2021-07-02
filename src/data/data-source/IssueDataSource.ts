@@ -5,6 +5,7 @@ import {AppDependencies} from '@di';
 import {
   CreateIssueRequest,
   CreateIssueResponse,
+  GetOrganizationInfoResponse,
   GetOrganizationTypeResponse,
   GetPermissionResponse,
   IssueListRequest,
@@ -60,6 +61,13 @@ class _IssueDataSource {
       .get<GetOrganizationTypeResponse>('organizations/list')
       .pipe(map((x) => x.data.Data));
   }
+
+  getOrganizationInfo(id: number | string): Observable<Organization> {
+    return this.provider
+      .get<GetOrganizationInfoResponse>(`organizations/${id}`)
+      .pipe(map((x) => x.data.Data));
+  }
+
   getPermission(
     org: string,
     token: string,
@@ -67,14 +75,6 @@ class _IssueDataSource {
     return this.provider
       .post<GetPermissionResponse>(`organizations/${org}/permission`, {token})
       .pipe(map((x) => (x.data.Data.length > 0 ? x.data.Data[0] : undefined)));
-    // .pipe(
-    //   mapTo({
-    //     vidagis_organizationid: 'sdi_hue',
-    //     job_order: '1',
-    //     asset: '1',
-    //     map: '0',
-    //   }),
-    //F );
   }
 }
 

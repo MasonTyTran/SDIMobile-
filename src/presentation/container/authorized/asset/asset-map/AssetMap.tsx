@@ -12,13 +12,16 @@ import {AssetMapProps} from './types';
 import {container} from 'tsyringe';
 import {AppDependencies} from '@di';
 import {RxRemoteProvider} from '@core';
-import {LocationDataSource} from '@data';
+import {IssueDataSource, LocationDataSource} from '@data';
+import {useUser} from '@hooks';
 
 export const AssetMap: React.FC<AssetMapProps> = (props) => {
   const {navigation} = props;
+  const user = useUser();
   const provider = container.resolve<RxRemoteProvider>(
     AppDependencies.ApiProvider,
   );
+  const [endPoint, setEndPoint] = React.useState<string>();
   const [position, setPosition] = React.useState<Geolocation.GeoPosition>();
   const [loadingPosition, setLoadingPosition] = React.useState(true);
   const getLocation = React.useCallback(async () => {
@@ -39,9 +42,16 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
       setLoadingPosition(false);
     }
   }, []);
+  const getEndPoint = React.useCallback(async () => {
+    const data = await IssueDataSource.getOrganizationInfo(
+      user.organizationID,
+    ).toPromise();
+    setEndPoint(data.vidagis_url);
+  }, [user.organizationID]);
   React.useEffect(() => {
     getLocation();
-  }, [getLocation]);
+    getEndPoint();
+  }, [getEndPoint, getLocation]);
   const renderWebview = () => {
     if (loadingPosition) {
       return <FullScreenLoadingIndicator visible />;
@@ -50,12 +60,13 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
       <WebView
         style={styles.webview}
         source={{
-          uri: `https://hue.aktivmap.com/GIS/MainMap/MapMobile?x=${position?.coords.latitude}&y=${position?.coords.longitude}`,
+          uri: `${endPoint}GIS/MainMap/MapMobile?x=${position?.coords.latitude}&y=${position?.coords.longitude}`,
           headers: {
             access_token: provider.token,
             type_request: 'mobile',
           },
         }}
+        ignoreSslError
       />
     );
   };
