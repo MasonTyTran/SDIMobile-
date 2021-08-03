@@ -6,6 +6,8 @@ export interface Notification {
   from_user: string;
   avatar_user: string;
   is_clicked: boolean;
+  type: 'project' | 'asset' | 'ticket';
+  code: string;
 }
 
 export interface NotificationListResponse {

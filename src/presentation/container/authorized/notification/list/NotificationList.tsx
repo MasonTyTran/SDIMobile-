@@ -9,12 +9,15 @@ import {Colors} from '@resources';
 import {NotificationListProps} from './types';
 import {Notification, NotificationDataSource} from '@data';
 import {debounce} from 'lodash';
+import {useItem} from './useItem';
 
 export const NotificationList: React.FC<NotificationListProps> = (props) => {
   const indexRef = React.useRef(1);
   const [data, setData] = React.useState<Notification[]>([]);
   const [refreshing, setRefreshing] = React.useState<boolean>(true);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [hasMore, setHasMore] = React.useState(true);
+  const {getItemDetail} = useItem();
   const refresh = React.useCallback(() => {
     setRefreshing(true);
     NotificationDataSource.listNotification({
@@ -22,16 +25,18 @@ export const NotificationList: React.FC<NotificationListProps> = (props) => {
       page_size: 10,
     }).subscribe({
       next: ({Data: {notifications}}) => {
+        console.log(notifications);
         setRefreshing(false);
         setData(notifications);
         indexRef.current = 1;
+        setHasMore(notifications.length === 10);
       },
       error: () => setRefreshing(false),
     });
   }, []);
   const loadMore = React.useCallback(
     debounce(() => {
-      if (loading || refreshing) {
+      if (loading || refreshing || !hasMore) {
         return;
       }
       setLoading(true);
@@ -40,9 +45,9 @@ export const NotificationList: React.FC<NotificationListProps> = (props) => {
         page_size: 10,
       }).subscribe({
         next: ({Data: {notifications}}) => {
-          console.log(notifications);
-          setData(data.concat(notifications));
+          setData((old) => [...old, ...notifications]);
           indexRef.current += 1;
+          setHasMore(notifications.length === 10);
         },
         complete: () => setLoading(false),
         error: console.log,
@@ -50,10 +55,13 @@ export const NotificationList: React.FC<NotificationListProps> = (props) => {
     }, 800),
     [loading, refreshing],
   );
+
   const renderItem = React.useCallback(
     ({item}: ListRenderItemInfo<Notification>) => {
       return (
-        <ListItem bottomDivider>
+        <ListItem
+          onPress={() => getItemDetail(item.type, item.code)}
+          bottomDivider>
           <SDIImage fileID={item.avatar_user} style={styles.avatar} />
           <ListItem.Content>
             <ListItem.Title>{item.from_user}</ListItem.Title>
@@ -63,7 +71,7 @@ export const NotificationList: React.FC<NotificationListProps> = (props) => {
         </ListItem>
       );
     },
-    [],
+    [getItemDetail],
   );
   React.useEffect(refresh, []);
   const keyExtractor = React.useCallback(

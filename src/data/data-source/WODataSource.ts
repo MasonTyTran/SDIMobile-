@@ -8,6 +8,8 @@ import {
   WOListRequest,
   WOListResponse,
   WOStepRequest,
+  ProjectDetailRequest,
+  WOResponse,
 } from '../model';
 import {map} from 'rxjs/operators';
 
@@ -53,6 +55,12 @@ class _WODataSource {
   complete(data: WOCompletedRequest): Observable<PostResponse> {
     return this.provider
       .post<WOListResponse>('project/complete', data)
+      .pipe(map((x) => x.data));
+  }
+
+  project(data: ProjectDetailRequest): Observable<WOResponse> {
+    return this.provider
+      .post<WOResponse>('project/id', data)
       .pipe(map((x) => x.data));
   }
 }

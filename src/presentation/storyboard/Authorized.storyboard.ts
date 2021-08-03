@@ -7,7 +7,7 @@ export type AuthorizedStoryboardParamList = {
   IssueMap: undefined;
   IssueList: {id: string; tableId: string};
   IssueSearchResult: undefined;
-  TaskDetail: {project: WOProject; state: TaskState};
+  TaskDetail: {project: WOProject};
   AssetDetail: {asset: Asset};
   AssetList: undefined;
   AssetMap: undefined;

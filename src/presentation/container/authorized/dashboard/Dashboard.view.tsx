@@ -54,7 +54,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
     loadData,
     permission,
   } = useDashboardModel();
-  const data = [totalInprogress, totalCompleted];
+  const data = [totalCompleted, totalInprogress];
   const colors = [red, accent, ocean, orange, gray];
   const pieData = data
     .filter((value) => value > 0)

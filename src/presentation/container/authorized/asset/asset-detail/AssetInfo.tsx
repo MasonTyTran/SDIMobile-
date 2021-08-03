@@ -40,7 +40,7 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
   }, [item.id, user.id, user.organizationID]);
   return (
     <ScrollView style={styles.container}>
-      <TextView style={styles.title} text="Information" />
+      <TextView style={styles.title} text="Thông tin tài sản" />
 
       <View style={styles.infoContainer}>
         <View style={GridStyles.row}>

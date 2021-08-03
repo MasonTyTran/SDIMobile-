@@ -15,7 +15,7 @@ import {DateTimeBox, InfoBox} from './common';
 import {useTaskInfo} from './useTaskInfo';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-export const TaskInfo: React.FC<TaskInfoProps> = ({item, taskState}) => {
+export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
   const {
     setEndDate,
     setStartDate,

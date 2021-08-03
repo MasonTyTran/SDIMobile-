@@ -39,7 +39,6 @@ export const TaskItem: React.FC<TaskItemProps> = ({item, onPress}) => {
             style={TextStyles.normal}
             text={`${item.vidagis_startdate_str}`}
           />
-          <Icon name="star-outline" type="ionicon" />
         </View>
       </View>
     </Pressable>

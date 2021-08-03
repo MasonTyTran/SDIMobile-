@@ -14,6 +14,12 @@ export type WOListResponse = {
   };
 };
 
+export type WOResponse = {
+  Message: string;
+  Code: number;
+  Data: WOProject;
+};
+
 export interface WOProject {
   oid: number;
   is_back_forward: boolean;
@@ -90,3 +96,9 @@ export interface PostResponse {
   Code: number;
   Data?: any;
 }
+
+export type ProjectDetailRequest = {
+  oid: string;
+  user_id: string;
+  organization_id: string;
+};

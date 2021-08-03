@@ -1,38 +1,16 @@
 import React from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {Header, Icon} from 'react-native-elements';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 
 import {TextView} from '@components';
 import {Colors} from '@resources';
 
 import {TaskDetailProps} from './types';
-import {TaskFeedBack} from './TaskFeedBack';
 import {TaskInfo} from './TaskInfo';
 
-const initialLayout = {width: Dimensions.get('window').width};
 export const TaskDetail: React.FC<TaskDetailProps> = (props) => {
-  const {project, state} = props.route.params;
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    {key: 'Information', title: 'Thông tin'},
-    {key: 'FeedBack', title: 'Phản hồi'},
-  ]);
-
-  const renderScene = SceneMap({
-    Information: () => <TaskInfo item={project} taskState={state} />,
-    FeedBack: () => <TaskFeedBack item={project} />,
-  });
-
-  const renderTabBar = (p: any) => (
-    <TabBar
-      {...p}
-      indicatorStyle={{backgroundColor: Colors.gray}}
-      style={styles.tabBarStyle}
-      labelStyle={{color: Colors.gray}}
-    />
-  );
+  const {project} = props.route.params;
 
   return (
     <>
@@ -50,13 +28,7 @@ export const TaskDetail: React.FC<TaskDetailProps> = (props) => {
         }
         backgroundColor={Colors.gray}
       />
-      <TabView
-        renderTabBar={renderTabBar}
-        navigationState={{index, routes}}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={initialLayout}
-      />
+      <TaskInfo item={project} />
     </>
   );
 };

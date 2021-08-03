@@ -86,7 +86,7 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
   useFocusEffect(
     React.useCallback(() => {
       onRefresh();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
 
@@ -96,7 +96,6 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
         onPress={(project) =>
           props.navigation.navigate('TaskDetail', {
             project,
-            state: props.taskState,
           })
         }
         item={item}
