@@ -2,7 +2,8 @@ import React from 'react';
 import {Image, View, StyleSheet} from 'react-native';
 import {Images} from '@assets';
 import {TextView} from '../label';
-const version = '1.1.0';
+import VersionInfo from 'react-native-version-info';
+const version = `${VersionInfo.appVersion}.${VersionInfo.buildVersion}`;
 export const Footer = ({
   color = 'white',
   hasG = false,

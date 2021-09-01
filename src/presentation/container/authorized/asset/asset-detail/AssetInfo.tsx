@@ -34,6 +34,7 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
       organization_id: user.organizationID,
     }).subscribe({
       next: (res) => {
+        console.log(res);
         setData(res.Data);
       },
     });
@@ -50,17 +51,19 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
             <KeyValueLabel title={'Mã thiết bị: '} value={`#${item.id}`} />
           </View>
           <View style={{width: '30%'}}>
-            <IconLabel
-              prefix={
-                <Icon
-                  color={Colors.accent}
-                  name="alert-circle-outline"
-                  type="ionicon"
-                />
-              }
-              color={Colors.accent}
-              text={`${item.is_f ? 'Đang hoạt động' : 'Ngừng hoạt động'}`}
-            />
+            {data?.status ? (
+              <IconLabel
+                prefix={
+                  <Icon
+                    color={Colors.accent}
+                    name="alert-circle-outline"
+                    type="ionicon"
+                  />
+                }
+                color={Colors.accent}
+                text={data?.status}
+              />
+            ) : null}
             <SDIImage
               fileID={data?.id ?? ''}
               source={{

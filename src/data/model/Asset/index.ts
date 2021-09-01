@@ -44,6 +44,7 @@ export interface AssetInfoRow {
 
 export interface AssetInformation {
   id: string;
+  status: string;
   table_name: string;
   table_id: string;
   table_asset: string;

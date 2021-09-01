@@ -15,7 +15,7 @@ import {
   Organization,
   OrgPermission,
 } from '../model';
-import {map, mapTo} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 class _IssueDataSource {
   get provider(): RxRemoteProvider {
