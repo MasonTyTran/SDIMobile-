@@ -53,7 +53,7 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
     getEndPoint();
   }, [getEndPoint, getLocation]);
   const renderWebview = () => {
-    if (loadingPosition) {
+    if (loadingPosition || !endPoint) {
       return <FullScreenLoadingIndicator visible />;
     }
     return (

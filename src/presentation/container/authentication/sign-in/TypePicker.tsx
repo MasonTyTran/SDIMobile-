@@ -28,6 +28,7 @@ export const TypePicker: React.FC<TypePickerProps> = ({onChange, value}) => {
       },
       complete: () => setLoading(false),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

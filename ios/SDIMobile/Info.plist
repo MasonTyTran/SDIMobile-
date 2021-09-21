@@ -39,11 +39,11 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) muốn truy cập camera upload ảnh tạo sự kiện </string>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) muốn truy vị trí để hiển thị mạng lưới tài sản quanh bạn</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>$(PRODUCT_NAME) muốn truy vị trí để hiển thị mạng lưới tài sản quanh bạn</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) muốn truy vị trí để hiển thị mạng lưới tài sản quanh bạn</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) muốn truy cập Photo upload ảnh tạo sự kiện</string>

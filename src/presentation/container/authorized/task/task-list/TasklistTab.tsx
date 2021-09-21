@@ -118,6 +118,10 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         onEndReached={debounce(onLoadMore, 1000)}
+        emptyListViewProps={{
+          content: 'Không có công việc',
+          title: ' ',
+        }}
       />
     </View>
   );
