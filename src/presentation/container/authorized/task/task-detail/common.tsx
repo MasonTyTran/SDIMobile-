@@ -1,5 +1,11 @@
 import React from 'react';
-import {Pressable, StyleSheet, View, TextInput} from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  View,
+  TextInput,
+  TextInputProps,
+} from 'react-native';
 
 import {TextView} from '@components';
 import {Colors, TextStyles} from '@resources';
@@ -12,10 +18,12 @@ export const InfoBox = ({
   label,
   value,
   onChangeText,
+  inputProps = {},
 }: {
   label: string;
   value: string;
   onChangeText: (v: string) => void;
+  inputProps?: TextInputProps;
 }) => (
   <View style={styles.infoBox}>
     <TextView style={styles.infoBoxLabel} text={label} />
@@ -23,6 +31,7 @@ export const InfoBox = ({
       style={styles.infoBoxValue}
       onChangeText={onChangeText}
       value={value}
+      {...inputProps}
     />
   </View>
 );

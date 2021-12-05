@@ -62,3 +62,14 @@ export interface AssetInfoRequest {
   user_id: string;
   organization_id: string;
 }
+
+export interface OrganizationConfig {
+  logo_url: string;
+  version: string;
+  title_footer: string;
+}
+export interface OrganizationConfigResponse {
+  Message: string;
+  Code: number;
+  Data: OrganizationConfig;
+}

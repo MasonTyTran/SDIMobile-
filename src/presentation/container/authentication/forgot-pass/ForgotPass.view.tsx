@@ -5,11 +5,17 @@ import {Button, Header, Icon} from 'react-native-elements';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {showMessage} from 'react-native-flash-message';
 
-import {FullScreenLoadingIndicator, TextField, TextView} from '@components';
+import {
+  Footer,
+  FullScreenLoadingIndicator,
+  TextField,
+  TextView,
+} from '@components';
 
 import {useForgotPass} from './ForgotPass.hooks';
 import {ForgotPassProps} from './types';
 import {Colors, TextStyles} from '@resources';
+import {BuildConfig} from '@core';
 
 const _ForgotPass: React.FC<ForgotPassProps> = (props) => {
   const {} = props;
@@ -48,8 +54,7 @@ const _ForgotPass: React.FC<ForgotPassProps> = (props) => {
       style={styles.background}
       resizeMode="cover"
       source={{
-        uri:
-          'https://www.vistaprojects.com/media/2019/07/workplace-safety-topics-for-meetings.png',
+        uri: BuildConfig.BackgroundUrl,
       }}>
       <Header
         leftComponent={
@@ -75,7 +80,7 @@ const _ForgotPass: React.FC<ForgotPassProps> = (props) => {
         />
         {renderForm()}
       </KeyboardAwareScrollView>
-      <TextView style={styles.version} text="Version 1.0.0" />
+      <Footer />
     </ImageBackground>
   );
 };

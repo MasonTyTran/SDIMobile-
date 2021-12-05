@@ -42,7 +42,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
             <TextView style={styles.id} text={item.vidagis_name} />
             <TextView
               style={styles.id}
-              text={`Priority: ${item.vidagis_prioritize_des}`}
+              text={`Mức độ ưu tiên: ${item.vidagis_prioritize_des}`}
             />
           </View>
           <IconLabel
@@ -65,6 +65,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
         onChangeText={setPerson}
         label="Người thực hiện"
         value={person}
+        inputProps={{editable: false}}
       />
       <DateTimeBox
         onChangeDate={setStartDate}
@@ -80,6 +81,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
         onChangeText={setCompletedTime}
         label="Số giờ hoàn thành"
         value={completedTime}
+        inputProps={{keyboardType: 'numeric'}}
       />
       {item.is_update && (
         <View style={styles.buttonContainer}>

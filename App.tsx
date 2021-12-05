@@ -31,7 +31,7 @@ const App = () => {
         container.resolve<StoreContainer>(AppDependencies.StoreContainer).store
       }>
       <RootNavigator />
-      <FlashMessage position="top" />
+      <FlashMessage position="top" style={{alignItems: 'center'}} />
     </Provider>
   );
 };

@@ -14,6 +14,7 @@ import {AuthorizedStoryboardParamList} from '../storyboard/Authorized.storyboard
 import {User} from '@domain';
 import {Footer} from '../component/brand';
 import {usePermissionContext} from '@hooks';
+import {config} from 'rxjs';
 
 export const drawerSelector: Selector<RootStoreState, {user: User}> = (
   state,
@@ -33,7 +34,7 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
     },
     [navigation],
   );
-
+  console.warn(user);
   return (
     <>
       <View style={styles.container}>
@@ -41,8 +42,7 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
           <Avatar
             size={100}
             source={{
-              uri:
-                'https://www.signfix.com.au/wp-content/uploads/2017/09/placeholder-600x400.png',
+              uri: 'https://api.aktivmap.com/FileStore/avatar-default-icon.png',
             }}
             rounded
           />

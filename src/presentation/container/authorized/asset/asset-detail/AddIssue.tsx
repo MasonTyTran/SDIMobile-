@@ -27,29 +27,28 @@ export interface AddIssueProps {
   visible: boolean;
   onRequestClose: () => void;
   id: number | string;
-  setLoading: (values: boolean) => void;
 }
 
 export const AddIssue: React.FC<AddIssueProps> = ({
   visible,
   onRequestClose,
   id,
-  setLoading,
 }) => {
+  const [loading, setLoading] = React.useState<boolean>(false);
   const createIssue = (request: CreateIssueRequest) => {
     setLoading(true);
     IssueDataSource.createIssue(request).subscribe({
       next: (res) => {
+        console.warn(res);
         if (res.Data) {
           showMessage({message: 'Thành công', type: 'success'});
           onRequestClose();
         } else {
-          showMessage({message: 'Thất bại', type: 'warning'});
+          showMessage({message: 'Tạo sự kiện thất bại', type: 'warning'});
         }
       },
-      error: (err) => {
-        console.log('000err', err);
-        showMessage({message: 'Thất bại', type: 'warning'});
+      error: () => {
+        showMessage({message: 'Tạo sự kiện thất bại', type: 'danger'});
       },
       complete: () => setLoading(false),
     });
@@ -74,17 +73,18 @@ export const AddIssue: React.FC<AddIssueProps> = ({
           hDate: undefined,
         }}
         onSubmit={(values) => {
-          if (!values.date) {
-            return showMessage({message: 'Ngày phát sinh không thể bỏ trống'});
-          }
-          if (!values.name) {
-            return showMessage({message: 'Tên sự kiện không thể bỏ trống'});
-          }
-          if (!values.content) {
-            return showMessage({message: 'Lí do không thể bỏ trống'});
+          if (!values.name || values.name.length > 50) {
+            return showMessage({
+              message: 'Tên sự kiện không thể bỏ trống hoặc dài hơn 50 kí tự',
+            });
           }
           if (!values.type) {
             return showMessage({message: 'Loại sự kiện không thể bỏ trống'});
+          }
+          if (values.content.length > 100) {
+            return showMessage({
+              message: 'Nội dung không thể bỏ trống hoặc dài hơn 100 kí tự',
+            });
           }
           let image;
           if (values.image) {
@@ -127,6 +127,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
                 onChangeText: (text) => {
                   setFieldValue('name', text, false);
                 },
+                maxLength: 50,
               }}
             />
 
@@ -141,6 +142,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
                 onChangeText: (text) => {
                   setFieldValue('content', text, false);
                 },
+                maxLength: 100,
               }}
             />
             <TypePicker
@@ -201,6 +203,7 @@ export const AddIssue: React.FC<AddIssueProps> = ({
                 buttonStyle={{
                   backgroundColor: Colors.ocean,
                 }}
+                loading={loading}
               />
             </View>
           </View>

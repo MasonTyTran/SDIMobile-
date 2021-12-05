@@ -78,7 +78,9 @@ export const AssetInfo: React.FC<AssetInfoProps> = ({item}) => {
       <Divider style={styles.divider} />
       <TextView style={styles.title} text="Thông số kĩ thuật" />
       {data?.info.map((x) => {
-        return <KeyValueLabel key={x.field} value={x.value} title={x.field} />;
+        return (
+          <KeyValueLabel key={x.field} value={x.value} title={`${x.field}:`} />
+        );
       })}
     </ScrollView>
   );

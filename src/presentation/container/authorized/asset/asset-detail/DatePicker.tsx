@@ -39,7 +39,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         />
       </Pressable>
       <DateTimePickerModal
-        minimumDate={new Date()}
         isVisible={isDatePickerVisible}
         date={date}
         mode="date"

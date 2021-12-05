@@ -7,6 +7,7 @@ import {
   AssetInfoResponse,
   ListAssetRequest,
   ListAssetResponse,
+  OrganizationConfigResponse,
 } from '../model';
 import {map} from 'rxjs/operators';
 
@@ -24,6 +25,11 @@ class _AssetDataSource {
   assetInfo(data: AssetInfoRequest): Observable<AssetInfoResponse> {
     return this.provider
       .post<AssetInfoResponse>('asset/id', data)
+      .pipe(map((x) => x.data));
+  }
+  getOrgConfig(): Observable<OrganizationConfigResponse> {
+    return this.provider
+      .get<OrganizationConfigResponse>('organizations/config')
       .pipe(map((x) => x.data));
   }
 }

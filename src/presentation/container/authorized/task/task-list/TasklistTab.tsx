@@ -109,6 +109,7 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
         platform="ios"
         value={keyword}
         onChangeText={onChangeKeyword}
+        maxLength={50}
       />
       <ListView
         isLoadingMore={loading}

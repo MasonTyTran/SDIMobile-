@@ -92,10 +92,8 @@ export const AssetListTab: React.FC<AssetListTabProps> = (props) => {
         platform="ios"
         value={keyword}
         onChangeText={onChangeKeyword}
+        maxLength={50}
       />
-      <View onStartShouldSetResponder={(e) => e.target}>
-
-      </View>
       <ListView
         isLoadingMore={loading}
         refreshing={refreshing}

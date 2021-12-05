@@ -10,11 +10,13 @@ import {useSignIn} from './SignIn.hooks';
 import {SignInProps} from './types';
 import {Images} from '@assets';
 import {Colors} from '@resources';
+import {showMessage} from 'react-native-flash-message';
+import {BuildConfig} from '@core';
 
 const _SignIn: React.FC<SignInProps> = (props) => {
   const {} = props;
   const onSignInFailed = React.useCallback(() => {
-    console.warn('Success');
+    showMessage({message: 'Thông tin đăng nhập sai', type: 'danger'});
   }, []);
   const {
     submit,
@@ -62,8 +64,7 @@ const _SignIn: React.FC<SignInProps> = (props) => {
       style={styles.background}
       resizeMode="cover"
       source={{
-        uri:
-          'https://www.vistaprojects.com/media/2019/07/workplace-safety-topics-for-meetings.png',
+        uri: BuildConfig.BackgroundUrl,
       }}>
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <Image style={styles.logo} source={Images.LOGO} resizeMode="contain" />
