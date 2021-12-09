@@ -1,4 +1,4 @@
-package com.sdimobile;
+package vn.hue.aktivmap;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
