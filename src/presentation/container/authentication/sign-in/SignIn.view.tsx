@@ -30,9 +30,12 @@ const _SignIn: React.FC<SignInProps> = (props) => {
   const renderForm = () => {
     return (
       <View style={styles.formContainer}>
-        <TypePicker
-          value={selectedOrganization}
-          onChange={setSelectedOrganization}
+        <TextField
+          inputProps={{
+            placeholder: 'Tổ chức',
+            onChangeText: setSelectedOrganization,
+          }}
+          containerStyle={styles.input}
         />
         <TextField
           inputProps={{placeholder: 'Tài khoản', onChangeText: setUsername}}

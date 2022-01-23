@@ -21,7 +21,6 @@ export const Footer = ({
     };
     get();
   }, []);
-  console.log(config?.logo_url);
   return (
     <View style={styles.container}>
       <Image

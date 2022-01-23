@@ -2,116 +2,57 @@ import React from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
 
 import {Header, Icon} from 'react-native-elements';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {TabView, TabBar, Route} from 'react-native-tab-view';
 
 import {TextView} from '@components';
 import {Colors} from '@resources';
 
 import {TaskListProps} from './types';
-import {TaskListTab} from './TasklistTab';
-import {WODataSource} from '@data';
-import {AuthorizedStoryboardParamList} from '@storyboards';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {useUser} from '@hooks';
-import {User} from '@domain';
-
-const OpenTab = (
-  navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>,
-  user: User,
-) => (
-  <TaskListTab
-    taskState="INIT"
-    getData={(keyword, i) =>
-      WODataSource.listOpenTask({
-        keyword,
-        page_num: i,
-        page_size: 10,
-        organization_id: user.organizationID,
-        user_id: user.id,
-      })
-    }
-    navigation={navigation}
-  />
-);
-
-const InprogressTab = (
-  navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>,
-  user: User,
-) => (
-  <TaskListTab
-    taskState="PROGRESS"
-    getData={(keyword, i) =>
-      WODataSource.listInProgressTask({
-        keyword,
-        page_num: i,
-        page_size: 10,
-        organization_id: user.organizationID,
-        user_id: user.id,
-      })
-    }
-    navigation={navigation}
-  />
-);
-
-const CompletedTab = (
-  navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>,
-  user: User,
-) => (
-  <TaskListTab
-    taskState="COMPLETED"
-    getData={(keyword, i) =>
-      WODataSource.listCompletedTask({
-        keyword,
-        page_num: i,
-        page_size: 10,
-        organization_id: user.organizationID,
-        user_id: user.id,
-      })
-    }
-    navigation={navigation}
-  />
-);
-const OverdueTab = (
-  navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>,
-  user: User,
-) => (
-  <TaskListTab
-    taskState="OVERDUE"
-    getData={(keyword, i) =>
-      WODataSource.listOverdueTask({
-        keyword,
-        page_num: i,
-        page_size: 10,
-        organization_id: user.organizationID,
-        user_id: user.id,
-      })
-    }
-    navigation={navigation}
-  />
-);
-
+import {OpenTab, InprogressTab, CompletedTab, OverdueTab} from './Components';
 const initialLayout = {width: Dimensions.get('window').width};
-
+const DFR = [
+  {key: 'OpenTab', title: 'Chưa thực hiện'},
+  {key: 'InprogressTab', title: 'Đang thực hiện'},
+  {key: 'CompletedTab', title: 'Hoàn thành'},
+  {key: 'OverdueTab', title: 'Qúa hạn'},
+];
 export const TaskList: React.FC<TaskListProps> = (props) => {
   const user = useUser();
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    {key: 'OpenTab', title: 'Chưa thực hiện'},
-    {key: 'InprogressTab', title: 'Đang thực hiện'},
-    {key: 'CompletedTab', title: 'Hoàn thành'},
-    {key: 'OverdueTab', title: 'Qúa hạn'},
-  ]);
-
-  const renderScene = SceneMap({
-    OpenTab: () => OpenTab(props.navigation, user),
-    InprogressTab: () => InprogressTab(props.navigation, user),
-    CompletedTab: () => CompletedTab(props.navigation, user),
-    OverdueTab: () => OverdueTab(props.navigation, user),
-  });
+  const [routes] = React.useState([...DFR]);
+  const tabLabelRef = React.useRef([...routes]);
+  const setTotalRecordForTab = (key: string) => (value: number) => {
+    const rIndex = tabLabelRef.current.findIndex((x) => x.key === key);
+    tabLabelRef.current.splice(rIndex, 1, {
+      key,
+      title: `${DFR[rIndex].title} (${value})`,
+    });
+  };
+  const renderScene = ({route}: {route: Route}) => {
+    const prs = {
+      navigation: props.navigation,
+      user,
+      setTotalRecord: setTotalRecordForTab(route.key),
+    };
+    switch (route.key) {
+      case 'OpenTab':
+        return <OpenTab {...prs} />;
+      case 'InprogressTab':
+        return <InprogressTab {...prs} />;
+      case 'CompletedTab':
+        return <CompletedTab {...prs} />;
+      case 'OverdueTab':
+        return <OverdueTab {...prs} />;
+    }
+  };
 
   const renderTabBar = (p: any) => (
     <TabBar
       {...p}
+      getLabelText={(r) =>
+        tabLabelRef.current.find((x) => x.key === r.route.key)?.title
+      }
       indicatorStyle={{backgroundColor: Colors.gray}}
       style={styles.tabBarStyle}
       labelStyle={{color: Colors.gray}}

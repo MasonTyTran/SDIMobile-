@@ -12,7 +12,8 @@ import {SignInHandle} from './types';
 
 const DFUser = {
   user: __DEV__ ? 'admin' : '',
-  pass: __DEV__ ? 'HueSDI@HueCIT' : '',
+  pass: __DEV__ ? '654321' : '',
+  org: __DEV__ ? 'genco3' : '',
 };
 
 export function useSignIn(handle: SignInHandle) {
@@ -25,7 +26,7 @@ export function useSignIn(handle: SignInHandle) {
   const [
     selectedOrganization,
     setSelectedOrganization,
-  ] = React.useState<string>();
+  ] = React.useState<string>(DFUser.org);
 
   const submit = (_: any) => {
     dispatch(

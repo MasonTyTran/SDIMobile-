@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, ListRenderItemInfo, View} from 'react-native';
 
 import {SearchBar} from 'react-native-elements';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {debounce} from 'lodash';
 
 import {ListView} from '@components';
@@ -17,6 +17,7 @@ export interface TaskListTabProps {
   taskState: TaskState;
   navigation: DrawerNavigationProp<AuthorizedStoryboardParamList, 'TaskList'>;
   getData: (keyword: string, index: number) => Observable<WOListResponse>;
+  setTotalRecord: (value: number) => void;
 }
 
 export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
@@ -28,12 +29,13 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState<WOProject[]>([]);
   const setIndex = (i: number) => (refIndex.current = i);
+  const subscriptions = React.useRef<Subscription[]>([]);
   const onRefresh = React.useCallback(() => {
     if (refreshing || loading) {
       return;
     }
     setRefreshing(true);
-    props.getData(keyword, 1).subscribe({
+    const sub = props.getData(keyword, 1).subscribe({
       next: (res) => {
         setData(res.Data.projects);
         setIndex(1);
@@ -41,13 +43,14 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
       },
       error: () => setRefreshing(false),
     });
+    subscriptions.current.push(sub);
   }, [keyword, loading, props, refreshing]);
   const onLoadMore = () => {
     if (loading || refreshing || !hasMore) {
       return;
     }
     setLoading(true);
-    props.getData(keyword, index + 1).subscribe({
+    const sub = props.getData(keyword, index + 1).subscribe({
       next: (res) => {
         if (res.Data.projects.length === 0) {
           setHasMore(false);
@@ -58,6 +61,7 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
       },
       error: () => setLoading(false),
     });
+    subscriptions.current.push(sub);
   };
 
   const debounceRefresh = React.useCallback(
@@ -77,6 +81,9 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
     }, 800),
     [],
   );
+  React.useEffect(() => {
+    props.setTotalRecord(data.length);
+  }, [data, props]);
 
   const onChangeKeyword = (t: string) => {
     setKeyword(t);
@@ -89,7 +96,10 @@ export const TaskListTab: React.FC<TaskListTabProps> = (props) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
-
+  React.useEffect(
+    () => () => subscriptions.current.forEach((sub) => sub.unsubscribe()),
+    [],
+  );
   const renderItem = ({item}: ListRenderItemInfo<WOProject>) => {
     return (
       <TaskItem

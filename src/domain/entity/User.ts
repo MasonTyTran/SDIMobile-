@@ -11,4 +11,5 @@ export interface User {
   languageID: string;
   roleIDs: string[] | null;
   permissionIDs: string[] | null;
+  image?: string;
 }

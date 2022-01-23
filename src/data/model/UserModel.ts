@@ -13,6 +13,7 @@ export interface UserModel {
   vidagis_language_id: string;
   role_ids: string[];
   permission_ids: string[];
+  vidagis_image: string;
 }
 
 export function parseUserModel(model: UserModel): User {
@@ -29,6 +30,7 @@ export function parseUserModel(model: UserModel): User {
     languageID: model.vidagis_language_id,
     roleIDs: model.role_ids,
     permissionIDs: model.permission_ids,
+    image: model.vidagis_image,
   };
   return user;
 }

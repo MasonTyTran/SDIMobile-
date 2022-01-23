@@ -30,7 +30,6 @@ export class CombineAuthenticationRepository
     return this.remoteDataSource.signIn(credential).pipe(
       map(
         (result): SignInResult => {
-          console.log(result);
           return {
             fromLocal: false,
             token: result.data.access_token,

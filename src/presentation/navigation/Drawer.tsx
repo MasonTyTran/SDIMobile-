@@ -14,7 +14,7 @@ import {AuthorizedStoryboardParamList} from '../storyboard/Authorized.storyboard
 import {User} from '@domain';
 import {Footer} from '../component/brand';
 import {usePermissionContext} from '@hooks';
-import {config} from 'rxjs';
+import {BuildConfig} from '@core';
 
 export const drawerSelector: Selector<RootStoreState, {user: User}> = (
   state,
@@ -34,7 +34,9 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
     },
     [navigation],
   );
-  console.warn(user);
+  const avatar = user.image
+    ? `${BuildConfig.ApiUrl}/getFile/${user.image}/${user.organizationID}`
+    : 'https://api.aktivmap.com/FileStore/avatar-default-icon.png';
   return (
     <>
       <View style={styles.container}>
@@ -42,7 +44,7 @@ export const Drawer: React.FC<DrawerContentComponentProps> = ({navigation}) => {
           <Avatar
             size={100}
             source={{
-              uri: 'https://api.aktivmap.com/FileStore/avatar-default-icon.png',
+              uri: avatar,
             }}
             rounded
           />

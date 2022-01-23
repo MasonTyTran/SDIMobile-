@@ -40,10 +40,12 @@ export const DateTimeBox = ({
   label,
   value,
   onChangeDate,
+  disabled = false,
 }: {
   label: string;
   value: Date;
   onChangeDate: (v: Date) => void;
+  disabled?: boolean;
 }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
 
@@ -61,7 +63,10 @@ export const DateTimeBox = ({
   };
   return (
     <>
-      <Pressable onPress={showDatePicker} style={styles.infoBox}>
+      <Pressable
+        disabled={disabled}
+        onPress={showDatePicker}
+        style={styles.infoBox}>
         <TextView style={styles.infoBoxLabel} text={label} />
         <TextView
           style={styles.infoBoxValue}

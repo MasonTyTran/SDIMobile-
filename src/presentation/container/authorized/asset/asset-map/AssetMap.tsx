@@ -46,7 +46,9 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
     const data = await IssueDataSource.getOrganizationInfo(
       user.organizationID,
     ).toPromise();
-    setEndPoint(data.vidagis_url);
+    console.warn(data);
+
+    setEndPoint(data.vidagis_url_map_mobile);
   }, [user.organizationID]);
   React.useEffect(() => {
     getLocation();
@@ -56,6 +58,7 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
     if (loadingPosition || !endPoint) {
       return <FullScreenLoadingIndicator visible />;
     }
+
     return (
       <WebView
         style={styles.webview}

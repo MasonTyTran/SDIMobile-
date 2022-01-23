@@ -16,6 +16,7 @@ import {useTaskInfo} from './useTaskInfo';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
+  const isCompleted = item.vidagis_status === 16;
   const {
     setEndDate,
     setStartDate,
@@ -71,11 +72,13 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
         onChangeDate={setStartDate}
         label="Thời gian bắt đầu"
         value={startDate}
+        disabled={isCompleted}
       />
       <DateTimeBox
         onChangeDate={setEndDate}
         label="Thời gian kết thúc"
         value={endDate}
+        disabled={isCompleted}
       />
       <InfoBox
         onChangeText={setCompletedTime}

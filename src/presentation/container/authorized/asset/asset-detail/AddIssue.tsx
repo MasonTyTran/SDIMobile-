@@ -40,8 +40,8 @@ export const AddIssue: React.FC<AddIssueProps> = ({
     IssueDataSource.createIssue(request).subscribe({
       next: (res) => {
         console.warn(res);
-        if (res.Data) {
-          showMessage({message: 'Thành công', type: 'success'});
+        if (res.Code === 0) {
+          showMessage({message: 'Tạo sự kiện thành công', type: 'success'});
           onRequestClose();
         } else {
           showMessage({message: 'Tạo sự kiện thất bại', type: 'warning'});

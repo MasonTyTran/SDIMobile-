@@ -10,6 +10,7 @@ export interface TaskItemProps {
   onPress: (item: WOProject) => void;
 }
 export const TaskItem: React.FC<TaskItemProps> = ({item, onPress}) => {
+  const isCompleted = item.vidagis_status === 16;
   return (
     <Pressable onPress={() => onPress(item)} style={styles.container}>
       <SDIImage fileID={item.vidagis_avatar} style={styles.image} />
@@ -35,10 +36,18 @@ export const TaskItem: React.FC<TaskItemProps> = ({item, onPress}) => {
         />
         <View style={GridStyles.rowSpaceBetween}>
           <TextView style={TextStyles.normal} text={`#${item.oid}`} />
-          <TextView
-            style={TextStyles.normal}
-            text={`${item.vidagis_startdate_str}`}
-          />
+          <View>
+            <TextView
+              style={TextStyles.normal}
+              text={`${item.vidagis_startdate_str}`}
+            />
+            {isCompleted && (
+              <TextView
+                style={TextStyles.normal}
+                text={`${item.vidagis_enddate_str}`}
+              />
+            )}
+          </View>
         </View>
       </View>
     </Pressable>

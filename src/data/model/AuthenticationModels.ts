@@ -15,7 +15,7 @@ export interface SignUpResponseData {}
 export interface Organization {
   vidagis_organizationid: string;
   vidagis_organizationname: string;
-  vidagis_url: string;
+  vidagis_url_map_mobile: string;
 }
 export interface GetOrganizationTypeResponse {
   Message: string;

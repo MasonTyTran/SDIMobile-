@@ -31,7 +31,11 @@ export const TypePicker: React.FC<TypePickerProps> = ({onChange, value}) => {
         value={value}
         onValueChange={onChange}
         placeholder="Loại sự kiện"
-        items={data.map((x) => ({value: x.event_id, label: x.event_name}))}>
+        items={data.map((x) => ({
+          value: x.event_id,
+          label: x.event_name,
+          key: x.event_id,
+        }))}>
         <View style={styles.datePickerContainer}>
           {loading ? (
             <ActivityIndicator />
