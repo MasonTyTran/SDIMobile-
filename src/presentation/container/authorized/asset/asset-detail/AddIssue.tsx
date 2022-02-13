@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Alert,
   Image,
   Modal,
   Platform,
@@ -11,13 +10,10 @@ import {
 
 import {Button, Icon} from 'react-native-elements';
 
-import {IconLabel, TextField} from '@components';
+import {IconLabel, openImagePicker, TextField} from '@components';
 import {Colors, GridStyles} from '@resources';
 import {Formik} from 'formik';
-import ImagePicker, {
-  Options,
-  Image as ImageProps,
-} from 'react-native-image-crop-picker';
+import {Image as ImageProps} from 'react-native-image-crop-picker';
 import {CreateIssueRequest, IssueDataSource} from '@data';
 import {showMessage} from 'react-native-flash-message';
 import {DatePicker} from './DatePicker';
@@ -164,7 +160,6 @@ export const AddIssue: React.FC<AddIssueProps> = ({
               style={styles.imageUpload}
               onPress={() => {
                 openImagePicker((image) => {
-                  console.warn(image);
                   setFieldValue('image', image);
                 });
               }}>
@@ -216,29 +211,6 @@ export const AddIssue: React.FC<AddIssueProps> = ({
       <View style={styles.container}>{form()}</View>
     </Modal>
   );
-};
-
-const openImagePicker = (callback: (image: any) => void) => {
-  let option: Options = {
-    width: 300,
-    height: 400,
-    mediaType: 'photo',
-    forceJpg: true,
-  };
-  Alert.alert('Chọn ảnh từ', '', [
-    {
-      text: 'Camera',
-      onPress: () => {
-        ImagePicker.openCamera(option).then(callback);
-      },
-    },
-    {
-      text: 'Thư viện ảnh',
-      onPress: () => {
-        ImagePicker.openPicker(option).then(callback);
-      },
-    },
-  ]);
 };
 
 const styles = StyleSheet.create({

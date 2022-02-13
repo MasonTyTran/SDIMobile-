@@ -3,6 +3,8 @@ import {useUser} from '@hooks';
 import {WODataSource, WOProject} from '@data';
 import React from 'react';
 import moment from 'moment';
+import {Image} from 'react-native-image-crop-picker';
+import {Platform} from 'react-native';
 
 export function useTaskInfo(project: WOProject) {
   const user = useUser();
@@ -86,6 +88,36 @@ export function useTaskInfo(project: WOProject) {
     });
   };
 
+  const attache = (image: Image) => {
+    setLoading(true);
+    const file = {
+      uri: Platform.select({
+        ios: image.sourceURL,
+        default: image.path,
+      }),
+      type: image.mime,
+      name: Platform.select({
+        ios: image.filename,
+        default: 'image.png',
+      }),
+    };
+    WODataSource.attache({
+      vidagis_project_id: project.oid + '',
+      file,
+    }).subscribe({
+      next: (res) => {
+        if (res.Code !== 0) {
+          return showMessage({message: 'Đính kèm thất bại', type: 'warning'});
+        }
+        showMessage({message: 'Đính kèm thành công', type: 'success'});
+      },
+      error: () => {
+        showMessage({message: 'Đính kèm thất bại', type: 'warning'});
+      },
+      complete: () => setLoading(false),
+    });
+  };
+
   return {
     setStartDate,
     setEndDate,
@@ -99,5 +131,6 @@ export function useTaskInfo(project: WOProject) {
     previous,
     complete,
     forward,
+    attache,
   };
 }

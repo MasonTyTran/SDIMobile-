@@ -2,6 +2,7 @@ import React from 'react';
 import {Pressable, RefreshControl, View, ScrollView} from 'react-native';
 // import from library
 import {PieChart} from 'react-native-svg-charts';
+import moment from 'moment';
 // import from alias
 import {TextView} from '@components';
 // localImport
@@ -10,7 +11,7 @@ import {DashboardProps} from './types';
 import {styles} from './Dashboard.style';
 import {Header, Icon} from 'react-native-elements';
 import {AuthorizedStoryboardParamList} from '@storyboards';
-import moment from 'moment';
+import {NotificationAction} from '@smart-component';
 
 const LEGENDS = ['Đã hoàn thành', 'Chưa hoàn thành'];
 
@@ -81,12 +82,14 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
           />
         }
         rightComponent={
-          <Icon
-            color="#fff"
-            onPress={() => navigation.navigate('AssetList')}
-            type="ionicon"
-            name="search-outline"
-          />
+          <NotificationAction>
+            <Icon
+              color="#fff"
+              onPress={() => navigation.navigate('AssetList')}
+              type="ionicon"
+              name="search-outline"
+            />
+          </NotificationAction>
         }
         centerComponent={<TextView text="Trang chủ" style={styles.header} />}
         backgroundColor={gray}

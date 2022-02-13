@@ -23,6 +23,7 @@ module.exports = {
           '@resources': './src/presentation/resource',
           '@storyboards': './src/presentation/storyboard',
           '@navigation': './src/presentation/navigation',
+          '@smart-component': './src/presentation/smart-component',
           // development
           '@mocks': './__mocks__',
         },

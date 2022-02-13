@@ -78,6 +78,9 @@
       "@shared-state": [
         "src/presentation/shared-state"
       ],
+      "@smart-component": [
+        "src/presentation/smart-component"
+      ],
       // test
       "@mocks": [
         "__mocks__"

@@ -102,3 +102,8 @@ export type ProjectDetailRequest = {
   user_id: string;
   organization_id: string;
 };
+
+export type WOAttacheRequest = {
+  vidagis_project_id: string;
+  file: any;
+};

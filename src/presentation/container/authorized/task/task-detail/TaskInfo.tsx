@@ -1,11 +1,13 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Divider, Icon} from 'react-native-elements';
+import {Button, Divider, Icon} from 'react-native-elements';
 
 import {
   FullScreenLoadingIndicator,
   IconLabel,
+  openImagePicker,
   SDIImage,
+  Spacer,
   TextView,
 } from '@components';
 import {Colors, GridStyles, TextStyles} from '@resources';
@@ -32,104 +34,127 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
     complete,
     previous,
     forward,
+    attache,
   } = useTaskInfo(item);
+
+  const generalInfo = () => {
+    return (
+      <>
+        <TextView style={styles.title} text="Thông tin chung" />
+
+        <View style={styles.infoContainer}>
+          <View style={GridStyles.row}>
+            <View style={styles.info}>
+              <TextView style={styles.id} text={`#${item.oid}`} />
+              <TextView style={styles.id} text={item.vidagis_name} />
+              <TextView
+                style={styles.id}
+                text={`Mức độ ưu tiên: ${item.vidagis_prioritize_des}`}
+              />
+            </View>
+            <IconLabel
+              suffix={
+                <Icon
+                  color={Colors.accent}
+                  name="alert-circle-outline"
+                  type="ionicon"
+                />
+              }
+              color={Colors.accent}
+              text={item.vidagis_status_des}
+            />
+            <SDIImage fileID={item.vidagis_avatar} style={styles.image} />
+          </View>
+        </View>
+      </>
+    );
+  };
+
+  const detail = () => {
+    return (
+      <>
+        <TextView style={styles.title} text="Thông tin task" />
+        <InfoBox
+          onChangeText={setPerson}
+          label="Người thực hiện"
+          value={person}
+          inputProps={{editable: !isAssigned}}
+        />
+        <DateTimeBox
+          onChangeDate={setStartDate}
+          label="Thời gian bắt đầu"
+          value={startDate}
+          disabled={isCompleted}
+        />
+        <DateTimeBox
+          onChangeDate={setEndDate}
+          label="Thời gian kết thúc"
+          value={endDate}
+          disabled={isCompleted}
+        />
+        <InfoBox
+          onChangeText={setCompletedTime}
+          label="Số giờ hoàn thành"
+          value={completedTime}
+          inputProps={{keyboardType: 'numeric'}}
+        />
+        {item.is_update && (
+          <View style={styles.buttonContainer}>
+            {item.is_back_forward && (
+              <IconLabel
+                onPress={previous}
+                prefix={
+                  <Icon
+                    color={Colors.gray}
+                    name="play-skip-back"
+                    type="ionicon"
+                  />
+                }
+                color={Colors.gray}
+                text="TRẢ LẠI"
+              />
+            )}
+            {item.is_complete && (
+              <IconLabel
+                onPress={complete}
+                prefix={
+                  <Icon
+                    color={Colors.gray}
+                    name="checkmark-done-circle"
+                    type="ionicon"
+                  />
+                }
+                color={Colors.gray}
+                text="HOÀN THÀNH"
+              />
+            )}
+            {item.is_forward && (
+              <IconLabel
+                onPress={forward}
+                prefix={
+                  <Icon
+                    color={Colors.gray}
+                    name="arrow-forward"
+                    type="ionicon"
+                  />
+                }
+                color={Colors.gray}
+                text="Bước tiếp theo"
+              />
+            )}
+          </View>
+        )}
+      </>
+    );
+  };
   return (
     <KeyboardAwareScrollView style={styles.container}>
       <FullScreenLoadingIndicator visible={loading} />
-      <TextView style={styles.title} text="Thông tin chung" />
-
-      <View style={styles.infoContainer}>
-        <View style={GridStyles.row}>
-          <View style={styles.info}>
-            <TextView style={styles.id} text={`#${item.oid}`} />
-            <TextView style={styles.id} text={item.vidagis_name} />
-            <TextView
-              style={styles.id}
-              text={`Mức độ ưu tiên: ${item.vidagis_prioritize_des}`}
-            />
-          </View>
-          <IconLabel
-            suffix={
-              <Icon
-                color={Colors.accent}
-                name="alert-circle-outline"
-                type="ionicon"
-              />
-            }
-            color={Colors.accent}
-            text={item.vidagis_status_des}
-          />
-          <SDIImage fileID={item.vidagis_avatar} style={styles.image} />
-        </View>
-      </View>
+      {generalInfo()}
       <Divider style={styles.divider} />
-      <TextView style={styles.title} text="Thông tin task" />
-      <InfoBox
-        onChangeText={setPerson}
-        label="Người thực hiện"
-        value={person}
-        inputProps={{editable: !isAssigned}}
-      />
-      <DateTimeBox
-        onChangeDate={setStartDate}
-        label="Thời gian bắt đầu"
-        value={startDate}
-        disabled={isCompleted}
-      />
-      <DateTimeBox
-        onChangeDate={setEndDate}
-        label="Thời gian kết thúc"
-        value={endDate}
-        disabled={isCompleted}
-      />
-      <InfoBox
-        onChangeText={setCompletedTime}
-        label="Số giờ hoàn thành"
-        value={completedTime}
-        inputProps={{keyboardType: 'numeric'}}
-      />
-      {item.is_update && (
-        <View style={styles.buttonContainer}>
-          {item.is_back_forward && (
-            <IconLabel
-              onPress={previous}
-              prefix={
-                <Icon
-                  color={Colors.gray}
-                  name="play-skip-back"
-                  type="ionicon"
-                />
-              }
-              color={Colors.gray}
-              text="TRẢ LẠI"
-            />
-          )}
-          {item.is_complete && (
-            <IconLabel
-              onPress={complete}
-              prefix={
-                <Icon
-                  color={Colors.gray}
-                  name="checkmark-done-circle"
-                  type="ionicon"
-                />
-              }
-              color={Colors.gray}
-              text="HOÀN THÀNH"
-            />
-          )}
-          {item.is_forward && (
-            <IconLabel
-              onPress={forward}
-              prefix={
-                <Icon color={Colors.gray} name="arrow-forward" type="ionicon" />
-              }
-              color={Colors.gray}
-              text="Bước tiếp theo"
-            />
-          )}
-        </View>
-      )}
+      <Button title="Đính kèm" onPress={() => openImagePicker(attache)} />
+      <Spacer />
+      {detail()}
     </KeyboardAwareScrollView>
   );
 };

@@ -10,6 +10,7 @@ import {
   WOStepRequest,
   ProjectDetailRequest,
   WOResponse,
+  WOAttacheRequest,
 } from '../model';
 import {map} from 'rxjs/operators';
 
@@ -61,6 +62,18 @@ class _WODataSource {
   project(data: ProjectDetailRequest): Observable<WOResponse> {
     return this.provider
       .post<WOResponse>('project/id', data)
+      .pipe(map((x) => x.data));
+  }
+
+  attache(data: WOAttacheRequest): Observable<any> {
+    const form = new FormData();
+    //@ts-ignore
+    Object.keys(data).forEach((k) => data[k] && form.append(k, data[k]));
+    console.log(form);
+    return this.provider
+      .post<any>('project/upload_image', form, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      })
       .pipe(map((x) => x.data));
   }
 }

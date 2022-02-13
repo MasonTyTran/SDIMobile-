@@ -46,8 +46,6 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
     const data = await IssueDataSource.getOrganizationInfo(
       user.organizationID,
     ).toPromise();
-    console.log(data.vidagis_url_map_mobile);
-
     setEndPoint(data.vidagis_url_map_mobile);
   }, [user.organizationID]);
   React.useEffect(() => {
