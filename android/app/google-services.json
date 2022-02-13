@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "874080023901",
+    "project_id": "vidagiscloud",
+    "storage_bucket": "vidagiscloud.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874080023901:android:8560562dc87532aa9024b4",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874080023901-81l440ooe7vst8simmbri074g0sr869k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKgwQfQWDI6e0Vqtb2yKa2dUUJ_3kQBQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874080023901-81l440ooe7vst8simmbri074g0sr869k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "874080023901-kt4lqo3cvacu10ivnnkhne5m3ipar5j4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "vn.hue.aktivmap"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874080023901:android:cb743fda526729db9024b4",
+        "android_client_info": {
+          "package_name": "vn.hue.aktivmap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874080023901-81l440ooe7vst8simmbri074g0sr869k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKgwQfQWDI6e0Vqtb2yKa2dUUJ_3kQBQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874080023901-81l440ooe7vst8simmbri074g0sr869k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "874080023901-kt4lqo3cvacu10ivnnkhne5m3ipar5j4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "vn.hue.aktivmap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

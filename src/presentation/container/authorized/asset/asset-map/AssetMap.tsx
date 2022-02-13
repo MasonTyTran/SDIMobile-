@@ -46,7 +46,7 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
     const data = await IssueDataSource.getOrganizationInfo(
       user.organizationID,
     ).toPromise();
-    console.warn(data);
+    console.log(data.vidagis_url_map_mobile);
 
     setEndPoint(data.vidagis_url_map_mobile);
   }, [user.organizationID]);
@@ -63,7 +63,7 @@ export const AssetMap: React.FC<AssetMapProps> = (props) => {
       <WebView
         style={styles.webview}
         source={{
-          uri: `${endPoint}GIS/MainMap/MapMobile?x=${position?.coords.latitude}&y=${position?.coords.longitude}`,
+          uri: `${endPoint}?x=${position?.coords.latitude}&y=${position?.coords.longitude}`,
           headers: {
             access_token: provider.token,
             type_request: 'mobile',

@@ -5,7 +5,6 @@ import {Button} from 'react-native-elements';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {Footer, TextField, TextView} from '@components';
-import {TypePicker} from './TypePicker';
 import {useSignIn} from './SignIn.hooks';
 import {SignInProps} from './types';
 import {Images} from '@assets';
@@ -13,20 +12,36 @@ import {Colors} from '@resources';
 import {showMessage} from 'react-native-flash-message';
 import {BuildConfig} from '@core';
 
+import messaging from '@react-native-firebase/messaging';
+messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  console.log('Message handled in the background!', remoteMessage);
+});
+async function requestUserPermission() {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+  console.log('Authorization status:', authStatus);
+  if (!enabled) {
+    return;
+  }
+  await messaging().registerDeviceForRemoteMessages();
+  console.log(await messaging().getToken());
+}
+
 const _SignIn: React.FC<SignInProps> = (props) => {
   const {} = props;
+  React.useEffect(() => {
+    requestUserPermission();
+  }, []);
   const onSignInFailed = React.useCallback(() => {
     showMessage({message: 'Thông tin đăng nhập sai', type: 'danger'});
   }, []);
-  const {
-    submit,
-    setPassword,
-    setUsername,
-    selectedOrganization,
-    setSelectedOrganization,
-  } = useSignIn({
-    onSignInFailed,
-  });
+  const {submit, setPassword, setUsername, setSelectedOrganization} = useSignIn(
+    {
+      onSignInFailed,
+    },
+  );
   const renderForm = () => {
     return (
       <View style={styles.formContainer}>

@@ -17,6 +17,8 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
   const isCompleted = item.vidagis_status === 16;
+  const isAssigned = item.vidagis_status >= 4;
+  console.log(item);
   const {
     setEndDate,
     setStartDate,
@@ -66,7 +68,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
         onChangeText={setPerson}
         label="Người thực hiện"
         value={person}
-        inputProps={{editable: false}}
+        inputProps={{editable: !isAssigned}}
       />
       <DateTimeBox
         onChangeDate={setStartDate}

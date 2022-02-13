@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>874080023901-kt4lqo3cvacu10ivnnkhne5m3ipar5j4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.874080023901-kt4lqo3cvacu10ivnnkhne5m3ipar5j4</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAlHeOZpn_y89A4_AXiFXDNs5eJ_HISfqw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>874080023901</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>vn.hue.aktivmap</string>
+	<key>PROJECT_ID</key>
+	<string>vidagiscloud</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vidagiscloud.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:874080023901:ios:8e5bbeb428b7d0989024b4</string>
+</dict>
+</plist>
