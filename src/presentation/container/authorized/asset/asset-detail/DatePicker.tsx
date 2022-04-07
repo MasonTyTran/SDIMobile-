@@ -42,9 +42,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         isVisible={isDatePickerVisible}
         date={date}
         mode="date"
-        onConfirm={(date) => {
-          onChange(date);
+        onConfirm={(d) => {
           hideDatePicker();
+          onChange(d);
         }}
         onCancel={hideDatePicker}
       />

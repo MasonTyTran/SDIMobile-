@@ -10,6 +10,7 @@ import {NotificationListProps} from './types';
 import {Notification, NotificationDataSource} from '@data';
 import {debounce} from 'lodash';
 import {useItem} from './useItem';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const NotificationList: React.FC<NotificationListProps> = (props) => {
   const indexRef = React.useRef(1);
@@ -25,7 +26,6 @@ export const NotificationList: React.FC<NotificationListProps> = (props) => {
       page_size: 10,
     }).subscribe({
       next: ({Data: {notifications}}) => {
-        console.log(notifications);
         setRefreshing(false);
         setData(notifications);
         indexRef.current = 1;
@@ -60,7 +60,12 @@ export const NotificationList: React.FC<NotificationListProps> = (props) => {
     ({item}: ListRenderItemInfo<Notification>) => {
       return (
         <ListItem
-          onPress={() => getItemDetail(item.type, item.code)}
+          containerStyle={{
+            backgroundColor: item.is_clicked ? '#fff' : '#ddd',
+          }}
+          onPress={() =>
+            getItemDetail(item.type, item.code, item.notifications_id)
+          }
           bottomDivider>
           <SDIImage fileID={item.avatar_user} style={styles.avatar} />
           <ListItem.Content>
@@ -73,7 +78,11 @@ export const NotificationList: React.FC<NotificationListProps> = (props) => {
     },
     [getItemDetail],
   );
-  React.useEffect(refresh, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      refresh();
+    }, [refresh]),
+  );
   const keyExtractor = React.useCallback(
     (item: Notification) => item.notifications_id,
     [],
@@ -109,7 +118,7 @@ export const NotificationList: React.FC<NotificationListProps> = (props) => {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         onRefresh={refresh}
-        onEndReached={loadMore}
+        onEndReached={data ? loadMore : () => null}
       />
     </>
   );

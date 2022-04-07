@@ -1,8 +1,11 @@
 import React from 'react';
 import {} from 'react-native';
-import {WODataSource} from '@data';
 
+import messaging from '@react-native-firebase/messaging';
 import {Selector, useSelector} from 'react-redux';
+
+import {NotificationDataSource, WODataSource} from '@data';
+
 import {RootStoreState} from '@shared-state';
 import {User} from '@domain';
 import {zip} from 'rxjs';
@@ -11,6 +14,17 @@ import {usePermissionContext} from '@hooks';
 export const dashboardSelector: Selector<RootStoreState, User> = (state) => {
   return state.authentication.user!;
 };
+
+async function requestUserPermission() {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+  if (!enabled) {
+    return;
+  }
+  await messaging().registerDeviceForRemoteMessages();
+}
 
 export function useDashboardModel() {
   const user = useSelector(dashboardSelector);
@@ -48,5 +62,13 @@ export function useDashboardModel() {
     loadData();
     refresh();
   }, [loadData, refresh]);
+  React.useEffect(() => {
+    const registerDevice = async () => {
+      await requestUserPermission();
+      const token = await messaging().getToken();
+      await NotificationDataSource.registerDevice(token).toPromise();
+    };
+    registerDevice();
+  }, []);
   return {totalInprogress, totalCompleted, refreshing, loadData, permission};
 }

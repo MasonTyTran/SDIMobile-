@@ -1,17 +1,33 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {ActivityIndicator, StyleSheet} from 'react-native';
 
 import {Header, Icon} from 'react-native-elements';
 
 import {TextView} from '@components';
 import {Colors} from '@resources';
+import {useUser} from '@hooks';
 
 import {TaskDetailProps} from './types';
 import {TaskInfo} from './TaskInfo';
+import {WODataSource, WOProject} from '@data';
 
 export const TaskDetail: React.FC<TaskDetailProps> = (props) => {
   const {project} = props.route.params;
-
+  const user = useUser();
+  const [data, setData] = React.useState<WOProject>();
+  const fetch = React.useCallback(async () => {
+    try {
+      const res = await WODataSource.project({
+        user_id: user.id,
+        organization_id: user.organizationID,
+        oid: project.oid.toString(),
+      }).toPromise();
+      setData(res.Data);
+    } catch (error) {}
+  }, [project.oid, user.id, user.organizationID]);
+  React.useEffect(() => {
+    fetch();
+  }, [fetch]);
   return (
     <>
       <Header
@@ -28,7 +44,7 @@ export const TaskDetail: React.FC<TaskDetailProps> = (props) => {
         }
         backgroundColor={Colors.gray}
       />
-      <TaskInfo item={project} />
+      {data ? <TaskInfo onUpdate={fetch} item={data} /> : <ActivityIndicator />}
     </>
   );
 };

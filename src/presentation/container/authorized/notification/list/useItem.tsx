@@ -1,4 +1,4 @@
-import {AssetDataSource, WODataSource} from '@data';
+import {AssetDataSource, NotificationDataSource, WODataSource} from '@data';
 import {useUser} from '@hooks';
 import {useNavigation} from '@react-navigation/native';
 
@@ -35,8 +35,12 @@ export function useItem() {
       project: data.Data,
     });
   };
-  const getItemDetail = (type: 'project' | 'asset' | 'ticket', id: string) => {
-    console.log(type);
+  const getItemDetail = async (
+    type: 'project' | 'asset' | 'ticket',
+    id: string,
+    notifications_id: string,
+  ) => {
+    await NotificationDataSource.markSeen(notifications_id).toPromise();
     if (type === 'project') {
       return getProject(id);
     }

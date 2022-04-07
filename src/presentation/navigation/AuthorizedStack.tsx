@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
-import { AuthorizedStoryboardParamList } from '../storyboard/Authorized.storyboard';
+import {AuthorizedStoryboardParamList} from '../storyboard/Authorized.storyboard';
 import {
   AssetDetail,
   AssetList,
@@ -14,7 +14,7 @@ import {
   TaskDetail,
   TaskList,
 } from '@containers';
-import { NotificationList } from '../container/authorized/notification';
+import {NotificationList} from '../container/authorized/notification';
 
 const Stack = createStackNavigator<AuthorizedStoryboardParamList>();
 

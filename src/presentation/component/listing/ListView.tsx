@@ -1,6 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, FlatListProps, RefreshControl} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {
+  View,
+  StyleSheet,
+  FlatListProps,
+  RefreshControl,
+  FlatList,
+} from 'react-native';
 import {EmptyListView, EmptyListViewProps} from './EmptyListView';
 import {SkeletonLoadingItem} from './SkeletonLoadingItem';
 
@@ -74,7 +79,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  list: {
-    flex: 1,
-  },
+  list: {},
 });

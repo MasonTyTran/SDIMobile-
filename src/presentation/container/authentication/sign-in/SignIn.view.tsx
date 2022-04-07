@@ -16,24 +16,10 @@ import messaging from '@react-native-firebase/messaging';
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {
   console.log('Message handled in the background!', remoteMessage);
 });
-async function requestUserPermission() {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-  console.log('Authorization status:', authStatus);
-  if (!enabled) {
-    return;
-  }
-  await messaging().registerDeviceForRemoteMessages();
-  console.log(await messaging().getToken());
-}
 
 const _SignIn: React.FC<SignInProps> = (props) => {
   const {} = props;
-  React.useEffect(() => {
-    requestUserPermission();
-  }, []);
+
   const onSignInFailed = React.useCallback(() => {
     showMessage({message: 'Thông tin đăng nhập sai', type: 'danger'});
   }, []);

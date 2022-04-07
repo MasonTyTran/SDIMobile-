@@ -87,7 +87,8 @@ export interface WOStepRequest {
 export interface WOCompletedRequest {
   project_id: string;
   user_id: string;
-  project_end_time: string;
+  project_dateend: string;
+  project_datestart: string;
   total_time: number;
   organization_id: string;
 }

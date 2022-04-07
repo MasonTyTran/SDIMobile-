@@ -6,7 +6,7 @@ import moment from 'moment';
 import {Image} from 'react-native-image-crop-picker';
 import {Platform} from 'react-native';
 
-export function useTaskInfo(project: WOProject) {
+export function useTaskInfo(project: WOProject, onUpdate: () => void) {
   const user = useUser();
   const [loading, setLoading] = React.useState(false);
   const [startDate, setStartDate] = React.useState(
@@ -40,7 +40,10 @@ export function useTaskInfo(project: WOProject) {
       error: () => {
         showMessage({message: 'Thất bại', type: 'warning'});
       },
-      complete: () => setLoading(false),
+      complete: () => {
+        setLoading(false);
+        onUpdate();
+      },
     });
   };
   const forward = () => {
@@ -63,14 +66,18 @@ export function useTaskInfo(project: WOProject) {
       error: () => {
         showMessage({message: 'Thất bại', type: 'warning'});
       },
-      complete: () => setLoading(false),
+      complete: () => {
+        setLoading(false);
+        onUpdate();
+      },
     });
   };
   const complete = () => {
     setLoading(true);
     WODataSource.complete({
       organization_id: user.organizationID,
-      project_end_time: moment(endDate).format('DD/MM/yyyy'),
+      project_dateend: moment(endDate).format('DD/MM/yyyy hh:mm'),
+      project_datestart: moment(startDate).format('DD/MM/yyyy hh:mm'),
       project_id: project.vidagis_project_id,
       total_time: completedTime,
       user_id: user.id,
@@ -84,7 +91,10 @@ export function useTaskInfo(project: WOProject) {
       error: () => {
         showMessage({message: 'Thất bại', type: 'warning'});
       },
-      complete: () => setLoading(false),
+      complete: () => {
+        setLoading(false);
+        onUpdate();
+      },
     });
   };
 

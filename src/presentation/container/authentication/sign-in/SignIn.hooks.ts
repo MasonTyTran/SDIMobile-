@@ -13,7 +13,7 @@ import {SignInHandle} from './types';
 const DFUser = {
   user: __DEV__ ? 'admin' : '',
   pass: __DEV__ ? '654321' : '',
-  org: __DEV__ ? 'genco3' : '',
+  org: __DEV__ ? 'telco' : '',
 };
 
 export function useSignIn(handle: SignInHandle) {

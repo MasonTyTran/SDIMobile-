@@ -23,6 +23,16 @@ class _NotificationDataSource {
       .post<NotificationListResponse>('notifications', data)
       .pipe(map((x) => x.data));
   }
+  registerDevice(token: string): Observable<any> {
+    return this.provider
+      .post('notifications/register_device', {device_token: token})
+      .pipe(map((x) => x.data));
+  }
+  markSeen(id: string): Observable<any> {
+    return this.provider
+      .post('notifications/updatestatus', {notification_id: id})
+      .pipe(map((x) => x.data));
+  }
 }
 
 export const NotificationDataSource = new _NotificationDataSource();

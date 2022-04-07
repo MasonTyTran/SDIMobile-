@@ -17,10 +17,12 @@ import {DateTimeBox, InfoBox} from './common';
 import {useTaskInfo} from './useTaskInfo';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
+export const TaskInfo: React.FC<TaskInfoProps & {onUpdate: () => void}> = ({
+  item,
+  onUpdate,
+}) => {
   const isCompleted = item.vidagis_status === 16;
   const isAssigned = item.vidagis_status >= 4;
-  console.log(item);
   const {
     setEndDate,
     setStartDate,
@@ -35,7 +37,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
     previous,
     forward,
     attache,
-  } = useTaskInfo(item);
+  } = useTaskInfo(item, onUpdate);
 
   const generalInfo = () => {
     return (
@@ -69,11 +71,53 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
       </>
     );
   };
-
+  const updateButtons = () => {
+    if (!item.is_update) {
+      return null;
+    }
+    return (
+      <View style={styles.buttonContainer}>
+        {item.is_back_forward && (
+          <IconLabel
+            onPress={previous}
+            prefix={
+              <Icon color={Colors.gray} name="play-skip-back" type="ionicon" />
+            }
+            color={Colors.gray}
+            text="TRẢ LẠI"
+          />
+        )}
+        {item.is_complete && (
+          <IconLabel
+            onPress={complete}
+            prefix={
+              <Icon
+                color={Colors.gray}
+                name="checkmark-done-circle"
+                type="ionicon"
+              />
+            }
+            color={Colors.gray}
+            text="HOÀN THÀNH"
+          />
+        )}
+        {item.is_forward && (
+          <IconLabel
+            onPress={forward}
+            prefix={
+              <Icon color={Colors.gray} name="arrow-forward" type="ionicon" />
+            }
+            color={Colors.gray}
+            text="Bước tiếp theo"
+          />
+        )}
+      </View>
+    );
+  };
   const detail = () => {
     return (
       <>
-        <TextView style={styles.title} text="Thông tin task" />
+        <TextView style={styles.title} text="Thông tin công việc" />
         <InfoBox
           onChangeText={setPerson}
           label="Người thực hiện"
@@ -98,52 +142,7 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
           value={completedTime}
           inputProps={{keyboardType: 'numeric'}}
         />
-        {item.is_update && (
-          <View style={styles.buttonContainer}>
-            {item.is_back_forward && (
-              <IconLabel
-                onPress={previous}
-                prefix={
-                  <Icon
-                    color={Colors.gray}
-                    name="play-skip-back"
-                    type="ionicon"
-                  />
-                }
-                color={Colors.gray}
-                text="TRẢ LẠI"
-              />
-            )}
-            {item.is_complete && (
-              <IconLabel
-                onPress={complete}
-                prefix={
-                  <Icon
-                    color={Colors.gray}
-                    name="checkmark-done-circle"
-                    type="ionicon"
-                  />
-                }
-                color={Colors.gray}
-                text="HOÀN THÀNH"
-              />
-            )}
-            {item.is_forward && (
-              <IconLabel
-                onPress={forward}
-                prefix={
-                  <Icon
-                    color={Colors.gray}
-                    name="arrow-forward"
-                    type="ionicon"
-                  />
-                }
-                color={Colors.gray}
-                text="Bước tiếp theo"
-              />
-            )}
-          </View>
-        )}
+        {updateButtons()}
       </>
     );
   };
@@ -155,13 +154,14 @@ export const TaskInfo: React.FC<TaskInfoProps> = ({item}) => {
       <Button title="Đính kèm" onPress={() => openImagePicker(attache)} />
       <Spacer />
       {detail()}
+      <Spacer />
+      <Spacer />
     </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     margin: 16,
     padding: 16,
     backgroundColor: 'white',

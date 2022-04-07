@@ -21,6 +21,7 @@ import {
 } from '@di';
 import {RootNavigator} from '@presentation';
 import {StoreContainer} from '@shared-state';
+import {Platform} from 'react-native';
 
 registerDependencies();
 registerFlyValue();
@@ -31,7 +32,13 @@ const App = () => {
         container.resolve<StoreContainer>(AppDependencies.StoreContainer).store
       }>
       <RootNavigator />
-      <FlashMessage position="top" style={{alignItems: 'center'}} />
+      <FlashMessage
+        position="top"
+        style={{
+          alignItems: 'center',
+          marginTop: Platform.select({android: 20}),
+        }}
+      />
     </Provider>
   );
 };
