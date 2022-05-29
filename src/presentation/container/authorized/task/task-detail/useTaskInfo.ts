@@ -112,7 +112,7 @@ export function useTaskInfo(project: WOProject, onUpdate: () => void) {
       }),
     };
     WODataSource.attache({
-      vidagis_project_id: project.oid + '',
+      vidagis_project_id: project.vidagis_project_id,
       file,
     }).subscribe({
       next: (res) => {

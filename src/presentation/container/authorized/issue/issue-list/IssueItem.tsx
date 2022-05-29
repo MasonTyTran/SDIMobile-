@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, Pressable, StyleSheet, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 
-import {IconLabel, SDIImage, Spacer, TextView} from '@components';
-import {Colors, GridStyles, TextStyles} from '@resources';
+import {SDIImage, TextView} from '@components';
+import {TextStyles} from '@resources';
 import {Icon} from 'react-native-elements';
 import {Issue} from '@data';
 import {useUser} from '@hooks';
@@ -67,10 +67,7 @@ export const IssueItem: React.FC<IssueItemProps> = ({item, onPress, type}) => {
         <TextView
           style={styles.normalText}
           numberOfLines={1}
-          text={moment(
-            item.incurred_incident_str,
-            'YYYY-MM-DDTHH:mm:ss',
-          ).format('HH:mm DD/MM/YYYY')}
+          text={item.incurred_incident_str}
         />
       </View>
       <View style={{flexDirection: 'row'}}>
@@ -78,14 +75,7 @@ export const IssueItem: React.FC<IssueItemProps> = ({item, onPress, type}) => {
         <TextView
           style={styles.normalText}
           numberOfLines={1}
-          text={
-            !isOpen
-              ? moment(
-                  item.vidagis_handling_incident,
-                  'YYYY-MM-DDTHH:mm:ss',
-                ).format('HH:mm DD/MM/YYYY')
-              : '...'
-          }
+          text={!isOpen ? item.vidagis_handling_incident : '...'}
         />
       </View>
     </Pressable>
