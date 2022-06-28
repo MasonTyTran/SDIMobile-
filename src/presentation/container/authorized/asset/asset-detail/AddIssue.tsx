@@ -72,14 +72,19 @@ export const AddIssue: React.FC<AddIssueProps> = ({
           if (!values.name || values.name.length > 50) {
             return showMessage({
               message: 'Tên sự kiện không thể bỏ trống hoặc dài hơn 50 kí tự',
+              type: 'warning',
             });
           }
           if (!values.type) {
-            return showMessage({message: 'Loại sự kiện không thể bỏ trống'});
+            return showMessage({
+              message: 'Loại sự kiện không thể bỏ trống',
+              type: 'warning',
+            });
           }
           if (values.content.length > 100) {
             return showMessage({
               message: 'Nội dung không thể bỏ trống hoặc dài hơn 100 kí tự',
+              type: 'warning',
             });
           }
           let image;

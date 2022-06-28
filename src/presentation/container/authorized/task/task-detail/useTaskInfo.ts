@@ -8,13 +8,12 @@ import {Platform} from 'react-native';
 
 export function useTaskInfo(project: WOProject, onUpdate: () => void) {
   const user = useUser();
+
   const [loading, setLoading] = React.useState(false);
   const [startDate, setStartDate] = React.useState(
-    new Date(project.vidagis_startdate),
+    moment(project.vidagis_startdate),
   );
-  const [endDate, setEndDate] = React.useState(
-    new Date(project.vidagis_enddate),
-  );
+  const [endDate, setEndDate] = React.useState(moment(project.vidagis_enddate));
   const [person, setPerson] = React.useState(project.leader_name);
   const [completedTime, setCompletedTime] = React.useState(
     project.vidagis_project_total_time,

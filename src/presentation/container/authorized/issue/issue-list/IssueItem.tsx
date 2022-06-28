@@ -75,7 +75,7 @@ export const IssueItem: React.FC<IssueItemProps> = ({item, onPress, type}) => {
         <TextView
           style={styles.normalText}
           numberOfLines={1}
-          text={!isOpen ? item.vidagis_handling_incident : '...'}
+          text={!isOpen ? item.handling_incident_str : '...'}
         />
       </View>
     </Pressable>

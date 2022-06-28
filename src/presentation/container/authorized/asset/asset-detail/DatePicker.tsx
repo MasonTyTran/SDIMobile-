@@ -35,7 +35,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         <Icon color={Colors.gray} type="ionicon" name="calendar" />
         <TextView
           style={styles.text}
-          text={date ? moment(date).format('DD/MM/YYYY HH:mm') : placeholder}
+          text={
+            date ? moment.utc(date).format('DD/MM/YYYY HH:mm') : placeholder
+          }
         />
       </Pressable>
       <DateTimePickerModal

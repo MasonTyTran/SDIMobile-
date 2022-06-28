@@ -70,7 +70,7 @@ export const DateTimeBox = ({
         <TextView style={styles.infoBoxLabel} text={label} />
         <TextView
           style={styles.infoBoxValue}
-          text={moment(value).format('DD/MM/YYYY hh:mm a')}
+          text={moment(value).format('DD/MM/yyyy hh:mm a')}
         />
       </Pressable>
       <DateTimePickerModal
